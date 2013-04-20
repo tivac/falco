@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         
         shell : {
             launch : {
-                command : "nw.exe ../../chirrup.nw",
+                command : "nw.exe ../../",
                 options : {
                     execOptions : {
                         cwd : nwDir
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
             },
             
             debug : {
-                command : "nw.exe ../../chirrup.nw --debug",
+                command : "nw.exe ../../ --debug",
                 options : {
                     execOptions : {
                         cwd : nwDir
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         }
     });
     
-    grunt.registerTask("default", [ "compress", "shell:launch" ]);
-    grunt.registerTask("debug",   [ "compress", "shell:debug" ]);
+    grunt.registerTask("default", [ "shell:launch" ]);
+    grunt.registerTask("debug",   [ "shell:debug" ]);
     grunt.registerTask("package", [ "compress", "shell:package" ]);
 };
