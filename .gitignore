@@ -15,3 +15,9 @@ bin
 build
 node_modules
 npm*
+
+# Ignore configuration files
+config/*
+
+# Except empty default one
+!config/default.js
