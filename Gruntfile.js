@@ -10,6 +10,7 @@ module.exports = function(grunt) {
     
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-mkdir");
+    grunt.loadNpmTasks("grunt-shell");
     
     grunt.initConfig({
         mkdir : {
