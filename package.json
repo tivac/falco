@@ -1,5 +1,13 @@
 {
-    "name" : "chirrup",
+    "name"        : "Tristis",
+    "description" : "Node-Webkit + Twitter experiment",
+    "version"     : "0.0.0",
+    "keywords"    : [ "twitter" ],
+    "maintainers" : [ {
+        "name"  : "Pat Cavit",
+        "email" : "pcavit@gmail.com"
+    } ],
+    
     "main" : "src/index.html",
     
     "devDependencies" : {
@@ -10,6 +18,7 @@
     
     "window" : {
         "show"    : false,
-        "toolbar" : false
+        "toolbar" : false,
+        "title"   : "Tristis"
     }
 }
