@@ -29,6 +29,15 @@ module.exports = function(grunt) {
                 }
             },
             
+            debug : {
+                command : "nw.exe ../../chirrup.nw --debug",
+                options : {
+                    execOptions : {
+                        cwd : nwDir
+                    }
+                }
+            },
+            
             package : {
                 command : "copy /by " + nwDir + "nw.exe+chirrup.nw chirrup.exe"
             }
@@ -36,5 +45,6 @@ module.exports = function(grunt) {
     });
     
     grunt.registerTask("default", [ "compress", "shell:launch" ]);
+    grunt.registerTask("debug",   [ "compress", "shell:debug" ]);
     grunt.registerTask("package", [ "compress", "shell:package" ]);
 };

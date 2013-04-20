@@ -6,5 +6,10 @@
         "grunt"                  : "0.4.x",
         "grunt-contrib-compress" : "0.4.x",
         "grunt-shell"            : "0.2.x"
+    },
+    
+    "window" : {
+        "show"    : false,
+        "toolbar" : false
     }
 }

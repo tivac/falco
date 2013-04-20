@@ -5,5 +5,22 @@
 <body>
 <h1>Hello World!</h1>
 We are using node.js <script>document.write(process.version)</script>
+<script>
+var gui = require("nw.gui");
+
+gui.App.argv.some(function(arg) {
+    if(arg !== "--debug") {
+        return false;
+    }
+    
+    gui.Window.get().showDevTools();
+    
+    return true;
+});
+
+onload = function() {
+    gui.Window.get().show();
+};
+</script>
 </body>
 </html>
