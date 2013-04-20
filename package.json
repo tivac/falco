@@ -10,10 +10,16 @@
     
     "main" : "src/index.html",
     
+    "dependencies" : {
+        "ntwitter" : "0.5.x",
+        "oauth"    : "0.9.x"
+    },
+    
     "devDependencies" : {
         "grunt"                  : "0.4.x",
         "grunt-contrib-compress" : "0.4.x",
-        "grunt-shell"            : "0.2.x"
+        "grunt-mkdir"            : "0.1.x",
+        "async"                  : "0.2.x"
     },
     
     "window" : {

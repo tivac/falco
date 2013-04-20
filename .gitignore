@@ -11,7 +11,7 @@ Desktop.ini
 # Mac crap
 .DS_Store
 
-chirrup.*
-node_modules
 bin
+build
+node_modules
 npm*
