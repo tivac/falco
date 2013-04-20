@@ -1,0 +1,10 @@
+{
+    "name" : "chirrup",
+    "main" : "src/index.html",
+    
+    "devDependencies" : {
+        "grunt"                  : "0.4.x",
+        "grunt-contrib-compress" : "0.4.x",
+        "grunt-shell"            : "0.2.x"
+    }
+}
