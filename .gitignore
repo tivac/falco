@@ -1,16 +1,10 @@
-############
-## Windows
-############
-
-# Windows image file caches
+# OS Stuff
 Thumbs.db
-
-# Folder config file
 Desktop.ini
-
-# Mac crap
 .DS_Store
 
+# My Stuff
+*MarkdownPad*
 bin
 build
 node_modules
