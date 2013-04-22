@@ -2,9 +2,10 @@
 
 "use strict";
 
-var conf  = require("config").Twitter,
-    OAuth = require("oauth").OAuth,
-    gui   = require("nw.gui"),
+var conf    = require("config").Twitter,
+    OAuth   = require("oauth").OAuth,
+    gui     = require("nw.gui"),
+    Chirrup = global.Chirrup,
     oauth, win;
 
 oauth = new OAuth(
@@ -59,6 +60,8 @@ $(".oauth-pin").submit(function(e) {
             
             localStorage.oauth_access_token = oauth_access_token;
             localStorage.oauth_access_token_secret = oauth_access_token_secret;
+            
+            Chirrup.showTwitter();
         }
     );
 });

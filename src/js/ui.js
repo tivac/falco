@@ -2,8 +2,23 @@
 
 "use strict";
 
-var gui = require("nw.gui"),
-    win = gui.Window.get();
+var gui     = require("nw.gui"),
+    win     = gui.Window.get(),
+    Chirrup = global.Chirrup;
+
+Chirrup.showOauth = function() {
+    $(".twitter").hide();
+    $(".oauth-process").show();
+    
+    $.getScript("js/oauth.js");
+};
+
+Chirrup.showTwitter = function() {
+    $(".oauth-process").hide();
+    $(".twitter").show();
+    
+    $.getScript("js/twitter.js");
+};
 
 // Save size on close.
 win.on("close", function() {
@@ -12,7 +27,9 @@ win.on("close", function() {
     localStorage.width  = win.width;
     localStorage.height = win.height;
     
-    this.close(true);
+    process.nextTick(function() {
+        win.close(true);
+    });
 });
 
 // Restore on startup.
@@ -31,11 +48,12 @@ window.onload = function() {
     
     // set up initial UI state
     if(localStorage.oauth_access_token) {
-        $(".oauth-process").hide();
-        $(".twitter").show();
+        Chirrup.showTwitter();
     } else {
-        $(".twitter").hide();
+        Chirrup.showOauth();
     }
     
     win.show();
 };
+
+
