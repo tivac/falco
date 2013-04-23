@@ -12,11 +12,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-mkdir");
     grunt.loadNpmTasks("grunt-shell");
     
+    grunt.loadTasks("./build/");
+    
     grunt.initConfig({
         mkdir : {
-            build : {
+            bin : {
                 options : {
-                    create : [ "build" ]
+                    create : [ "bin" ]
                 }
             }
         },
@@ -26,7 +28,7 @@ module.exports = function(grunt) {
                 src  : [ "src/*", "package.json" ],
                 options : {
                     mode    : "zip",
-                    archive : "./build/tristis.nw"
+                    archive : "./bin/tristis.nw"
                 }
             }
         },
@@ -50,53 +52,6 @@ module.exports = function(grunt) {
                 }
             }
         }
-    });
-
-    // NodeJS powered binary concatenation, a bit longer than "copy /BY" but cross-platform :D
-    grunt.registerTask("package", "Build a packaged binary", function() {
-        var done = this.async();
-        
-        grunt.task.requires("mkdir");
-        grunt.task.requires("compress");
-        
-        grunt.log.writeln("Reading buffers");
-        
-        async.waterfall([
-            function readNodeWebkit(callback) {
-                fs.readFile(nwDir + "nw.exe", function(err, data) {
-                    if(err) {
-                        return callback(err);
-                    }
-                    
-                    callback(null, data);
-                });
-            },
-            
-            function readTristis(nw, callback) {
-                fs.readFile("./build/tristis.nw", function(err, data) {
-                    if(err) {
-                        return callback(err);
-                    }
-                    
-                    callback(null, nw, data);
-                });
-            },
-            
-            function combine(nw, tristis, callback) {
-                callback(null, Buffer.concat([ nw, tristis ]));
-            },
-            
-            function write(tristis, callback) {
-                fs.writeFile("./build/tristis.exe", tristis, function(err) {
-                    callback(err);
-                });
-            }
-        ], function(err) {
-            console.error(err);
-            
-            done();
-        });
-        
     });
     
     grunt.registerTask("default", [ "shell:launch" ]);
