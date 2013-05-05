@@ -9,7 +9,6 @@ bin
 build
 node_modules
 npm*
-yui
 
 # Ignore configuration files
 config/*

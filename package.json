@@ -13,7 +13,8 @@
     "dependencies" : {
         "config"   : "0.4.x",
         "ntwitter" : "0.5.x",
-        "oauth"    : "0.9.x"
+        "oauth"    : "0.9.x",
+        "yui"      : "3.x.x"
     },
     
     "devDependencies" : {
@@ -26,8 +27,8 @@
     },
     
     "window" : {
-        "show"    : false,
-        "toolbar" : false,
+        "show"    : true,
+        "toolbar" : true,
         "title"   : "Tristis"
     }
 }
