@@ -1,12 +1,9 @@
 /*jshint node:true */
 "use strict";
 
-var fs    = require("fs"),
-    async = require("async");
-
 module.exports = function(grunt) {
     
-    var nwDir = grunt.option("nwdir") || "./bin/node-webkit-v0.5.0-win-ia32/";
+    var nwDir = grunt.option("nwdir") || "./bin/node-webkit-v0.5.1-win-ia32/";
     
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-mkdir");
