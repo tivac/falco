@@ -1,5 +1,4 @@
-/*jshint node:true, browser:true, yui:true */
-
+/*jshint maxparams:5 */
 YUI.add("auth", function(Y) {
     "use strict";
 
@@ -71,4 +70,4 @@ YUI.add("auth", function(Y) {
     requires : [
         "node"
     ]
-})
+});

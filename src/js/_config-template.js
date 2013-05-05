@@ -1,16 +1,8 @@
-var YUI_config = {
-    combine : false,
-    base    : "js/yui/",
-    
+/* exported YUI_config */
+var tristis_config = {
     groups : {
-        "oauth" : {
-            base    : "js/oauth/",
-            modules : "configger"
-        },
-        
-        "setup" : {
-            base    : "js/setup",
-            modules : "configger"
+        $group : {
+            base : "{dir}"
         }
     }
 };

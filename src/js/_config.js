@@ -1,19 +1,35 @@
-var YUI_config = {
-        combine: false,
-        base: 'js/yui/',
+var tristis_config = {
         groups: {
-            'oauth': {
-                base: 'js/oauth/',
+            "/": {
+                base: "js/",
                 modules: {
-                    'auth': {
-                        path: 'auth.js',
-                        requires: ['node']
+                    "app-tristis": {
+                        path: "app-tristis.js",
+                        requires: [
+                            "base-build",
+                            "app",
+                            "extension-tristis-events",
+                            "extension-tristis-routes"
+                        ]
+                    },
+                    "extension-tristis-events": {
+                        path: "extension-tristis-events.js",
+                        requires: []
+                    },
+                    "extension-tristis-routes": {
+                        path: "extension-tristis-routes.js",
+                        requires: []
                     }
                 }
             },
-            'setup': {
-                base: 'js/setup',
-                modules: 'configger'
+            "/oauth/": {
+                base: "js/oauth/",
+                modules: {
+                    "auth": {
+                        path: "auth.js",
+                        requires: ["node"]
+                    }
+                }
             }
         }
     };
