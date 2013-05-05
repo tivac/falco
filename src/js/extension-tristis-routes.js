@@ -3,38 +3,52 @@ YUI.add("extension-tristis-routes", function(Y) {
     
     var Routes;
     
-    Routes = function() {};
+    Routes = function() {
+        console.log(this);
+    };
     
     Routes.ATTRS = {
-        routes : [
-            { path : "/",            callbacks : "_routeRoot" },
-            { path : "/auth",        callbacks : "_routeAuth" },
-            { path : "/search",      callbacks : "_routeSearch" },
-            { path : "/lists",       callbacks : "_routeLists" },
-            { path : "/lists/:list", callbacks : "_routeList" }
-        ]
+        routes : {
+            value : [
+                { path : "/",            callbacks : "_routeRoot" },
+                { path : "/auth",        callbacks : "_routeAuth" },
+                { path : "/search",      callbacks : "_routeSearch" },
+                { path : "/lists",       callbacks : "_routeLists" },
+                { path : "/lists/:list", callbacks : "_routeList" }
+            ]
+        }
     };
     
     Routes.prototype = {
         // Route Handles
-        _routeRoot : function() {
+        _routeRoot : function(req) {
             // TODO: Show main UI
+            
+            console.log(req.path, req);
         },
         
-        _routeAuth : function() {
+        _routeAuth : function(req) {
             // TODO: show auth UI
+            
+            console.log(req.path, req);
         },
         
-        _routeSearch : function() {
+        _routeSearch : function(req) {
             // TODO: show search tweets
+            
+            console.log(req.path, req);
         },
         
-        _routeLists : function() {
+        _routeLists : function(req) {
             // TODO: show lists
+            
+            console.log(req.path, req);
         },
         
-        _routeList : function() {
+        _routeList : function(req) {
             // TODO: show list
+            
+            console.log(req.path, req);
         }
     };
     

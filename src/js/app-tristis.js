@@ -15,7 +15,8 @@ YUI.add("app-tristis", function(Y) {
         extensions.Events
     ], {
         initializer : function() {
-            var twitter;
+            var app = this,
+                twitter;
             
             twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
@@ -30,10 +31,14 @@ YUI.add("app-tristis", function(Y) {
             
             twitter.verifyCredentials(function(err, data) {
                 if(err) {
-                    return console.error(err);
+                    return app.navigate("/auth");
                 }
                 
+                console.log(data);
+                
                 Y.one(".twitter").append("<img npm src='" + data.profile_image_url + "' />");
+                
+                app.navigate("/");
             });
         },
         
@@ -43,7 +48,7 @@ YUI.add("app-tristis", function(Y) {
     }, {
         ATTRS : {
             serverRouting: {
-                value : true
+                value : false
             }
         }
     });
@@ -51,8 +56,7 @@ YUI.add("app-tristis", function(Y) {
     app = new App({
         viewContainer : ".views"
     })
-    .render()
-    .dispatch();
+    .render();
     
     Y.namespace("Tristis").app = app;
     

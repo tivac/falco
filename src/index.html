@@ -6,7 +6,7 @@
 <body>
     <div class="nav"></div>
     <div class="views"></div>
-    
+<!--
 <div class="oauth-process">
     <p>
         <button class="oauth-start">Authenticate with Twitter</button>
@@ -19,19 +19,21 @@
         </p>
     </form>
 </div>
-
+ -->
 <div class="twitter">
     TWITTER!
 </div>
 
 <script src="js/debug.js"></script>
 <script src="js/_config.js"></script>
+<script src="../node_modules/yui/yui/yui.js"></script>
 <script>
-    var YUI = require("yui").YUI,
-        Y;
+    var Y = YUI(tristis_config);
     
-    // start everything!
-    Y = YUI(tristis_config).use("app-tristis");
+    // trick YUI into not loading all the nodejs stuff, it's wonky here
+    Y.UA.nodejs = 0;
+    
+    Y.use("app-tristis");
 </script>
 </body>
 </html>
