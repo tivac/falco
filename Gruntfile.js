@@ -51,7 +51,7 @@ module.exports = function(grunt) {
         }
     });
     
-    grunt.registerTask("default", [ "shell:launch" ]);
-    grunt.registerTask("debug",   [ "shell:debug" ]);
-    grunt.registerTask("release", [ "mkdir", "compress", "package" ]);
+    grunt.registerTask("default",     [ "shell:launch" ]);
+    grunt.registerTask("debug",       [ "shell:debug" ]);
+    grunt.registerTask("release",     [ "mkdir", "compress", "package" ]);
 };
