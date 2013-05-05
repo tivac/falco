@@ -20,6 +20,7 @@
     "devDependencies" : {
         "grunt"                  : "0.4.x",
         "grunt-contrib-compress" : "0.4.x",
+        "grunt-contrib-watch"    : "0.4.x",
         "grunt-mkdir"            : "0.1.x",
         "grunt-shell"            : "0.2.x",
         "async"                  : "0.2.x",

@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     var nwDir = grunt.option("nwdir") || "./bin/node-webkit-v0.5.1-win-ia32/";
     
     grunt.loadNpmTasks("grunt-contrib-compress");
+    grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-mkdir");
     grunt.loadNpmTasks("grunt-shell");
     
@@ -17,6 +18,13 @@ module.exports = function(grunt) {
                 options : {
                     create : [ "bin" ]
                 }
+            }
+        },
+        
+        watch : {
+            templates : {
+                files : "src/templates/raw/**",
+                tasks : [ "template" ]
             }
         },
         
@@ -53,5 +61,5 @@ module.exports = function(grunt) {
     
     grunt.registerTask("default",     [ "shell:launch" ]);
     grunt.registerTask("debug",       [ "shell:debug" ]);
-    grunt.registerTask("release",     [ "mkdir", "compress", "package" ]);
+    grunt.registerTask("release",     [ "template", "mkdir", "compress", "package" ]);
 };

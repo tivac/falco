@@ -4,6 +4,19 @@ var tristis_config = {
     groups : {
         $group : {
             base : "{dir}"
+        },
+        
+        "template": {
+            patterns : {
+                "template-" : {
+                    configFn : function(me) {
+                        "use strict";
+                        
+                        me.fullpath = "templates/compiled/" + me.name.replace(me.group + "-", "") + ".micro";
+                        me.requires = [ "template" ];
+                    }
+                }
+            }
         }
     }
 };
