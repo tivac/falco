@@ -1,23 +1,28 @@
 YUI.add("app-tristis", function(Y) {
     "use strict";
     
-    var gui         = require("nw.gui"),
-        conf        = require("config").Twitter,
-        Twitter     = require("ntwitter"),
+    var gui      = require("nw.gui"),
+        conf     = require("config").Twitter,
+        Twitter  = require("ntwitter"),
         
-        tristis     = Y.namespace("Tristis"),
-        extensions  = Y.namespace("Tristis.extensions"),
+        extensions    = Y.namespace("Extensions"),
+        tristis       = Y.namespace("Tristis"),
+        appExtensions = Y.namespace("Tristis.Extensions"),
+        views         = Y.namespace("Tristis.Views"),
+        models        = Y.namespace("Tristis.Models"),
         
         App, app;
     
     App = Y.Base.create("tristis", Y.App, [
-        extensions.Routes,
-        extensions.Events
+        extensions.ViewClasses,
+        extensions.ViewParent,
+        appExtensions.Routes,
+        appExtensions.Events
     ], {
         initializer : function() {
-            var app = this,
-                twitter;
+            var twitter;
             
+            // set up twitter object
             twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
                 consumer_secret     : conf.consumerSecret,
@@ -27,36 +32,48 @@ YUI.add("app-tristis", function(Y) {
             
             tristis.twitter = twitter;
             
-            gui.Window.get().show();
-            
-            twitter.verifyCredentials(function(err, data) {
-                if(err) {
-                    return app.navigate("/auth");
-                }
-                
-                console.log(data);
-                
-                Y.one(".twitter").append("<img npm src='" + data.profile_image_url + "' />");
-                
-                app.navigate("/");
-            });
+            this._verify();
         },
         
-        destructor : function() {
+        _verify : function() {
+            var app = this;
             
-        },
+            tristis.twitter.verifyCredentials(function(err, data) {
+                if(err) {
+                    app.navigate("/auth");
+                    
+                    app.render();
+                    gui.Window.get().show();
+                    
+                    return;
+                }
+                
+                tristis.user = new models.User(data);
+                
+                // set up children view here because they depend on model above
+                app.set("children", {
+                    nav : new views.Nav()
+                });
+                
+                app.navigate("/");
+                
+                app.render();
+                gui.Window.get().show();
+            });
+        }
     }, {
         ATTRS : {
             serverRouting: {
                 value : false
-            }
+            },
+            
+            children : null
         }
     });
     
     app = new App({
         viewContainer : ".views"
-    })
-    .render();
+    });
     
     Y.namespace("Tristis").app = app;
     
@@ -68,6 +85,14 @@ YUI.add("app-tristis", function(Y) {
         
         // Extensions
         "extension-tristis-events",
-        "extension-tristis-routes"
+        "extension-tristis-routes",
+        "extension-view-classes",
+        "extension-view-parent",
+        
+        // Models
+        "model-user",
+        
+        // Views
+        "view-nav"
     ]
 });
