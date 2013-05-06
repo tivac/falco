@@ -52,7 +52,7 @@ YUI.add("extension-tristis-routes", function(Y) {
         }
     };
     
-    Y.namespace("Tristis.extensions").Routes = Routes;
+    Y.namespace("Tristis.Extensions").Routes = Routes;
     
 }, "@VERSION@", {
     requires : [

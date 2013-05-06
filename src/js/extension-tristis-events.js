@@ -1,13 +1,14 @@
 YUI.add("extension-tristis-events", function(Y) {
     "use strict";
     
-    var Events;
+    var gui = require("nw.gui"),
+        Events;
     
     Events = function() {};
     
     Events.prototype = {
         events : {
-            ".external" : {
+            "[data-external]" : {
                 click : "_eventExternalClick"
             }
         },
@@ -16,11 +17,11 @@ YUI.add("extension-tristis-events", function(Y) {
         _eventExternalClick : function(e) {
             e.preventDefault();
             
-            console.log(e.type, e.currentTarget, e);
+            gui.Shell.openExternal(e.currentTarget.get("href"));
         }
     };
     
-    Y.namespace("Tristis.extensions").Events = Events;
+    Y.namespace("Tristis.Extensions").Events = Events;
     
 }, "@VERSION@", {
     requires : [
