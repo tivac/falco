@@ -1,0 +1,11 @@
+YUI.add("template-main", function(Y) {
+    "use strict";
+    Y.namespace("Tristis.Templates")["main"] = Y.Template.Micro.revive(function (Y, $e, data) {
+var $b='', $v=function (v){return v || v === 0 ? v : $b;}, $t='';
+return $t;
+});
+}, "@VERSION@", {
+    requires : [
+        "template"
+    ]
+});

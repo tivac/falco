@@ -13,20 +13,23 @@
     "dependencies" : {
         "config"   : "0.4.x",
         "ntwitter" : "0.5.x",
-        "oauth"    : "0.9.x"
+        "oauth"    : "0.9.x",
+        "yui"      : "3.x.x"
     },
     
     "devDependencies" : {
         "grunt"                  : "0.4.x",
         "grunt-contrib-compress" : "0.4.x",
+        "grunt-contrib-watch"    : "0.4.x",
         "grunt-mkdir"            : "0.1.x",
         "grunt-shell"            : "0.2.x",
-        "async"                  : "0.2.x"
+        "async"                  : "0.2.x",
+        "yui-configger"          : "0.1.x"
     },
     
     "window" : {
-        "show"    : false,
-        "toolbar" : false,
+        "show"    : true,
+        "toolbar" : true,
         "title"   : "Tristis"
     }
 }
