@@ -4,27 +4,21 @@
     <title>Tristis</title>
 </head>
 <body>
-    
-<div class="oauth-process">
-    <p>
-        <button class="oauth-start">Authenticate with Twitter</button>
-    </p>
+    <div class="nav" data-child="nav"></div>
+    <div class="views"></div>
 
-    <form class="oauth-pin">
-        <label>Twitter PIN: <input type="text" name="pin" />
-        <p>
-            <button type="submit">Authenticate</button>
-        </p>
-    </form>
-</div>
-
-<div class="twitter">
-    TWITTER!
-</div>
-
-<script>global.Chirrup = {};</script>
-<script src="js/jquery.js"></script>
-<script src="js/debug.js"></script>
-<script src="js/ui.js"></script>
+    <script src="js/debug.js"></script>
+    <script src="js/_config.js"></script>
+    <script src="../node_modules/yui/yui/yui.js"></script>
+    <script>
+        var Y = YUI(tristis_config);
+        
+        // trick YUI into not loading all the nodejs stuff, it's wonky here
+        Y.UA.nodejs = 0;
+        
+        //function go() {
+            Y.use("app-tristis");
+        //}
+    </script>
 </body>
 </html>

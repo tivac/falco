@@ -6,12 +6,6 @@ var gui = require("nw.gui"),
     win = gui.Window.get();
 
 // support opening devtools via command-line switch
-gui.App.argv.some(function(arg) {
-    if(arg !== "--debug") {
-        return false;
-    }
-    
+if(gui.App.argv.indexOf("--debug") > -1) {
     win.showDevTools();
-    
-    return true;
-});
+}
