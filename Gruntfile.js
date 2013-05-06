@@ -24,8 +24,14 @@ module.exports = function(grunt) {
         watch : {
             templates : {
                 files : "src/templates/raw/**",
-                tasks : [ "template" ]
-            }
+                tasks : "template"
+            },
+            
+            // Disabled until I figure out some configger issues
+            /*modules : {
+                files : [ "src/js/**", "!src/js/_config*", "!src/js/debug.js" ],
+                tasks : "yui"
+            }*/
         },
         
         compress : {
