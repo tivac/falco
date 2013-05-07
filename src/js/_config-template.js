@@ -1,9 +1,10 @@
 /* exported tristis_config */
 var tristis_config = {
-    base: "../node_modules/yui/",
+    base   : "../node_modules/yui/",
+    filter : "raw",
     groups : {
         $group : {
-            base : "{dir}"
+            base : "js{dir}"
         },
         
         "template": {

@@ -25,8 +25,8 @@ var tristis_config = {
                             "extension-tristis-routes",
                             "extension-view-classes",
                             "extension-view-parent",
-                            "view-nav",
-                            "model-user"
+                            "model-user",
+                            "view-nav"
                         ]
                     },
                     "extension-tristis-events": {
@@ -49,9 +49,8 @@ var tristis_config = {
                         ]
                     },
                     "model-user": {
-                        path : "model-user.js",
-                        requires : [
-                            // YUI
+                        path: "model-user.js",
+                        requires: [
                             "base-build",
                             "model"
                         ]
