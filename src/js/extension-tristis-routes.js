@@ -1,7 +1,9 @@
 YUI.add("extension-tristis-routes", function(Y) {
     "use strict";
     
-    var Routes;
+    var views  = Y.namespace("Tristis.Views"),
+        models = Y.namespace("Tristis.Models"),
+        Routes;
     
     Routes = function() {
         console.log(this);
@@ -27,10 +29,23 @@ YUI.add("extension-tristis-routes", function(Y) {
             console.log(req.path, req);
         },
         
-        _routeAuth : function(req) {
-            // TODO: show auth UI
+        _routeAuth : function() {
+            var app = this;
             
-            console.log(req.path, req);
+            Y.lazyLoad("view-link", "model-oauth", function(errors, attached) {
+                if("model-oauth" in attached) {
+                    models.oauth = new models.OAuth();
+                }
+                
+                if("view-link" in attached) {
+                    app.views.link = {
+                        type     : views.Link,
+                        preserve : false
+                    };
+                }
+                
+                app.showView("link");
+            });
         },
         
         _routeSearch : function(req) {
@@ -56,6 +71,6 @@ YUI.add("extension-tristis-routes", function(Y) {
     
 }, "@VERSION@", {
     requires : [
-        
+        "gallery-lazy-load"
     ]
 });

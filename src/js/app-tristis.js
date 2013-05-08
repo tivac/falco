@@ -20,19 +20,24 @@ YUI.add("app-tristis", function(Y) {
         appExtensions.Events
     ], {
         initializer : function() {
-            var twitter;
+            if(!localStorage.access_token || !localStorage.access_secret) {
+                return this._verifyFailed();
+            }
             
-            // set up twitter object
-            twitter = new Twitter({
+            this._twitter();
+            this._verify();
+        },
+        
+        // set up twitter object
+        _twitter : function() {
+            var twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
                 consumer_secret     : conf.consumerSecret,
-                access_token_key    : localStorage.oauth_access_token,
-                access_token_secret : localStorage.oauth_access_token_secret
+                access_token_key    : localStorage.access_token,
+                access_token_secret : localStorage.access_secret
             });
             
             tristis.twitter = twitter;
-            
-            this._verify();
         },
         
         _verify : function() {
@@ -40,12 +45,7 @@ YUI.add("app-tristis", function(Y) {
             
             tristis.twitter.verifyCredentials(function(err, data) {
                 if(err) {
-                    app.navigate("/auth");
-                    
-                    app.render();
-                    gui.Window.get().show();
-                    
-                    return;
+                    return app._verifyFailed();
                 }
                 
                 tristis.user = new models.User(data);
@@ -60,6 +60,13 @@ YUI.add("app-tristis", function(Y) {
                 app.render();
                 gui.Window.get().show();
             });
+        },
+        
+        _verifyFailed : function() {
+            this.navigate("/auth");
+            this.render();
+            
+            gui.Window.get().show();
         }
     }, {
         ATTRS : {

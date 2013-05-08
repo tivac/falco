@@ -35,7 +35,7 @@ var tristis_config = {
                     },
                     "extension-tristis-routes": {
                         path: "extension-tristis-routes.js",
-                        requires: []
+                        requires: ["gallery-lazy-load"]
                     },
                     "extension-view-classes": {
                         path: "extension-view-classes.js",
@@ -65,12 +65,33 @@ var tristis_config = {
                     }
                 }
             },
+            "/gallery/": {
+                base: "js/gallery/",
+                modules: {
+                    "gallery-lazy-load": {
+                        path: "gallery-lazy-load.js",
+                        requires: ["oop"]
+                    }
+                }
+            },
             "/oauth/": {
                 base: "js/oauth/",
                 modules: {
-                    "auth": {
-                        path: "auth.js",
-                        requires: ["node"]
+                    "model-oauth": {
+                        path: "model-oauth.js",
+                        requires: [
+                            "base-build",
+                            "model"
+                        ]
+                    },
+                    "view-link": {
+                        path: "view-link.js",
+                        requires: [
+                            "base-build",
+                            "view",
+                            "model-oauth",
+                            "template-oauth-link"
+                        ]
                     }
                 }
             }

@@ -1,0 +1,8 @@
+<button class="start">Authenticate with Twitter</button>
+ 
+<form class="pin">
+    <label>Twitter PIN: <input type="text" name="pin" />
+    <p>
+        <button type="submit">Authenticate</button>
+    </p>
+</form>
