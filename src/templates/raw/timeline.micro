@@ -1,0 +1,5 @@
+<ol>
+    <% Y.Array.each(this.tweets, function(tweet) { %>
+    <li><%== _t.tweet.apply(tweet) %></li>
+    <% }); %>
+<ol>

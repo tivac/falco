@@ -1,0 +1,22 @@
+<div class="tweet" data-id="<%= this.id_str %>">
+    <img class="icon" src="<%= this.user.profile_image_url %>" >
+    
+    <div class="bd">
+        <p class="name">
+            <%= this.user.name %>
+            <span class="screen-name">@<%= this.user.screen_name %></span>
+        </p>
+        <p class="text">
+            <%= this.text %>
+        </p>
+        <div class="meta">
+            <p class="">
+        </div>
+    </div>
+    
+    <div class="time">
+        <p>
+            <%= this.created_at %>
+        </p>
+    </div>
+</div>

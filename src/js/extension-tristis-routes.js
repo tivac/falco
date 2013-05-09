@@ -5,10 +5,7 @@ YUI.add("extension-tristis-routes", function(Y) {
         models = Y.namespace("Tristis.Models"),
         Routes;
     
-    Routes = function() {
-        console.log(this);
-    };
-    
+    Routes = function() {};
     Routes.ATTRS = {
         routes : {
             value : [
@@ -23,10 +20,23 @@ YUI.add("extension-tristis-routes", function(Y) {
     
     Routes.prototype = {
         // Route Handles
-        _routeRoot : function(req) {
-            // TODO: Show main UI
+        _routeRoot : function() {
+            var app = this;
             
-            console.log(req.path, req);
+            Y.lazyLoad("view-timeline", "model-list-timeline", function(errors, attached) {
+                if("model-list-timeline" in attached) {
+                    models.timeline = new models.Timeline();
+                }
+                
+                if("view-timeline" in attached) {
+                    app.views.timeline = {
+                        type     : views.Timeline,
+                        preserve : true
+                    };
+                }
+                
+                app.showView("timeline");
+            });
         },
         
         _routeAuth : function() {
