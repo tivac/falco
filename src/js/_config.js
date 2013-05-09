@@ -48,6 +48,13 @@ var tristis_config = {
                             "event-custom"
                         ]
                     },
+                    "model-list-timeline": {
+                        path: "model-timeline.js",
+                        requires: [
+                            "base-build",
+                            "lazy-model-list"
+                        ]
+                    },
                     "model-user": {
                         path: "model-user.js",
                         requires: [

@@ -7,7 +7,7 @@ YUI.add("model-list-timeline", function(Y) {
         
     Timeline = Y.Base.create("timeline", [], {
         
-        model : models.Tweet,
+        //model : models.Tweet,
         
         initializer : function() {
             this._streamConnect();
@@ -50,6 +50,6 @@ YUI.add("model-list-timeline", function(Y) {
         "lazy-model-list",
         
         // Models
-        "model-tweet"
+        //"model-tweet"
     ]
 });
