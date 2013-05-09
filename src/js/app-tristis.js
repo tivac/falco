@@ -30,25 +30,23 @@ YUI.add("app-tristis", function(Y) {
         
         // set up twitter object
         _twitter : function() {
-            var twitter = new Twitter({
+            tristis.twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
                 consumer_secret     : conf.consumerSecret,
                 access_token_key    : localStorage.access_token,
                 access_token_secret : localStorage.access_secret
             });
-            
-            tristis.twitter = twitter;
         },
         
         _verify : function() {
             var app = this;
             
-            tristis.twitter.verifyCredentials(function(err, data) {
+            tristis.twitter.get("account/verify_credentials", function(err, resp) {
                 if(err) {
                     return app._verifyFailed();
                 }
                 
-                tristis.user = new models.User(data);
+                tristis.user = new models.User(resp);
                 
                 // set up children view here because they depend on model above
                 app.set("children", {
