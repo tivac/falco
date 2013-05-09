@@ -67,7 +67,17 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "view",
-                            "template-nav"
+                            "template-nav",
+                            "template-nav-lists"
+                        ]
+                    },
+                    "view-timeline": {
+                        path: "view-timeline.js",
+                        requires: [
+                            "base-build",
+                            "view",
+                            "template-timeline",
+                            "template-tweet"
                         ]
                     }
                 }

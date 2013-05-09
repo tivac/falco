@@ -1,12 +1,13 @@
 YUI.add("view-nav", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
+    var tristis   = Y.namespace("Tristis"),
+        templates = Y.namespace("Tristis.Templates"),
         Nav;
     
     Nav = Y.Base.create("nav", Y.View, [], {
         
-        template : Y.namespace("Tristis.Templates").nav,
+        template : templates.nav,
         
         initializer : function() {
             this._handles = [
@@ -22,10 +23,14 @@ YUI.add("view-nav", function(Y) {
         
         render : function() {
             this.get("container").setHTML(
-                this.template(
-                    tristis.user.toJSON()
-                )
+                this.template({
+                    user : tristis.user.toJSON()
+                })
             );
+        },
+        
+        _renderLists : function(e) {
+            
         }
     });
     
@@ -38,6 +43,7 @@ YUI.add("view-nav", function(Y) {
         "view",
         
         // Templates
-        "template-nav"
+        "template-nav",
+        "template-nav-lists"
     ]
 });
