@@ -1,5 +1,3 @@
-/*jshint node:true, browser:true, jquery:true */
-
 "use strict";
 
 var gui = require("nw.gui"),

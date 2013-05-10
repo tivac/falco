@@ -8,7 +8,7 @@
     <div class="nav" data-child="nav"></div>
     <div class="views"></div>
 
-    <script src="js/debug.js"></script>
+    <script src="js/_cli.js"></script>
     <script src="js/_config.js"></script>
     <script src="../node_modules/yui/yui/yui.js"></script>
     <script>
@@ -17,9 +17,7 @@
         // trick YUI into not loading all the nodejs stuff, it's wonky here
         Y.UA.nodejs = 0;
         
-        //function go() {
-            Y.use("app-tristis");
-        //}
+        Y.use("app-tristis");
     </script>
 </body>
 </html>
