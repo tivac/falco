@@ -20,6 +20,8 @@ YUI.add("model-list-timeline", function(Y) {
             
             // Only caring about tweets atm
             stream.on("tweet", function(data) {
+                debugger;
+                
                 self.add(data);
             });
             

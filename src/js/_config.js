@@ -49,11 +49,19 @@ var tristis_config = {
                             "event-custom"
                         ]
                     },
+                    "model-list-list-tweets": {
+                        path: "model-list-list-tweets.js",
+                        requires: [
+                            "base-build",
+                            "lazy-model-list"
+                        ]
+                    },
                     "model-list-lists": {
                         path: "model-list-lists.js",
                         requires: [
                             "base-build",
-                            "lazy-model-list"
+                            "model-list",
+                            "model-twitter-list"
                         ]
                     },
                     "model-list-timeline": {
@@ -61,6 +69,14 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "lazy-model-list"
+                        ]
+                    },
+                    "model-twitter-list": {
+                        path: "model-twitter-list.js",
+                        requires: [
+                            "base-build",
+                            "model",
+                            "model-list-list-tweets"
                         ]
                     },
                     "model-user": {

@@ -73,6 +73,13 @@ YUI.add("extension-tristis-routes", function(Y) {
         
         _routeList : function(req) {
             console.log(req.path, req);
+            
+            // TODO: write this
+            Y.LazyLoad("model-twitter-list", "view-list", function(errors, attached) {
+                if("model-twitter-list" in attached) {
+                    //models.
+                }
+            });
         }
     };
     
@@ -80,6 +87,7 @@ YUI.add("extension-tristis-routes", function(Y) {
     
 }, "@VERSION@", {
     requires : [
+        // Gallery
         "gallery-lazy-load"
     ]
 });
