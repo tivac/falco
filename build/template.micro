@@ -1,0 +1,8 @@
+YUI.add("<%= this.module %>", function(Y) {
+    "use strict";
+    Y.namespace("Tristis.Templates")["<%= this.template %>"] = Y.Template.Micro.revive(<%== this.fn %>);
+}, "@VERSION@", {
+    requires : [
+        "template"
+    ]
+});

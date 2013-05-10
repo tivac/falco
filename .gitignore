@@ -6,7 +6,6 @@ Desktop.ini
 # My Stuff
 *MarkdownPad*
 bin
-build
 node_modules
 npm*
 src/yui
