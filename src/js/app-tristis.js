@@ -107,11 +107,15 @@ YUI.add("app-tristis", function(Y) {
         }
     });
     
-    //Y.start = function() {
+    if(!conf.consumerKey || !conf.consumerSecret) {
+        console.error("You need to specify an API key!");
+        
+        return;
+    }
+    
     tristis.app = new App({
         viewContainer : ".views"
     });
-    //};
     
 }, "@VERSION@", {
     requires : [
