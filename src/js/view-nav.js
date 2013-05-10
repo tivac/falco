@@ -25,7 +25,7 @@ YUI.add("view-nav", function(Y) {
         destructor : function() {
             new Y.EventTarget(this._handles).detach();
             
-            this._handles = this._linkEvent = null;
+            this._handles = this._urlEvent = null;
         },
         
         render : function() {
@@ -50,14 +50,13 @@ YUI.add("view-nav", function(Y) {
         _navClick : function(e) {
             e.preventDefault();
             
-            /*if(!this._linkEvent) {
-                this._linkEvent = this.publish("link", {
+            if(!this._urlEvent) {
+                this._urlEvent = this.publish("url", {
                     preventable : false
                 });
-            }*/
+            }
             
-            
-            this.fire("link", {
+            this.fire("url", {
                 // Using "getAttribute" here instead of "get" so we get the
                 // actual value instead of an absolute URL
                 url : e.target.getAttribute("href")

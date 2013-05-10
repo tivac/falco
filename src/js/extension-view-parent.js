@@ -65,12 +65,12 @@ YUI.add("extension-view-parent", function(Y) {
             var self = this;
             
             Y.Object.each(e.newVal, function(child) {
-                var stamp = Y.stamp(child, true);
-                
                 // already stamped, bail
-                if(stamp) {
+                if("_viewparentchild" in child) {
                     return;
                 }
+                
+                child._viewparentchild = true;
                 
                 child.set("parent", self);
                 child.addTarget(self);

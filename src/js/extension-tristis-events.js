@@ -14,8 +14,10 @@ YUI.add("extension-tristis-events", function(Y) {
         
         initializer : function() {
             this._handles = [
-                this.on("*:linked", this._linkedEvent, this),
-                this.on("*:link"  , this._linkEvent,    this)
+                this.on({
+                    "*:linked" : this._linkedEvent,
+                    "*:url"    : this._urlEvent
+                }, null, this)
             ];
         },
         
@@ -33,9 +35,7 @@ YUI.add("extension-tristis-events", function(Y) {
             this._setup();
         },
         
-        _linkEvent : function(e) {
-            console.log(e.type, e);
-            
+        _urlEvent : function(e) {
             this.navigate(e.url);
         }
     };

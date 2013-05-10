@@ -107,9 +107,11 @@ YUI.add("app-tristis", function(Y) {
         }
     });
     
+    //Y.start = function() {
     tristis.app = new App({
         viewContainer : ".views"
     });
+    //};
     
 }, "@VERSION@", {
     requires : [
