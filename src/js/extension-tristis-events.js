@@ -5,7 +5,6 @@ YUI.add("extension-tristis-events", function(Y) {
         Events;
     
     Events = function() {};
-    
     Events.prototype = {
         events : {
             "[data-external]" : {
@@ -15,7 +14,8 @@ YUI.add("extension-tristis-events", function(Y) {
         
         initializer : function() {
             this._handles = [
-                this.on("*:linked", this._linked, this)
+                this.on("*:linked", this._linkedEvent, this),
+                this.on("*:link"  , this._linkEvent,    this)
             ];
         },
         
@@ -28,9 +28,15 @@ YUI.add("extension-tristis-events", function(Y) {
         
         // YUI events
         
-        _linked : function() {
-            this._twitter();
-            this._verify();
+        // TODO: more?
+        _linkedEvent : function() {
+            this._setup();
+        },
+        
+        _linkEvent : function(e) {
+            console.log(e.type, e);
+            
+            this.navigate(e.url);
         }
     };
     

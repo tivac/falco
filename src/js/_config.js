@@ -21,11 +21,12 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "app",
-                            "extension-tristis-events",
-                            "extension-tristis-routes",
                             "extension-view-classes",
                             "extension-view-parent",
+                            "extension-tristis-events",
+                            "extension-tristis-routes",
                             "model-user",
+                            "model-list-lists",
                             "view-nav"
                         ]
                     },
@@ -48,8 +49,15 @@ var tristis_config = {
                             "event-custom"
                         ]
                     },
+                    "model-list-lists": {
+                        path: "model-list-lists.js",
+                        requires: [
+                            "base-build",
+                            "lazy-model-list"
+                        ]
+                    },
                     "model-list-timeline": {
-                        path: "model-timeline.js",
+                        path: "model-list-timeline.js",
                         requires: [
                             "base-build",
                             "lazy-model-list"

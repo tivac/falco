@@ -35,7 +35,8 @@ YUI.add("extension-tristis-routes", function(Y) {
                     };
                 }
                 
-                app.showView("timeline");
+                // start streaming after view's been shown
+                app.showView("timeline", {}, models.timeline.start);
             });
         },
         
@@ -71,8 +72,6 @@ YUI.add("extension-tristis-routes", function(Y) {
         },
         
         _routeList : function(req) {
-            // TODO: show list
-            
             console.log(req.path, req);
         }
     };

@@ -3,15 +3,19 @@ YUI.add("app-tristis", function(Y) {
     
     var gui      = require("nw.gui"),
         conf     = require("config").Twitter,
-        Twitter  = require("ntwitter"),
+        //Twitter  = require("ntwitter"),
+        Twitter   = require("twit"),
         
         extensions    = Y.namespace("Extensions"),
+        
         tristis       = Y.namespace("Tristis"),
         appExtensions = Y.namespace("Tristis.Extensions"),
         views         = Y.namespace("Tristis.Views"),
         models        = Y.namespace("Tristis.Models"),
         
-        App, app;
+        win = gui.Window.get(),
+        
+        App;
     
     App = Y.Base.create("tristis", Y.App, [
         extensions.ViewClasses,
@@ -21,50 +25,77 @@ YUI.add("app-tristis", function(Y) {
     ], {
         initializer : function() {
             if(!localStorage.access_token || !localStorage.access_secret) {
-                return this._verifyFailed();
+                return this._auth();
             }
             
-            this._twitter();
-            this._verify();
-        },
-        
-        // set up twitter object
-        _twitter : function() {
             tristis.twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
                 consumer_secret     : conf.consumerSecret,
-                access_token_key    : localStorage.access_token,
+                access_token        : localStorage.access_token,
                 access_token_secret : localStorage.access_secret
+            });
+            
+            models.user  = new models.User();
+            models.lists = new models.Lists();
+            
+            this._setup();
+            
+            // Save window size when closing
+            win.on("close", function() {
+                localStorage.x      = win.x;
+                localStorage.y      = win.y;
+                localStorage.width  = win.width;
+                localStorage.height = win.height;
+                
+                process.nextTick(function() {
+                    win.close(true);
+                });
             });
         },
         
-        _verify : function() {
-            var app = this;
+        _setup : function() {
+            var self = this;
             
-            tristis.twitter.get("account/verify_credentials", function(err, resp) {
+            models.user.load(function(err) {
                 if(err) {
-                    return app._verifyFailed();
+                    return self._auth();
                 }
                 
-                tristis.user = new models.User(resp);
+                models.lists.load();
                 
-                // set up children view here because they depend on model above
-                app.set("children", {
+                // set up children view here because they depend on model being loaded
+                self.set("children", {
                     nav : new views.Nav()
                 });
                 
-                app.navigate("/");
+                self.navigate("/");
                 
-                app.render();
-                gui.Window.get().show();
+                self._render();
             });
         },
         
-        _verifyFailed : function() {
-            this.navigate("/auth");
+        _render : function() {
+            // Restore size & position
+            if(localStorage.width && localStorage.height) {
+                win.resizeTo(
+                    parseInt(localStorage.width, 10),
+                    parseInt(localStorage.height, 10)
+                );
+                
+                win.moveTo(
+                    parseInt(localStorage.x, 10),
+                    parseInt(localStorage.y, 10)
+                );
+            }
+
             this.render();
+            win.show();
+        },
+        
+        _auth : function() {
+            this.navigate("/auth");
             
-            gui.Window.get().show();
+            this._render();
         }
     }, {
         ATTRS : {
@@ -76,11 +107,9 @@ YUI.add("app-tristis", function(Y) {
         }
     });
     
-    app = new App({
+    tristis.app = new App({
         viewContainer : ".views"
     });
-    
-    Y.namespace("Tristis").app = app;
     
 }, "@VERSION@", {
     requires : [
@@ -88,14 +117,17 @@ YUI.add("app-tristis", function(Y) {
         "base-build",
         "app",
         
-        // Extensions
-        "extension-tristis-events",
-        "extension-tristis-routes",
+        // Generic Extensions
         "extension-view-classes",
         "extension-view-parent",
         
+        // Tristis Extensions
+        "extension-tristis-events",
+        "extension-tristis-routes",
+        
         // Models
         "model-user",
+        "model-list-lists",
         
         // Views
         "view-nav"
