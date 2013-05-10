@@ -1,6 +1,6 @@
 <% Y.Array.each(this.lists, function(list) { %>
 <li class="list <%= list.slug %>">
-    <a href="/list/<%= list.slug %>">
+    <a href="/lists/<%= list.id_str %>">
         <%= list.name %>
     </a>
 </li>
