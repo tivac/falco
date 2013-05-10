@@ -5,27 +5,8 @@ YUI.add("model-user", function(Y) {
         User;
     
     User = Y.Base.create("user", Y.Model, [], {
-        initializer : function() {
-            // TODO: User Model should attempt to load user info via sync
-            // TODO: User Model should create a "user lists" LML & also start that loading
-            
-            tristis.twitter.get("lists/list", function(error, response) {
-                console.log("list subscriptions");
-                console.log(error);
-                console.log(response);
-            });
-        },
-        
-        sync : function() {
-            
-        },
-        
-        parse : function() {
-            
-        },
-        
-        lists : function() {
-            
+        sync : function(action, options, done) {
+            tristis.twitter.get("account/verify_credentials", done);
         }
     }, {
         ATTRS : {
@@ -37,9 +18,7 @@ YUI.add("model-user", function(Y) {
             
             // images
             profile_image_url       : null,
-            profile_image_url_https : null,
-            
-            // lists
+            profile_image_url_https : null
         }
     });
     
