@@ -38,6 +38,11 @@ YUI.add("app-tristis", function(Y) {
             models.user  = new models.User();
             models.lists = new models.Lists();
             
+            // add child view now because they depend on model references existing
+            this.set("children", {
+                nav : new views.Nav()
+            });
+            
             this._setup();
             
             // Save window size when closing
@@ -62,11 +67,6 @@ YUI.add("app-tristis", function(Y) {
                 }
                 
                 models.lists.load();
-                
-                // set up children view here because they depend on model being loaded
-                self.set("children", {
-                    nav : new views.Nav()
-                });
                 
                 self.navigate("/");
                 

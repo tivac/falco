@@ -17,7 +17,7 @@ YUI.add("view-nav", function(Y) {
         
         initializer : function() {
             this._handles = [
-                models.user.after("change", this.render, this),
+                models.user.after([  "change", "reset" ], this.render,       this),
                 models.lists.after([ "change", "reset" ], this._renderLists, this)
             ];
         },
@@ -50,11 +50,11 @@ YUI.add("view-nav", function(Y) {
         _navClick : function(e) {
             e.preventDefault();
             
-            if(!this._linkEvent) {
+            /*if(!this._linkEvent) {
                 this._linkEvent = this.publish("link", {
                     preventable : false
                 });
-            }
+            }*/
             
             
             this.fire("link", {
