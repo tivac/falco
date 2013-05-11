@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         module = Micro.compile(grunt.file.read("build/template.ejs"));
     
     grunt.registerTask("template", "Precompile templates", function() {
-        var files = grunt.file.expand({ filter : "isFile" }, [ "src/templates/raw/*.micro", "src/templates/raw/**/*.micro" ]);
+        var files = grunt.file.expand({ filter : "isFile" }, [ "src/templates/*.ejs", "src/templates/**/*.ejs" ]);
         
         files.forEach(function(file) {
             var name = path.basename(file, path.extname(file)),
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                 fn       : fn
             });
             
-            grunt.file.write(file.replace("raw", "compiled"), fn);
+            grunt.file.write(file.replace("src/templates/", "src/templates/compiled/").replace(".ejs", ".js"), fn);
         });
     });
 };
