@@ -19,6 +19,20 @@ YUI.add("model-twitter-list", function(Y) {
         
         sync : function(action, options, done) {
             tristis.twitter.get("lists/show", { list_id : this.get("id") }, done);
+        },
+        
+        // Simple pass-through to tweets list
+        more : function(options, done) {
+            this.get("tweets").more(options, done);
+        },
+        
+        // Override .toJSON() to make sure tweets are included
+        toJSON : function() {
+            var json = List.superclass.toJSON.apply(this);
+            
+            json.tweets = json.tweets.toJSON();
+            
+            return json;
         }
     });
     

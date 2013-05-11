@@ -19,10 +19,6 @@ YUI.add("view-link", function(Y) {
             }
         },
         
-        initializer : function() {
-            
-        },
-        
         render : function() {
             this.get("container").setHTML(this.template());
             
@@ -39,10 +35,8 @@ YUI.add("view-link", function(Y) {
                     return console.error(error);
                 }
                 
-                self.win = require("nw.gui").Window.get(
-                    window.open(
-                        "https://twitter.com/oauth/authenticate?oauth_token=" + token
-                    )
+                require("nw.gui").Shell.openExternal(
+                    "https://twitter.com/oauth/authenticate?oauth_token=" + token
                 );
             });
         },
@@ -59,9 +53,6 @@ YUI.add("view-link", function(Y) {
                 if(error) {
                     return console.error(error);
                 }
-                
-                // close twitter window
-                self.win.close();
                 
                 self.fire("linked");
             });

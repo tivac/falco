@@ -6,7 +6,9 @@ YUI.add("model-list-list-tweets", function(Y) {
         
         ListTweets;
     
-    ListTweets = Y.Base.create("listTweets", Y.LazyModelList, [], {
+    ListTweets = Y.Base.create("listTweets", Y.LazyModelList, [
+        Y.namespace("Extensions").ModelListMore
+    ], {
         sync : function(action, options, done) {
             tristis.twitter.get("lists/statuses", {
                 list_id     : this.get("list_id"),
@@ -26,6 +28,9 @@ YUI.add("model-list-list-tweets", function(Y) {
     requires : [
         // YUI
         "base-build",
-        "lazy-model-list"
+        "lazy-model-list",
+        
+        // Extensions
+        "extension-model-list-more"
     ]
 });

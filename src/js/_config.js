@@ -38,22 +38,12 @@ var tristis_config = {
                         path: "extension-tristis-routes.js",
                         requires: ["gallery-lazy-load"]
                     },
-                    "extension-view-classes": {
-                        path: "extension-view-classes.js",
-                        requires: ["event-custom"]
-                    },
-                    "extension-view-parent": {
-                        path: "extension-view-parent.js",
-                        requires: [
-                            "view",
-                            "event-custom"
-                        ]
-                    },
                     "model-list-list-tweets": {
                         path: "model-list-list-tweets.js",
                         requires: [
                             "base-build",
-                            "lazy-model-list"
+                            "lazy-model-list",
+                            "extension-model-list-more"
                         ]
                     },
                     "model-list-lists": {
@@ -86,6 +76,15 @@ var tristis_config = {
                             "model"
                         ]
                     },
+                    "view-list": {
+                        path: "view-list.js",
+                        requires: [
+                            "base-build",
+                            "view",
+                            "template-timeline",
+                            "template-tweet"
+                        ]
+                    },
                     "view-nav": {
                         path: "view-nav.js",
                         requires: [
@@ -102,6 +101,23 @@ var tristis_config = {
                             "view",
                             "template-timeline",
                             "template-tweet"
+                        ]
+                    }
+                }
+            },
+            "/extensions/": {
+                base: "js/extensions/",
+                modules: {
+                    "extension-model-list-more": { path: "extension-model-list-more.js" },
+                    "extension-view-classes": {
+                        path: "extension-view-classes.js",
+                        requires: ["event-custom"]
+                    },
+                    "extension-view-parent": {
+                        path: "extension-view-parent.js",
+                        requires: [
+                            "view",
+                            "event-custom"
                         ]
                     }
                 }

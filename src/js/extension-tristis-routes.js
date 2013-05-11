@@ -24,6 +24,11 @@ YUI.add("extension-tristis-routes", function(Y) {
             var app = this;
             
             Y.lazyLoad("view-timeline", "model-list-timeline", function(errors, attached) {
+                // TODO: handle
+                if(errors) {
+                    return console.log(errors);
+                }
+                
                 if("model-list-timeline" in attached) {
                     models.timeline = new models.Timeline();
                 }
@@ -44,6 +49,11 @@ YUI.add("extension-tristis-routes", function(Y) {
             var app = this;
             
             Y.lazyLoad("view-link", "model-oauth", function(errors, attached) {
+                // TODO: handle
+                if(errors) {
+                    return console.log(errors);
+                }
+                
                 if("model-oauth" in attached) {
                     models.oauth = new models.OAuth();
                 }
@@ -72,13 +82,30 @@ YUI.add("extension-tristis-routes", function(Y) {
         },
         
         _routeList : function(req) {
-            console.log(req.path, req);
+            var app = this;
             
-            // TODO: write this
-            Y.LazyLoad("model-twitter-list", "view-list", function(errors, attached) {
-                if("model-twitter-list" in attached) {
-                    //models.
+            Y.lazyLoad("view-list", function(errors) {
+                var list;
+                
+                // TODO: handle
+                if(errors) {
+                    return console.log(errors);
                 }
+                
+                if(!(req.path in app.views)) {
+                    app.views[req.path] = {
+                        type     : views.List,
+                        preserve : true
+                    };
+                }
+                
+                list = models.lists.getById(req.params.list);
+                
+                app.showView(req.path, {
+                    model : list
+                });
+                
+                list.more();
             });
         }
     };

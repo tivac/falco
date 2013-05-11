@@ -1,7 +1,13 @@
 YUI.add("template-timeline", function(Y) {
     "use strict";
     Y.namespace("Tristis.Templates")["timeline"] = Y.Template.Micro.revive(function (Y, $e, data) {
-var $b='', $v=function (v){return v || v === 0 ? v : $b;}, $t='<ol>\r\n    ';
+var $b='', $v=function (v){return v || v === 0 ? v : $b;}, $t='';
+ if(this.title) { 
+$t+='\r\n<h2>'+
+$e($v( this.title ))+
+'</h2>\r\n';
+ } 
+$t+='\r\n<ol>\r\n    ';
  Y.Array.each(this.tweets, function(tweet) { 
 $t+='\r\n    <li>'+
 $v( _t.tweet.apply(tweet) )+

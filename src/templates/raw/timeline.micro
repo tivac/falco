@@ -1,3 +1,6 @@
+<% if(this.name) { %>
+<h2><%= this.name %> <small><%= this.full_name %></small></h2>
+<% } %>
 <ol>
     <% Y.Array.each(this.tweets, function(tweet) { %>
     <li><%== _t.tweet.apply(tweet) %></li>
