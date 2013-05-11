@@ -7,7 +7,7 @@ var tristis_config = {
                     "template-": {
                         configFn: function (me) {
                             "use strict";
-                            me.fullpath = "templates/compiled/" + me.name.replace(me.group + "-", "") + ".micro";
+                            me.fullpath = "templates/compiled/" + me.name.replace(me.group + "-", "") + ".js";
                             me.requires = ["template"];
                         }
                     }
