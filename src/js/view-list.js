@@ -38,15 +38,17 @@ YUI.add("view-list", function(Y) {
         },
         
         _renderTweets : function(e) {
-            console.log(e.type, e);
+            var models;
             
             // Render first if necessary
             if(!this._rendered) {
                 this.render();
             }
             
+            models = e.response || e.models;
+            
             this.get("container").one("ol").prepend(
-                e.response.reduce(function(prev, curr) {
+                models.reduce(function(prev, curr) {
                     return prev + templates.tweet(curr);
                 }, "")
             );
