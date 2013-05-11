@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     
     var path   = require("path"),
         Micro  = require("yui/template-micro").Template.Micro,
-        module = Micro.compile(grunt.file.read("build/template.micro"));
+        module = Micro.compile(grunt.file.read("build/template.ejs"));
     
     grunt.registerTask("template", "Precompile templates", function() {
         var files = grunt.file.expand({ filter : "isFile" }, [ "src/templates/raw/*.micro", "src/templates/raw/**/*.micro" ]);
