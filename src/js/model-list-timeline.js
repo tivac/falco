@@ -12,7 +12,14 @@ YUI.add("model-list-timeline", function(Y) {
             this.stream = null;
         },
         
-        start : function() {
+        sync : function(action, options, done) {
+            tristis.twitter.get("statuses/home_timeline", {
+                count : 50,
+                contributor_details : true
+            }, done);
+        },
+        
+        stream : function() {
             var self = this,
                 stream;
             
@@ -20,8 +27,6 @@ YUI.add("model-list-timeline", function(Y) {
             
             // Only caring about tweets atm
             stream.on("tweet", function(data) {
-                debugger;
-                
                 self.add(data);
             });
             

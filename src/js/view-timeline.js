@@ -10,7 +10,7 @@ YUI.add("view-timeline", function(Y) {
         
         initializer : function() {
             this._handles = [
-                models.timeline.after("add", this._renderUpdate, this)
+                models.timeline.after([ "reset", "add" ], this._renderUpdate, this)
             ];
         },
         
@@ -37,12 +37,18 @@ YUI.add("view-timeline", function(Y) {
         },
         
         _renderUpdate : function(e) {
+            var models;
+            
             if(!this.rendered) {
                 return this.render();
             }
             
+            models = e.models ? e.models : [ e.model ];
+            
             this.get("container").one("ol").prepend(
-                templates.tweet(e.model)
+                models.reduce(function(prev, curr) {
+                    return prev + templates.tweet(curr);
+                }, "")
             );
         }
     });

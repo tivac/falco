@@ -31,6 +31,15 @@ YUI.add("extension-tristis-routes", function(Y) {
                 
                 if("model-list-timeline" in attached) {
                     models.timeline = new models.Timeline();
+                    
+                    // load a page of results, then begin streaming new ones
+                    models.timeline.load(function(err) {
+                        if(err) {
+                            return console.log(err);
+                        }
+                        
+                        models.timeline.stream();
+                    });
                 }
                 
                 if("view-timeline" in attached) {
@@ -40,8 +49,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                     };
                 }
                 
-                // start streaming after view's been shown
-                app.showView("timeline", {}, models.timeline.start);
+                app.showView("timeline");
             });
         },
         
