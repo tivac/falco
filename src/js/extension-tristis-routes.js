@@ -92,6 +92,9 @@ YUI.add("extension-tristis-routes", function(Y) {
         _routeList : function(req) {
             var app = this;
             
+            // start attempting to stream updates to all the lists
+            models.lists.stream();
+            
             Y.lazyLoad("view-list", function(errors) {
                 var list;
                 
@@ -109,11 +112,15 @@ YUI.add("extension-tristis-routes", function(Y) {
                 
                 list = models.lists.getById(req.params.list);
                 
+                list.more(function(err) {
+                    if(err) {
+                        console.error(err);
+                    }
+                });
+                
                 app.showView(req.path, {
                     model : list
                 });
-                
-                list.more();
             });
         }
     };
