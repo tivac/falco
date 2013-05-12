@@ -1,23 +1,24 @@
-YUI.add("model-list-lists", function(Y) {
+YUI.add("model-list-timelines", function(Y) {
     "use strict";
     
     var tristis = Y.namespace("Tristis"),
         models  = Y.namespace("Tristis.Models"),
         
-        Lists;
+        Timelines;
         
-    Lists = Y.Base.create("lists", Y.ModelList, [], {
+    Timelines = Y.Base.create("timelines", Y.ModelList, [], {
         model : models.List,
         
         initializer : function() {
             this._handles = [
                 this.after({
-                    "reset"    : this._usersLookup,
+                    "reset"    : this._listUsers,
+                    "add"      : this._listUsers,
                     "*:tweets" : this._tweetsEvent
                 }, null, this)
             ];
             
-            this.publish("updated", { preventable : false })
+            this.publish("updated", { preventable : false });
         },
         
         destructor : function() {
@@ -29,12 +30,19 @@ YUI.add("model-list-lists", function(Y) {
         },
         
         sync : function(action, options, done) {
-            
-            tristis.twitter.get("lists/list", done);
+            tristis.twitter.get("lists/list", function(err, resp) {
+                if(err) {
+                    return done(err);
+                }
+                
+                debugger;
+                
+                done(resp);
+            });
         },
         
         stream : function() {
-            var self = this,
+            /*var self = this,
                 stream;
             
             stream = tristis.twitter.stream("statuses/filter", {
@@ -48,9 +56,9 @@ YUI.add("model-list-lists", function(Y) {
                 if(!self._users[user]) {
                     debugger;
                     
-                    /*user = data.in_reply_to_user_id_str;
+                    user = data.in_reply_to_user_id_str;
                     
-                    if(!self._users[user]) {*/
+                    if(!self._users[user]) {
                         return console.error("Unknown user tweet, not in any lists.", data);
                     //}
                 }
@@ -67,7 +75,7 @@ YUI.add("model-list-lists", function(Y) {
                 });
             });
             
-            this._stream = stream;
+            this._stream = stream;*/
         },
         
         stop : function() {
@@ -76,7 +84,7 @@ YUI.add("model-list-lists", function(Y) {
             }
         },
         
-        _usersLookup : function() {
+        _listUsers : function() {
             var self = this;
             
             this._users = {};
@@ -84,6 +92,11 @@ YUI.add("model-list-lists", function(Y) {
             // go get all the members of all the lists
             this.each(function(list) {
                 var id = list.get("id_str");
+                
+                // Home timeline has its own stream, so ignore it
+                if(!id) {
+                    return;
+                }
                 
                 tristis.twitter.get("lists/members", {
                     list_id          : id,
@@ -116,7 +129,7 @@ YUI.add("model-list-lists", function(Y) {
         }
     });
     
-    models.Lists = Lists;
+    models.Timelines = Timelines;
     
 }, "@VERSION@", {
     requires : [
