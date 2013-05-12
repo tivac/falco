@@ -11,7 +11,7 @@ YUI.add("view-list", function(Y) {
             var list = this.get("model");
             
             this._handles = [
-                list.get("tweets").after([ "reset", "more" ], this._renderTweets, this)
+                list.get("tweets").after([ "reset", "more", "add" ], this._renderTweets, this)
             ];
         },
         
@@ -24,11 +24,14 @@ YUI.add("view-list", function(Y) {
         render : function() {
             this.get("container").setHTML(
                 this.template(
-                    Y.merge(this.get("model").toJSON(), {
-                        _t : {
-                            tweet : templates.tweet
+                    Y.merge(
+                        this.get("model").toJSON(),
+                        {
+                            _t : {
+                                tweet : templates.tweet
+                            }
                         }
-                    })
+                    )
                 )
             );
             
@@ -45,7 +48,8 @@ YUI.add("view-list", function(Y) {
                 this.render();
             }
             
-            models = e.response || e.models;
+            // Handle results from "reset"/"more"/"add" events
+            models = e.models || e.response || [ e.model ];
             
             this.get("container").one("ol").prepend(
                 models.reduce(function(prev, curr) {
