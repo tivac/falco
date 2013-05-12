@@ -66,7 +66,11 @@ YUI.add("app-tristis", function(Y) {
                     return self._auth();
                 }
                 
-                models.lists.load();
+                models.lists.load(function(err) {
+                    if(err) {
+                        console.error(err);
+                    }
+                });
                 
                 self.navigate("/");
                 
