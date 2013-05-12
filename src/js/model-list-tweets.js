@@ -1,12 +1,12 @@
-YUI.add("model-list-list-tweets", function(Y) {
+YUI.add("model-list-tweets", function(Y) {
     "use strict";
     
     var tristis = Y.namespace("Tristis"),
         models  = Y.namespace("Tristis.Models"),
         
-        ListTweets;
+        Tweets;
     
-    ListTweets = Y.Base.create("listTweets", Y.LazyModelList, [
+    Tweets = Y.Base.create("tweets", Y.LazyModelList, [
         Y.namespace("Extensions").ModelListMore
     ], {
         sync : function(action, options, done) {
@@ -21,6 +21,7 @@ YUI.add("model-list-list-tweets", function(Y) {
                 }
             }
             
+            // TODO: Make list/home agnostic somehow. Config-based?
             tristis.twitter.get("lists/statuses", Y.merge({
                 list_id     : this.get("list_id"),
                 // TODO: configurable?
@@ -38,7 +39,7 @@ YUI.add("model-list-list-tweets", function(Y) {
         }
     });
     
-    models.ListTweets = ListTweets;
+    models.Tweets = Tweets;
     
 }, "@VERSION@", {
     requires : [
