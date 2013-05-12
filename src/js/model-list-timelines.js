@@ -35,9 +35,9 @@ YUI.add("model-list-timelines", function(Y) {
                     return done(err);
                 }
                 
-                debugger;
+                resp.unshift(new models.Home(), new models.Mentions());
                 
-                done(resp);
+                done(null, resp);
             });
         },
         
@@ -82,6 +82,30 @@ YUI.add("model-list-timelines", function(Y) {
             if(this._stream) {
                 this._stream.stop();
             }
+        },
+        
+        // Override sorting so things line up how we like
+        _compare : function(a, b) {
+            // Home should be first
+            if(a.get("id") === "home") {
+                return 1;
+            }
+            
+            if(b.get("id") === "home") {
+                return -1;
+            }
+            
+            // Mentions should be second
+            if(a.get("id") === "mentions") {
+                return 1;
+            }
+            
+            if(b.get("id") === "mentions") {
+                return -1;
+            }
+            
+            // Everyone else is sorted by name
+            return a.get("name").localCompare(b.get("name"));
         },
         
         _listUsers : function() {
@@ -138,6 +162,8 @@ YUI.add("model-list-timelines", function(Y) {
         "model-list",
         
         // Models
-        "model-twitter-list"
+        "model-timeline-home",
+        "model-timeline-mentions",
+        "model-timeline-list"
     ]
 });

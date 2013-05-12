@@ -10,7 +10,7 @@ YUI.add("view-timeline", function(Y) {
         
         initializer : function() {
             this._handles = [
-                models.timeline.after([ "reset", "add" ], this._renderUpdate, this)
+                this.get("model").after([ "reset", "add" ], this._renderUpdate, this)
             ];
         },
         
@@ -23,7 +23,7 @@ YUI.add("view-timeline", function(Y) {
         render : function() {
             this.get("container").setHTML(
                 this.template({
-                    tweets : models.timeline.toJSON(),
+                    tweets : this.get("model").toJSON(),
                     
                     _t : {
                         tweet : templates.tweet

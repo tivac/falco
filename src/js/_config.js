@@ -26,7 +26,7 @@ var tristis_config = {
                             "extension-tristis-events",
                             "extension-tristis-routes",
                             "model-user",
-                            "model-list-lists",
+                            "model-list-timelines",
                             "view-nav"
                         ]
                     },
@@ -38,35 +38,51 @@ var tristis_config = {
                         path: "extension-tristis-routes.js",
                         requires: ["gallery-lazy-load"]
                     },
-                    "model-list-list-tweets": {
-                        path: "model-list-list-tweets.js",
+                    "model-list-timelines": {
+                        path: "model-list-timelines.js",
+                        requires: [
+                            "base-build",
+                            "model-list",
+                            "model-timeline-home",
+                            "model-timeline-mentions",
+                            "model-timeline-list"
+                        ]
+                    },
+                    "model-list-tweets": {
+                        path: "model-list-tweets.js",
                         requires: [
                             "base-build",
                             "lazy-model-list",
                             "extension-model-list-more"
                         ]
                     },
-                    "model-list-lists": {
-                        path: "model-list-lists.js",
-                        requires: [
-                            "base-build",
-                            "model-list",
-                            "model-twitter-list"
-                        ]
-                    },
-                    "model-list-timeline": {
-                        path: "model-list-timeline.js",
-                        requires: [
-                            "base-build",
-                            "lazy-model-list"
-                        ]
-                    },
-                    "model-twitter-list": {
-                        path: "model-twitter-list.js",
+                    "model-timeline-base": {
+                        path: "model-timeline-base.js",
                         requires: [
                             "base-build",
                             "model",
-                            "model-list-list-tweets"
+                            "model-list-tweets"
+                        ]
+                    },
+                    "model-timeline-home": {
+                        path: "model-timeline-home.js",
+                        requires: [
+                            "base-build",
+                            "model-timeline-base"
+                        ]
+                    },
+                    "model-timeline-list": {
+                        path: "model-timeline-list.js",
+                        requires: [
+                            "base-build",
+                            "model-timeline-base"
+                        ]
+                    },
+                    "model-timeline-mentions": {
+                        path: "model-timeline-mentions.js",
+                        requires: [
+                            "base-build",
+                            "model-timeline-base"
                         ]
                     },
                     "model-user": {

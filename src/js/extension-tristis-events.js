@@ -22,8 +22,7 @@ YUI.add("extension-tristis-events", function(Y) {
                     "*:url"    : this._urlEvent
                 }, null, this),
                 
-                models.lists.on("updated", this._updatedEvent, this),
-                // TODO: sub to models.timeline.on("updated") somehow
+                models.timelines.on("updated", this._updatedEvent, this),
             ];
         },
         

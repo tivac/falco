@@ -23,23 +23,10 @@ YUI.add("extension-tristis-routes", function(Y) {
         _routeRoot : function() {
             var app = this;
             
-            Y.lazyLoad("view-timeline", "model-list-timeline", function(errors, attached) {
+            Y.lazyLoad("view-timeline", function(errors, attached) {
                 // TODO: handle
                 if(errors) {
                     return console.log(errors);
-                }
-                
-                if("model-list-timeline" in attached) {
-                    models.timeline = new models.Timeline();
-                    
-                    // load a page of results, then begin streaming new ones
-                    models.timeline.load(function(err) {
-                        if(err) {
-                            return console.log(err);
-                        }
-                        
-                        models.timeline.stream();
-                    });
                 }
                 
                 if("view-timeline" in attached) {
@@ -49,7 +36,9 @@ YUI.add("extension-tristis-routes", function(Y) {
                     };
                 }
                 
-                app.showView("timeline");
+                app.showView("timeline", {
+                    model : models.timelines.getById("home")
+                });
             });
         },
         
@@ -93,9 +82,9 @@ YUI.add("extension-tristis-routes", function(Y) {
             var app = this;
             
             // start attempting to stream updates to all the lists
-            models.lists.stream();
+            //models.lists.stream();
             
-            Y.lazyLoad("view-list", function(errors) {
+            Y.lazyLoad("view-timeline", function(errors) {
                 var list;
                 
                 // TODO: handle
@@ -105,7 +94,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 
                 if(!(req.path in app.views)) {
                     app.views[req.path] = {
-                        type     : views.List,
+                        type     : views.Timeline,
                         preserve : true
                     };
                 }

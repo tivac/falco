@@ -17,8 +17,8 @@ YUI.add("view-nav", function(Y) {
         
         initializer : function() {
             this._handles = [
-                models.user.after([  "change", "reset" ], this.render,       this),
-                models.lists.after([ "change", "reset" ], this._renderLists, this)
+                models.user.after([ "change", "reset" ], this.render, this),
+                models.timelines.after([ "change", "reset" ], this._renderLists, this)
             ];
         },
         
@@ -41,7 +41,7 @@ YUI.add("view-nav", function(Y) {
         _renderLists : function() {
             this.get("container").one(".lists").setHTML(
                 templates["nav-lists"]({
-                    lists : models.lists.toJSON()
+                    lists : models.timelines.toJSON()
                 })
             );
         },

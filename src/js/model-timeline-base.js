@@ -27,7 +27,7 @@ YUI.add("model-timeline-base", function(Y) {
         
         // Override .toJSON() to make sure tweets are included
         toJSON : function() {
-            var json = List.superclass.toJSON.apply(this);
+            var json = TimelineBase.superclass.toJSON.apply(this);
             
             json.tweets = json.tweets.toJSON();
             

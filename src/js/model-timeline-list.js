@@ -1,4 +1,4 @@
-YUI.add("model-twitter-list", function(Y) {
+YUI.add("model-timeline-list", function(Y) {
     "use strict";
     
     var models  = Y.namespace("Tristis.Models"),

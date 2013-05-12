@@ -1,19 +1,18 @@
-YUI.add("model-timeline-home", function(Y) {
+YUI.add("model-timeline-mentions", function(Y) {
     "use strict";
     
     var models = Y.namespace("Tristis.Models"),
-        Home;
+        Mentions;
         
-    Home = Y.Base.create("home", models.TimelineBase, [], {}, {
+    Mentions = Y.Base.create("mentions", models.TimelineBase, [], {}, {
         ATTRS : {
             id : {
-                value : "home"
+                value : "mentions"
             }
         }
     });
     
-    models.Home = Home;
-    
+    models.Mentions = Mentions;
 }, "@VERSION@", {
     requires : [
         // YUI
