@@ -18,7 +18,9 @@ YUI.add("model-twitter-list", function(Y) {
         },
         
         sync : function(action, options, done) {
-            tristis.twitter.get("lists/show", { list_id : this.get("id") }, done);
+            tristis.twitter.get("lists/show", {
+                list_id : this.get("id_str")
+            }, done);
         },
         
         // Simple pass-through to tweets list
