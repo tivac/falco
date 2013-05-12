@@ -37,7 +37,7 @@ YUI.add("extension-model-list-more", function(Y) {
                     
                     parsed = facade.parsed = self.parse(response);
                     
-                    self.add(parsed, options);
+                    self.add(parsed, Y.merge(options, { silent : true }));
                     
                     self.fire("more", facade);
                 }
