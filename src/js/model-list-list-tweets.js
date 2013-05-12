@@ -10,11 +10,27 @@ YUI.add("model-list-list-tweets", function(Y) {
         Y.namespace("Extensions").ModelListMore
     ], {
         sync : function(action, options, done) {
-            tristis.twitter.get("lists/statuses", {
+            var args = {},
+                last;
+            
+            if(action === "more") {
+                last = this.item(this.size() - 1);
+                
+                if(last) {
+                    args.since_id = last.id_str;
+                }
+            }
+            
+            tristis.twitter.get("lists/statuses", Y.merge({
                 list_id     : this.get("list_id"),
-                // TODO: configurable
-                include_rts : true
-            }, done);
+                // TODO: configurable?
+                include_rts : true,
+                count       : 50
+            }, args), done);
+        },
+        
+        comparator : function(model) {
+            return Date.parse(model.created_at);
         }
     }, {
         ATTRS : {
