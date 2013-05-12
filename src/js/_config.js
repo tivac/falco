@@ -125,6 +125,7 @@ var tristis_config = {
             "/gallery/": {
                 base: "js/gallery/",
                 modules: {
+                    "gallery-debounce": { path: "gallery-debounce.js" },
                     "gallery-lazy-load": {
                         path: "gallery-lazy-load.js",
                         requires: ["oop"]
