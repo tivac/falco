@@ -2,6 +2,9 @@ YUI.add("extension-tristis-events", function(Y) {
     "use strict";
     
     var gui = require("nw.gui"),
+    
+        models = Y.namespace("Tristis.Models"),
+        
         Events;
     
     Events = function() {};
@@ -17,7 +20,10 @@ YUI.add("extension-tristis-events", function(Y) {
                 this.on({
                     "*:linked" : this._linkedEvent,
                     "*:url"    : this._urlEvent
-                }, null, this)
+                }, null, this),
+                
+                models.lists.on("updated", this._updatedEvent, this),
+                // TODO: sub to models.timeline.on("updated") somehow
             ];
         },
         
@@ -37,6 +43,10 @@ YUI.add("extension-tristis-events", function(Y) {
         
         _urlEvent : function(e) {
             this.navigate(e.url);
+        },
+        
+        _updatedEvent : function(e) {
+            console.log("updatedEvent", e.type, e);
         }
     };
     

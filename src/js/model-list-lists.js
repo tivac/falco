@@ -16,6 +16,8 @@ YUI.add("model-list-lists", function(Y) {
                     "*:tweets" : this._tweetsEvent
                 }, null, this)
             ];
+            
+            this.publish("updated", { preventable : false })
         },
         
         destructor : function() {
@@ -23,7 +25,7 @@ YUI.add("model-list-lists", function(Y) {
             
             this.stop();
             
-            this._handles = this._stream = null;
+            this._handles = this._stream = this._tweetsEvent = null;
         },
         
         sync : function(action, options, done) {
@@ -104,9 +106,13 @@ YUI.add("model-list-lists", function(Y) {
             });
         },
         
+        // refire tweets
         _tweetsEvent : function(e) {
-            console.log("Lists._tweetsEvent", e.type, e);
-            console.log(e.target.get("id_str"));
+            this.fire("updated", {
+                count  : e.count,
+                type   : "list",
+                source : e.target.get("id_str")
+            });
         }
     });
     

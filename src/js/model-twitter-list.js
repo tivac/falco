@@ -15,6 +15,18 @@ YUI.add("model-twitter-list", function(Y) {
             });
             
             this.set("tweets", tweets);
+            
+            this._handles = [
+                tweets.after([ "reset", "more", "add" ], this._tweetAdd, this)
+            ];
+            
+            this.publish("tweets", { preventable : false });
+        },
+        
+        destructor : function() {
+            new Y.EventTarget(this._handles).detach();
+            
+            this._handles = this._tweetsEvent = null;
         },
         
         sync : function(action, options, done) {
@@ -35,6 +47,12 @@ YUI.add("model-twitter-list", function(Y) {
             json.tweets = json.tweets.toJSON();
             
             return json;
+        },
+        
+        _tweetAdd : function(e) {
+            this.fire("tweets", {
+                count : e.response.length || 1
+            });
         }
     });
     
