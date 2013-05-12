@@ -9,7 +9,8 @@ YUI.add("model-list-timeline", function(Y) {
         
         destructor : function() {
             this.stop();
-            this.stream = null;
+            
+            this._stream = null;
         },
         
         sync : function(action, options, done) {
@@ -23,20 +24,26 @@ YUI.add("model-list-timeline", function(Y) {
             var self = this,
                 stream;
             
-            stream = tristis.twitter.stream("user");
+            stream = tristis.twitter.stream("user", {
+                with : "followings"
+            });
             
             // Only caring about tweets atm
             stream.on("tweet", function(data) {
                 self.add(data);
             });
             
-            this.stream = stream;
+            this._stream = stream;
         },
         
         stop : function() {
-            if(this.stream) {
-                this.stream.stop();
+            if(this._stream) {
+                this._stream.stop();
             }
+        },
+        
+        comparator : function(model) {
+            return Date.parse(model.created_at);
         }
     });
     
