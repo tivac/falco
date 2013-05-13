@@ -27,8 +27,14 @@ var tristis_config = {
                             "extension-tristis-routes",
                             "model-user",
                             "model-list-timelines",
-                            "view-nav"
+                            "view-nav",
+                            "stream-user",
+                            "stream-users"
                         ]
+                    },
+                    "extension-list-users": {
+                        path: "extension-list-users.js",
+                        requires: ["stream-users"]
                     },
                     "extension-tristis-events": {
                         path: "extension-tristis-events.js",
@@ -45,7 +51,8 @@ var tristis_config = {
                             "model-list",
                             "model-timeline-home",
                             "model-timeline-mentions",
-                            "model-timeline-list"
+                            "model-timeline-list",
+                            "extension-list-users"
                         ]
                     },
                     "model-list-tweets": {
@@ -68,7 +75,8 @@ var tristis_config = {
                         path: "model-timeline-home.js",
                         requires: [
                             "base-build",
-                            "model-timeline-base"
+                            "model-timeline-base",
+                            "stream-user"
                         ]
                     },
                     "model-timeline-list": {
@@ -90,6 +98,29 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "model"
+                        ]
+                    },
+                    "stream-base": {
+                        path: "stream-base.js",
+                        requires: [
+                            "oop",
+                            "event-custom"
+                        ]
+                    },
+                    "stream-user": {
+                        path: "stream-user.js",
+                        requires: [
+                            "oop",
+                            "event-custom",
+                            "stream-base"
+                        ]
+                    },
+                    "stream-users": {
+                        path: "stream-users.js",
+                        requires: [
+                            "oop",
+                            "event-custom",
+                            "stream-base"
                         ]
                     },
                     "view-list": {
