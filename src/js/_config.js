@@ -138,7 +138,7 @@ var tristis_config = {
                             "base-build",
                             "view",
                             "template-nav",
-                            "template-nav-lists"
+                            "template-nav-timelines"
                         ]
                     },
                     "view-timeline": {
