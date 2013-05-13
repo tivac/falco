@@ -31,17 +31,24 @@ YUI.add("stream-users", function(Y) {
             console.log("Users._tweet", data, this);
         },
         
-        ids : function() {
-            var self = this,
-                args = Array.prototype.splice.apply(arguments);
+        ids : function(ids) {
+            var self = this;
             
-            args.forEach(function(id) {
-                if(id in self._ids) {
+            // if the first argument isn't an array assume we got called like
+            // ids(id, ..., id) & turn that into an array
+            if(!Array.isArray(ids)) {
+                ids = Array.prototype.splice.apply(arguments);
+            }
+            
+            ids.forEach(function(id) {
+                if(!id || (id in self._ids)) {
                     return;
                 }
                 
                 self._ids[id] = 1;
             });
+            
+            this.start();
         }
     };
     
