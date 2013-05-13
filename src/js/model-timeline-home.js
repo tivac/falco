@@ -25,6 +25,10 @@ YUI.add("model-timeline-home", function(Y) {
             
             name : {
                 value : "Home"
+            },
+            
+            type : {
+                value : "home"
             }
         }
     });

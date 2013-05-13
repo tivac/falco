@@ -15,6 +15,10 @@ YUI.add("model-timeline-list", function(Y) {
                 }
             });
         }
+    }, {
+        type : {
+            value : "list"
+        }
     });
     
     models.List = List;
