@@ -10,7 +10,7 @@ $e($v( this.user.name ))+
 '\r\n            <span class="screen-name">@'+
 $e($v( this.user.screen_name ))+
 '</span>\r\n        </p>\r\n        <p class="text">\r\n            '+
-$e($v( this.text ))+
+$v( this.text )+
 '\r\n        </p>\r\n        <div class="meta">\r\n            <p class="">\r\n        </div>\r\n    </div>\r\n    \r\n    <div class="time">\r\n        <p>\r\n            '+
 $e($v( this.created_at ))+
 '\r\n        </p>\r\n    </div>\r\n</div>\r\n';

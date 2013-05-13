@@ -12,6 +12,7 @@ YUI.add("app-tristis", function(Y) {
         appExtensions = Y.namespace("Tristis.Extensions"),
         views         = Y.namespace("Tristis.Views"),
         models        = Y.namespace("Tristis.Models"),
+        streams       = Y.namespace("Tristis.Streams"),
         
         win = gui.Window.get(),
         
@@ -35,8 +36,8 @@ YUI.add("app-tristis", function(Y) {
                 access_token_secret : localStorage.access_secret
             });
             
-            models.user  = new models.User();
-            models.lists = new models.Lists();
+            models.user      = new models.User();
+            models.timelines = new models.Timelines();
             
             // add child view now because they depend on model references existing
             this.set("children", {
@@ -66,11 +67,13 @@ YUI.add("app-tristis", function(Y) {
                     return self._auth();
                 }
                 
-                models.lists.load(function(err) {
+                models.timelines.load(function(err) {
                     if(err) {
                         console.error(err);
                     }
                 });
+                
+                streams.user.start();
                 
                 self.navigate("/");
                 
@@ -137,9 +140,13 @@ YUI.add("app-tristis", function(Y) {
         
         // Models
         "model-user",
-        "model-list-lists",
+        "model-list-timelines",
         
         // Views
-        "view-nav"
+        "view-nav",
+        
+        // Streams
+        "stream-user",
+        "stream-users"
     ]
 });

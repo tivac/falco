@@ -26,9 +26,15 @@ var tristis_config = {
                             "extension-tristis-events",
                             "extension-tristis-routes",
                             "model-user",
-                            "model-list-lists",
-                            "view-nav"
+                            "model-list-timelines",
+                            "view-nav",
+                            "stream-user",
+                            "stream-users"
                         ]
+                    },
+                    "extension-list-users": {
+                        path: "extension-list-users.js",
+                        requires: ["stream-users"]
                     },
                     "extension-tristis-events": {
                         path: "extension-tristis-events.js",
@@ -38,35 +44,53 @@ var tristis_config = {
                         path: "extension-tristis-routes.js",
                         requires: ["gallery-lazy-load"]
                     },
-                    "model-list-list-tweets": {
-                        path: "model-list-list-tweets.js",
+                    "model-list-timelines": {
+                        path: "model-list-timelines.js",
+                        requires: [
+                            "base-build",
+                            "model-list",
+                            "model-timeline-home",
+                            "model-timeline-mentions",
+                            "model-timeline-list",
+                            "extension-list-users"
+                        ]
+                    },
+                    "model-list-tweets": {
+                        path: "model-list-tweets.js",
                         requires: [
                             "base-build",
                             "lazy-model-list",
                             "extension-model-list-more"
                         ]
                     },
-                    "model-list-lists": {
-                        path: "model-list-lists.js",
-                        requires: [
-                            "base-build",
-                            "model-list",
-                            "model-twitter-list"
-                        ]
-                    },
-                    "model-list-timeline": {
-                        path: "model-list-timeline.js",
-                        requires: [
-                            "base-build",
-                            "lazy-model-list"
-                        ]
-                    },
-                    "model-twitter-list": {
-                        path: "model-twitter-list.js",
+                    "model-timeline-base": {
+                        path: "model-timeline-base.js",
                         requires: [
                             "base-build",
                             "model",
-                            "model-list-list-tweets"
+                            "model-list-tweets"
+                        ]
+                    },
+                    "model-timeline-home": {
+                        path: "model-timeline-home.js",
+                        requires: [
+                            "base-build",
+                            "model-timeline-base",
+                            "stream-user"
+                        ]
+                    },
+                    "model-timeline-list": {
+                        path: "model-timeline-list.js",
+                        requires: [
+                            "base-build",
+                            "model-timeline-base"
+                        ]
+                    },
+                    "model-timeline-mentions": {
+                        path: "model-timeline-mentions.js",
+                        requires: [
+                            "base-build",
+                            "model-timeline-base"
                         ]
                     },
                     "model-user": {
@@ -74,6 +98,29 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "model"
+                        ]
+                    },
+                    "stream-base": {
+                        path: "stream-base.js",
+                        requires: [
+                            "oop",
+                            "event-custom"
+                        ]
+                    },
+                    "stream-user": {
+                        path: "stream-user.js",
+                        requires: [
+                            "oop",
+                            "event-custom",
+                            "stream-base"
+                        ]
+                    },
+                    "stream-users": {
+                        path: "stream-users.js",
+                        requires: [
+                            "oop",
+                            "event-custom",
+                            "stream-base"
                         ]
                     },
                     "view-list": {
@@ -91,7 +138,7 @@ var tristis_config = {
                             "base-build",
                             "view",
                             "template-nav",
-                            "template-nav-lists"
+                            "template-nav-timelines"
                         ]
                     },
                     "view-timeline": {

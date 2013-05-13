@@ -1,0 +1,13 @@
+<% Y.Array.each(this.timelines, function(timeline) { %>
+<li class="timeline <%= timeline.slug %>">
+    <% if(timeline.type === "home") { %>
+    <a href="/">
+    <% } else if(timeline.type === "mentions") { %>
+    <a href="/mentions">
+    <% } else { %>
+    <a href="/lists/<%= timeline.id_str %>">
+    <% } %>
+        <%= timeline.name %>
+    </a>
+</li>
+<% }); %>
