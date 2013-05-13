@@ -16,14 +16,21 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         initializer : function() {
+            Y.Do.after(this._eventsSetup, this, "_setup", this);
+            
             this._handles = [
                 this.on({
                     "*:linked" : this._linkedEvent,
                     "*:url"    : this._urlEvent
-                }, null, this),
-                
-                models.timelines.on("updated", this._updatedEvent, this),
+                }, null, this)
             ];
+        },
+        
+        // Called after main app's _setup fn
+        _eventsSetup : function() {
+            this._handles.push(
+                models.timelines.on("updated", this._updatedEvent, this)
+            );
         },
         
         // DOM events

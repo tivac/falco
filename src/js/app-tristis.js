@@ -25,9 +25,27 @@ YUI.add("app-tristis", function(Y) {
         appExtensions.Events
     ], {
         initializer : function() {
+            // Save window size when closing
+            win.on("close", function() {
+                localStorage.x      = win.x;
+                localStorage.y      = win.y;
+                localStorage.width  = win.width;
+                localStorage.height = win.height;
+                
+                process.nextTick(function() {
+                    win.close(true);
+                });
+            });
+            
             if(!localStorage.access_token || !localStorage.access_secret) {
                 return this._auth();
             }
+            
+            this._setup();
+        },
+        
+        _setup : function() {
+            var self = this;
             
             tristis.twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
@@ -43,25 +61,8 @@ YUI.add("app-tristis", function(Y) {
             this.set("children", {
                 nav : new views.Nav()
             });
-            
-            this._setup();
-            
-            // Save window size when closing
-            win.on("close", function() {
-                localStorage.x      = win.x;
-                localStorage.y      = win.y;
-                localStorage.width  = win.width;
-                localStorage.height = win.height;
-                
-                process.nextTick(function() {
-                    win.close(true);
-                });
-            });
-        },
-        
-        _setup : function() {
-            var self = this;
-            
+
+            // go load user details
             models.user.load(function(err) {
                 if(err) {
                     return self._auth();
