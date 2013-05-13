@@ -40,6 +40,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 
                 home = models.timelines.getById("home");
                 
+                // Load first page of tweets via REST api
                 home.get("tweets").load();
                 
                 app.showView("timeline", {
