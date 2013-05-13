@@ -15,13 +15,13 @@ YUI.add("stream-user", function(Y) {
                 with : "followings"
             });
             
-            stream.on("tweet", this._tweet);
+            stream.on("tweet", this._tweet.bind(this));
             
             this._stream = stream;
         },
         
         _tweet : function(data) {
-            console.log("User._tweet", data, this);
+            this.fire("tweet", { tweet : data });
         }
     };
     
