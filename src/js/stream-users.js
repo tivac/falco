@@ -22,7 +22,7 @@ YUI.add("stream-users", function(Y) {
                 follow : users.join(",")
             });
             
-            stream.on("tweet", this._tweet);
+            stream.on("tweet", this._tweet.bind(this));
             
             this._stream = stream;
         },
