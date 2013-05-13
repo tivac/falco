@@ -1,11 +1,8 @@
-<ol>
-    <li class="user">
-        <a href="https://twitter.com/<%= this.user.screen_name %>" data-external>
-            <img class="icon" src="<%= this.user.profile_image_url %>">
-        </a>
-    </li>
-    <li class="timeline">
-        <a href="/">TIMELINE</a>
-    </li>
+<div class="user">
+    <a href="https://twitter.com/<%= this.user.screen_name %>" data-external>
+        <img class="icon" src="<%= this.user.profile_image_url %>">
+    </a>
+</div>
+<ol class="timelines">
+    <%== this._t.timelines.apply(this) %>
 </ol>
-<ol class="lists"></ol>
