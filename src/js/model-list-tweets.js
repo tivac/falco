@@ -10,14 +10,11 @@ YUI.add("model-list-tweets", function(Y) {
         Y.namespace("Extensions").ModelListMore
     ], {
         sync : function(action, options, done) {
-            var args = {},
-                last;
+            var args = {};
             
             if(action === "more") {
-                last = this.item(this.size() - 1);
-                
-                if(last) {
-                    args.since_id = last.id_str;
+                if(this.size()) {
+                    args.since_id = this.item(0).id_str;
                 }
             }
             
