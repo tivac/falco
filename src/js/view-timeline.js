@@ -1,16 +1,18 @@
 YUI.add("view-timeline", function(Y) {
     "use strict";
     
-    var models    = Y.namespace("Tristis.Models"),
-        templates = Y.namespace("Tristis.Templates"),
+    var templates = Y.namespace("Tristis.Templates"),
         Timeline;
     
     Timeline = Y.Base.create("timeline", Y.View, [], {
         template : templates.timeline,
         
         initializer : function() {
+            var model = this.get("model");
+            
             this._handles = [
-                models.timeline.after([ "reset", "add" ], this._renderUpdate, this)
+                model.after("reset", this.render, this),
+                model.get("tweets").after([ "reset", "add" ], this._renderUpdate, this)
             ];
         },
         
@@ -22,13 +24,16 @@ YUI.add("view-timeline", function(Y) {
         
         render : function() {
             this.get("container").setHTML(
-                this.template({
-                    tweets : models.timeline.toJSON(),
-                    
-                    _t : {
-                        tweet : templates.tweet
-                    }
-                })
+                this.template(
+                    Y.merge(
+                        this.get("model").toJSON(),
+                        {
+                            _t : {
+                                tweet : templates.tweet
+                            }
+                        }
+                    )
+                )
             );
             
             this.rendered = true;

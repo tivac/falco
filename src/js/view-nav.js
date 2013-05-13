@@ -17,8 +17,8 @@ YUI.add("view-nav", function(Y) {
         
         initializer : function() {
             this._handles = [
-                models.user.after([  "change", "reset" ], this.render,       this),
-                models.lists.after([ "change", "reset" ], this._renderLists, this)
+                models.user.after([ "change", "reset" ], this.render, this),
+                models.timelines.after([ "change", "reset" ], this._renderLists, this)
             ];
         },
         
@@ -31,7 +31,12 @@ YUI.add("view-nav", function(Y) {
         render : function() {
             this.get("container").setHTML(
                 this.template({
-                    user : models.user.toJSON()
+                    user      : models.user.toJSON(),
+                    timelines : models.timelines.toJSON(),
+                    
+                    _t : {
+                        timelines : templates["nav-timelines"]
+                    }
                 })
             );
             
@@ -39,9 +44,9 @@ YUI.add("view-nav", function(Y) {
         },
         
         _renderLists : function() {
-            this.get("container").one(".lists").setHTML(
-                templates["nav-lists"]({
-                    lists : models.lists.toJSON()
+            this.get("container").one(".timelines").setHTML(
+                templates["nav-timelines"]({
+                    timelines : models.timelines.toJSON()
                 })
             );
         },
@@ -74,6 +79,6 @@ YUI.add("view-nav", function(Y) {
         
         // Templates
         "template-nav",
-        "template-nav-lists"
+        "template-nav-timelines"
     ]
 });

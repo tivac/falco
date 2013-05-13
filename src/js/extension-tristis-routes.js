@@ -23,23 +23,12 @@ YUI.add("extension-tristis-routes", function(Y) {
         _routeRoot : function() {
             var app = this;
             
-            Y.lazyLoad("view-timeline", "model-list-timeline", function(errors, attached) {
+            Y.lazyLoad("view-timeline", function(errors, attached) {
+                var home;
+                
                 // TODO: handle
                 if(errors) {
                     return console.log(errors);
-                }
-                
-                if("model-list-timeline" in attached) {
-                    models.timeline = new models.Timeline();
-                    
-                    // load a page of results, then begin streaming new ones
-                    models.timeline.load(function(err) {
-                        if(err) {
-                            return console.log(err);
-                        }
-                        
-                        models.timeline.stream();
-                    });
                 }
                 
                 if("view-timeline" in attached) {
@@ -49,7 +38,13 @@ YUI.add("extension-tristis-routes", function(Y) {
                     };
                 }
                 
-                app.showView("timeline");
+                home = models.timelines.getById("home");
+                
+                home.get("tweets").load();
+                
+                app.showView("timeline", {
+                    model : home
+                });
             });
         },
         
@@ -92,11 +87,8 @@ YUI.add("extension-tristis-routes", function(Y) {
         _routeList : function(req) {
             var app = this;
             
-            // start attempting to stream updates to all the lists
-            models.lists.stream();
-            
-            Y.lazyLoad("view-list", function(errors) {
-                var list;
+            Y.lazyLoad("view-timeline", function(errors) {
+                var list, tweets;
                 
                 // TODO: handle
                 if(errors) {
@@ -105,18 +97,15 @@ YUI.add("extension-tristis-routes", function(Y) {
                 
                 if(!(req.path in app.views)) {
                     app.views[req.path] = {
-                        type     : views.List,
+                        type     : views.Timeline,
                         preserve : true
                     };
                 }
                 
-                list = models.lists.getById(req.params.list);
+                list   = models.timelines.getById(req.params.list);
+                tweets = list.get("tweets");
                 
-                list.more(function(err) {
-                    if(err) {
-                        console.error(err);
-                    }
-                });
+                tweets[tweets.size() ? "more" : "load"]();
                 
                 app.showView(req.path, {
                     model : list
