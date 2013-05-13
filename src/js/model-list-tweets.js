@@ -21,21 +21,28 @@ YUI.add("model-list-tweets", function(Y) {
                 }
             }
             
-            // TODO: Make list/home agnostic somehow. Config-based?
-            tristis.twitter.get("lists/statuses", Y.merge({
-                list_id     : this.get("list_id"),
-                // TODO: configurable?
-                include_rts : true,
-                count       : 50
-            }, args), done);
+            args = Y.merge(
+                { count : 50 },
+                this.get("config") || {},
+                args
+            );
+            
+            tristis.twitter.get(this.get("api"), args, done);
         },
         
+        // Sort tweets by date
         comparator : function(model) {
             return Date.parse(model.created_at);
+        },
+        
+        // Sort tweets by newest first
+        _compare : function(a, b) {
+            return b - a;
         }
     }, {
         ATTRS : {
-            list_id : null
+            api     : null,
+            config  : null
         }
     });
     
