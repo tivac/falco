@@ -35,7 +35,7 @@ YUI.add("model-timeline-base", function(Y) {
         },
         
         _tweetAdd : function(e) {
-            console.log(this.name, "_tweetAdd", e.type, e);
+            console.log(this.name + "._tweetAdd", e.type, e);
             
             // TODO: better way of determining count value!
             

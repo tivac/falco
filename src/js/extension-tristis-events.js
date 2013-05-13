@@ -45,7 +45,7 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         _updatedEvent : function(e) {
-            console.log("updatedEvent", e.type, e);
+            //console.log("updatedEvent", e.type, e);
         }
     };
     
