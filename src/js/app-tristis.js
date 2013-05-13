@@ -12,6 +12,7 @@ YUI.add("app-tristis", function(Y) {
         appExtensions = Y.namespace("Tristis.Extensions"),
         views         = Y.namespace("Tristis.Views"),
         models        = Y.namespace("Tristis.Models"),
+        streams       = Y.namespace("Tristis.Streams"),
         
         win = gui.Window.get(),
         
@@ -71,6 +72,8 @@ YUI.add("app-tristis", function(Y) {
                         console.error(err);
                     }
                 });
+                
+                streams.user.start();
                 
                 self.navigate("/");
                 
@@ -140,6 +143,10 @@ YUI.add("app-tristis", function(Y) {
         "model-list-timelines",
         
         // Views
-        "view-nav"
+        "view-nav",
+        
+        // Streams
+        "stream-user",
+        "stream-users"
     ]
 });
