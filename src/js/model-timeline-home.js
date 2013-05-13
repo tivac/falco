@@ -15,7 +15,7 @@ YUI.add("model-timeline-home", function(Y) {
         },
         
         _streamTweet : function(e) {
-            console.log("User stream tweet in home timeline", e.type, e);
+            this.get("tweets").add(e.tweet);
         }
     }, {
         ATTRS : {

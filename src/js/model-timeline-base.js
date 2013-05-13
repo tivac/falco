@@ -35,12 +35,14 @@ YUI.add("model-timeline-base", function(Y) {
         },
         
         _tweetAdd : function(e) {
-            console.log(this.name + "._tweetAdd caught " + e.type, e);
+            var count = 1;
             
-            // TODO: better way of determining count value!
+            if(e.response || e.models) {
+                count = (e.response || e.models).lenth;
+            }
             
             this.fire("tweets", {
-                count : (e.response || e.models).length || 1
+                count : count
             });
         }
     });
