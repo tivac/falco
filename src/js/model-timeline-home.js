@@ -21,6 +21,10 @@ YUI.add("model-timeline-home", function(Y) {
         ATTRS : {
             id : {
                 value : "home"
+            },
+            
+            name : {
+                value : "Home"
             }
         }
     });

@@ -8,6 +8,10 @@ YUI.add("model-timeline-mentions", function(Y) {
         ATTRS : {
             id : {
                 value : "mentions"
+            },
+            
+            name : {
+                value : "Mentions"
             }
         }
     });

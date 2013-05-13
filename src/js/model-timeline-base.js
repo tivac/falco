@@ -13,7 +13,7 @@ YUI.add("model-timeline-base", function(Y) {
             this.set("tweets", tweets);
             
             this._handles = [
-                tweets.after([ "reset", "more", "add" ], this._tweetAdd, this)
+                tweets.after([ "more", "add" ], this._tweetAdd, this)
             ];
             
             this.publish("tweets", { preventable : false });
@@ -35,7 +35,7 @@ YUI.add("model-timeline-base", function(Y) {
         },
         
         _tweetAdd : function(e) {
-            console.log(this.name + "._tweetAdd", e.type, e);
+            console.log(this.name + "._tweetAdd caught " + e.type, e);
             
             // TODO: better way of determining count value!
             
