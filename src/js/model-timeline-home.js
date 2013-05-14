@@ -7,7 +7,9 @@ YUI.add("model-timeline-home", function(Y) {
         
     Home = Y.Base.create("home", models.TimelineBase, [], {
         initializer : function() {
-            streams.user.on("tweet", this._streamTweet, this);
+            this._handles.push(
+                streams.user.on("tweet", this._streamTweet, this)
+            );
             
             this.get("tweets").setAttrs({
                 api : "statuses/home_timeline"
