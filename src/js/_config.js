@@ -34,7 +34,11 @@ var tristis_config = {
                     },
                     "extension-list-users": {
                         path: "extension-list-users.js",
-                        requires: ["stream-users"]
+                        requires: [
+                            "promise",
+                            "array-extras",
+                            "stream-users"
+                        ]
                     },
                     "extension-tristis-events": {
                         path: "extension-tristis-events.js",
