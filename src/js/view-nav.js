@@ -20,6 +20,10 @@ YUI.add("view-nav", function(Y) {
                 models.user.after([ "change", "reset" ], this.render, this),
                 models.timelines.after([ "change", "reset" ], this._renderLists, this)
             ];
+            
+            this.publish("url", {
+                preventable : false
+            });
         },
         
         destructor : function() {
@@ -47,6 +51,8 @@ YUI.add("view-nav", function(Y) {
             var list  = this.get("container").one("[data-id='" + args.id + "']"),
                 count = parseInt(list.getData("updates"), 10) || 0;
             
+            console.log(args.id + " has " + (args.count + count) + " updates");
+            
             list.setAttribute("data-updates", args.count + count);
         },
         
@@ -60,18 +66,16 @@ YUI.add("view-nav", function(Y) {
         
         // DOM Events
         _navClick : function(e) {
+            var target = e.target;
+            
             e.preventDefault();
             
-            if(!this._urlEvent) {
-                this._urlEvent = this.publish("url", {
-                    preventable : false
-                });
-            }
+            target.ancestor(".timeline").removeAttribute("data-updates");
             
             this.fire("url", {
                 // Using "getAttribute" here instead of "get" so we get the
                 // actual value instead of an absolute URL
-                url : e.target.getAttribute("href")
+                url : target.getAttribute("href")
             });
         }
     });
