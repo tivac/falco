@@ -16,14 +16,19 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         initializer : function() {
-            Y.Do.after(this._eventsSetup, this, "_setup", this);
-            
             this._handles = [
                 this.on({
                     "*:linked" : this._linkedEvent,
                     "*:url"    : this._urlEvent
                 }, null, this)
             ];
+            
+            // Have to adjust this based on main app startup flow
+            if(models.timelines) {
+                this._eventsSetup();
+            } else {
+                Y.Do.after(this._eventsSetup, this, "_setup", this);
+            }
         },
         
         // Called after main app's _setup fn
@@ -52,7 +57,8 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         _updatedEvent : function(e) {
-            //console.log("updatedEvent", e.type, e);
+            // TODO: Only update if not the currently active view
+            this.get("children").nav.updated({ id : e.src, count : e.count });
         }
     };
     
