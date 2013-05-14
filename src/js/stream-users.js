@@ -18,8 +18,8 @@ YUI.add("stream-users", function(Y) {
                 return;
             }
             
-            stream = tristis.twitter.stream("status/filter", {
-                follow : users.join(",")
+            stream = tristis.twitter.stream("statuses/filter", {
+                follow : users
             });
             
             stream.on("tweet", this._tweet.bind(this));
