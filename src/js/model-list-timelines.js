@@ -53,28 +53,36 @@ YUI.add("model-list-timelines", function(Y) {
             });
         },
         
-        // Override sorting so things line like so: home, mentions, lists in alphabetical order
+        // Return the minimum fields required to sort things
+        comparator : function(model) {
+            return {
+                id   : model.get("id"),
+                slug : model.get("slug")
+            };
+        },
+        
+        // Override comparisons so things line up like so: home, mentions, lists in alphabetical order
         _compare : function(a, b) {
             // Home should be first
-            if(a.get("id") === "home") {
-                return 1;
+            if(a.id === "home") {
+                return -1;
             }
             
-            if(b.get("id") === "home") {
-                return -1;
+            if(b.id === "home") {
+                return 1;
             }
             
             // Mentions should be second
-            if(a.get("id") === "mentions") {
-                return 1;
-            }
-            
-            if(b.get("id") === "mentions") {
+            if(a.id === "mentions") {
                 return -1;
             }
             
+            if(b.id === "mentions") {
+                return 1;
+            }
+            
             // Everyone else is sorted by name
-            return a.get("name").localCompare(b.get("name"));
+            return a.slug.localeCompare(b.slug);
         },
         
         // refire tweets
