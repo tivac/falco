@@ -32,7 +32,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 }
                 
                 if("view-timeline" in attached) {
-                    app.views.timeline = {
+                    app.views.home = {
                         type     : views.Timeline,
                         preserve : true
                     };
@@ -43,7 +43,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 // Load first page of tweets via REST api
                 home.get("tweets").load();
                 
-                app.showView("timeline", {
+                app.showView("home", {
                     model : home
                 });
             });
@@ -97,7 +97,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 }
                 
                 if(!(req.path in app.views)) {
-                    app.views[req.path] = {
+                    app.views[req.params.list] = {
                         type     : views.Timeline,
                         preserve : true
                     };
@@ -108,7 +108,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 
                 tweets[tweets.size() ? "more" : "load"]();
                 
-                app.showView(req.path, {
+                app.showView(req.params.list, {
                     model : list
                 });
             });
