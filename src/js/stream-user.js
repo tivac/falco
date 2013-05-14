@@ -21,7 +21,10 @@ YUI.add("stream-user", function(Y) {
         },
         
         _tweet : function(data) {
-            this.fire("tweet", { tweet : data });
+            this.fire("tweet", {
+                tweet : data,
+                src   : "user"
+            });
         }
     };
     

@@ -28,9 +28,14 @@ YUI.add("stream-users", function(Y) {
         },
         
         _tweet : function(data) {
-            console.log("Users._tweet", data.user.screen_name, data.text, data);
+            if(!this._ids[data.user.id_str]) {
+                return;
+            }
             
-            this.fire("tweet", { tweet : data });
+            this.fire("tweet", {
+                tweet : data,
+                src   : "users"
+            });
         },
         
         ids : function(ids) {
