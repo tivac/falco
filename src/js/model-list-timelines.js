@@ -16,10 +16,7 @@ YUI.add("model-list-timelines", function(Y) {
         
         initializer : function() {
             this._handles = [
-                this.after({
-                    
-                    "*:tweets" : this._tweetsEvent
-                }, null, this)
+                this.after("*:tweets", this._tweetsEvent, this)
             ];
             
             this.publish("updated", { preventable : false });
@@ -83,9 +80,8 @@ YUI.add("model-list-timelines", function(Y) {
         // refire tweets
         _tweetsEvent : function(e) {
             this.fire("updated", {
-                count  : e.count,
-                type   : "list",
-                source : e.target.get("id_str")
+                count : e.count,
+                src   : e.target.get("id_str") || e.target.get("id")
             });
         }
     });

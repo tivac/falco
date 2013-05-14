@@ -10,9 +10,9 @@ $e($v( this.full_name ))+
 '</small></h2>\r\n';
  } 
 $t+='\r\n<ol>\r\n    ';
- Y.Array.each(this.tweets, function(tweet) { 
+ this.tweets.forEach(function(tweet) { 
 $t+='\r\n    <li>'+
-$v( _t.tweet.apply(tweet) )+
+$v( this._t.tweet.apply(tweet) )+
 '</li>\r\n    ';
  }); 
 $t+='\r\n</ol>\r\n';
