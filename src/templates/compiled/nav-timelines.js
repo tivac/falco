@@ -5,6 +5,8 @@ var $b='', $v=function (v){return v || v === 0 ? v : $b;}, $t='';
  Y.Array.each(this.timelines, function(timeline) { 
 $t+='\r\n<li class="timeline '+
 $e($v( timeline.slug ))+
+'" data-id="'+
+$e($v( timeline.id_str || timeline.id ))+
 '">\r\n    ';
  if(timeline.type === "home") { 
 $t+='\r\n    <a href="/">\r\n    ';
