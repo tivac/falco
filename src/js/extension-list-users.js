@@ -68,8 +68,6 @@ YUI.add("extension-list-users", function(Y) {
         },
         
         _streamTweet : function(e) {
-            debugger;
-            
             console.log("Users stream tweet from a list", e.type, e);
         }
     };
