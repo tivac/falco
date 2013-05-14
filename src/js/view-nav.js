@@ -43,6 +43,13 @@ YUI.add("view-nav", function(Y) {
             this._renderLists();
         },
         
+        updated : function(args) {
+            var list  = this.get("container").one("[data-id='" + args.id + "']"),
+                count = parseInt(list.getData("updates"), 10) || 0;
+            
+            list.setAttribute("data-updates", args.count + count);
+        },
+        
         _renderLists : function() {
             this.get("container").one(".timelines").setHTML(
                 templates["nav-timelines"]({
