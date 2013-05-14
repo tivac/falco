@@ -27,11 +27,7 @@ YUI.add("view-timeline", function(Y) {
                 this.template(
                     Y.merge(
                         this.get("model").toJSON(),
-                        {
-                            _t : {
-                                tweet : templates.tweet
-                            }
-                        }
+                        { _t : templates }
                     )
                 )
             );
