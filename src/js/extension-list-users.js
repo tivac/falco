@@ -11,7 +11,8 @@ YUI.add("extension-list-users", function(Y) {
         initializer : function() {
             this._handles.push(
                 this.after([ "reset", "add" ], this._listUsers, this),
-                streams.users.on("tweet", this._streamTweet, this)
+                streams.users.on("tweet", this._streamTweet, this),
+                streams.user.on("tweet", this._streamTweet, this)
             );
         },
         
@@ -68,7 +69,16 @@ YUI.add("extension-list-users", function(Y) {
         },
         
         _streamTweet : function(e) {
-            console.log("Users stream tweet from a list", e.type, e);
+            var self = this,
+                lists = this._users[e.tweet.user.id_str];
+            
+            if(!lists) {
+                return;
+            }
+            
+            lists.forEach(function(list) {
+                self.getById(list).get("tweets").add(e.tweet);
+            });
         }
     };
     
