@@ -11,9 +11,10 @@ YUI.add("extension-tristis-routes", function(Y) {
             value : [
                 { path : "/",            callbacks : "_routeRoot" },
                 { path : "/auth",        callbacks : "_routeAuth" },
+                { path : "/mentions",    callbacks : "_routeMentions" },
                 { path : "/search",      callbacks : "_routeSearch" },
                 { path : "/lists",       callbacks : "_routeLists" },
-                { path : "/lists/:list", callbacks : "_routeList" }
+                { path : "/lists/:list", callbacks : "_routeList" },
             ]
         }
     };
@@ -23,25 +24,28 @@ YUI.add("extension-tristis-routes", function(Y) {
         _routeRoot : function() {
             var app = this;
             
-            Y.lazyLoad("view-timeline", function(errors, attached) {
-                var home;
+            Y.lazyLoad("view-timeline", function(errors) {
+                var home, tweets;
                 
                 // TODO: handle
                 if(errors) {
                     return console.log(errors);
                 }
                 
-                if("view-timeline" in attached) {
+                if(!app.views.home) {
                     app.views.home = {
                         type     : views.Timeline,
                         preserve : true
                     };
                 }
                 
-                home = models.timelines.getById("home");
+                home   = models.timelines.getById("home");
+                tweets = home.get("tweets");
                 
-                // Load first page of tweets via REST api
-                home.get("tweets").load();
+                // Load first page of tweets via REST api if needed
+                if(!tweets.loaded) {
+                    tweets.load();
+                }
                 
                 app.showView("home", {
                     model : home
@@ -73,6 +77,38 @@ YUI.add("extension-tristis-routes", function(Y) {
             });
         },
         
+        _routeMentions : function() {
+            var app = this;
+            
+            Y.lazyLoad("view-timeline", function(errors) {
+                var mentions, tweets;
+                
+                // TODO: handle
+                if(errors) {
+                    return console.log(errors);
+                }
+                
+                if(!app.views.mentions) {
+                    app.views.mentions = {
+                        type     : views.Timeline,
+                        preserve : true
+                    };
+                }
+                
+                mentions = models.timelines.getById("mentions");
+                tweets   = mentions.get("tweets");
+                
+                // Load first page of tweets via REST api if needed
+                if(!tweets.loaded) {
+                    tweets.load();
+                }
+                
+                app.showView("mentions", {
+                    model : mentions
+                });
+            });
+        },
+        
         _routeSearch : function(req) {
             // TODO: show search tweets
             
@@ -96,7 +132,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                     return console.log(errors);
                 }
                 
-                if(!(req.path in app.views)) {
+                if(!app.views[req.params.list]) {
                     app.views[req.params.list] = {
                         type     : views.Timeline,
                         preserve : true
@@ -106,7 +142,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 list   = models.timelines.getById(req.params.list);
                 tweets = list.get("tweets");
                 
-                tweets[tweets.size() ? "more" : "load"]();
+                tweets[tweets.loaded ? "more" : "load"]();
                 
                 app.showView(req.params.list, {
                     model : list
