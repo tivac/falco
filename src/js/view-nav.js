@@ -1,7 +1,8 @@
 YUI.add("view-nav", function(Y) {
     "use strict";
     
-    var models    = Y.namespace("Tristis.Models"),
+    var tristis   = Y.namespace("Tristis"),
+        models    = Y.namespace("Tristis.Models"),
         templates = Y.namespace("Tristis.Templates"),
         Nav;
     
@@ -51,15 +52,19 @@ YUI.add("view-nav", function(Y) {
             var list  = this.get("container").one("[data-id='" + args.id + "']"),
                 count = parseInt(list.getData("updates"), 10) || 0;
             
-            console.log(args.id + " has " + (args.count + count) + " updates");
-            
-            list.setAttribute("data-updates", args.count + count);
+            // only update inactive links
+            if(!list.hasClass("active")) {
+                console.log(args.id + " has " + (args.count + count) + " updates");
+                
+                list.setAttribute("data-updates", args.count + count);
+            }
         },
         
         _renderLists : function() {
             this.get("container").one(".timelines").setHTML(
                 templates["nav-timelines"]({
-                    timelines : models.timelines.toJSON()
+                    timelines : models.timelines.toJSON(),
+                    path      : tristis.app.getPath()
                 })
             );
         },
@@ -70,7 +75,11 @@ YUI.add("view-nav", function(Y) {
             
             e.preventDefault();
             
-            target.ancestor(".timeline").removeAttribute("data-updates");
+            this.get("container").all(".timeline").removeClass("active");
+            
+            target.ancestor(".timeline")
+                .removeAttribute("data-updates")
+                .addClass("active");
             
             this.fire("url", {
                 // Using "getAttribute" here instead of "get" so we get the
