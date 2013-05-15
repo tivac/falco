@@ -42,11 +42,21 @@ var tristis_config = {
                     },
                     "extension-tristis-events": {
                         path: "extension-tristis-events.js",
-                        requires: []
+                        requires: [
+                            "stream-user",
+                            "model-list-friends"
+                        ]
                     },
                     "extension-tristis-routes": {
                         path: "extension-tristis-routes.js",
                         requires: ["gallery-lazy-load"]
+                    },
+                    "model-list-friends": {
+                        path: "model-list-friends.js",
+                        requires: [
+                            "base-build",
+                            "lazy-model-list"
+                        ]
                     },
                     "model-list-timelines": {
                         path: "model-list-timelines.js",

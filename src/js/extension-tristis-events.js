@@ -3,7 +3,8 @@ YUI.add("extension-tristis-events", function(Y) {
     
     var gui = require("nw.gui"),
     
-        models = Y.namespace("Tristis.Models"),
+        models  = Y.namespace("Tristis.Models"),
+        streams = Y.namespace("Tristis.Streams"),
         
         Events;
     
@@ -34,7 +35,8 @@ YUI.add("extension-tristis-events", function(Y) {
         // Called after main app's _setup fn
         _eventsSetup : function() {
             this._handles.push(
-                models.timelines.on("updated", this._updatedEvent, this)
+                models.timelines.on("updated", this._updatedEvent, this),
+                streams.user.on("friends", this._friendsEvent, this)
             );
         },
         
@@ -57,8 +59,13 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         _updatedEvent : function(e) {
-            // TODO: Only update if not the currently active view
             this.get("children").nav.updated({ id : e.src, count : e.count });
+        },
+        
+        _friendsEvent : function(friends) {
+            models.friends = new models.Friends({
+                items : friends
+            });
         }
     };
     
@@ -66,6 +73,7 @@ YUI.add("extension-tristis-events", function(Y) {
     
 }, "@VERSION@", {
     requires : [
-    
+        "stream-user",
+        "model-list-friends"
     ]
 });
