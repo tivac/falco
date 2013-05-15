@@ -29,7 +29,9 @@ YUI.add("stream-base", function(Y) {
         }
     };
     
-    Y.augment(StreamBase, Y.EventTarget);
+    Y.augment(StreamBase, Y.EventTarget, true, null, {
+        preventable : false
+    });
     
     Y.namespace("Tristis.Streams").Base = StreamBase;
     
