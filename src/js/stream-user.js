@@ -16,6 +16,7 @@ YUI.add("stream-user", function(Y) {
             });
             
             stream.on("tweet", this._tweet.bind(this));
+            stream.on("friends", this._friends.bind(this));
             
             this._stream = stream;
         },
@@ -25,6 +26,14 @@ YUI.add("stream-user", function(Y) {
                 tweet : data,
                 src   : "user"
             });
+        },
+        
+        _friends : function(data) {
+            this.fire("friends", data.friends.map(function(id) {
+                return {
+                    id : id
+                };
+            }));
         }
     };
     
