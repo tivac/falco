@@ -14,6 +14,8 @@ YUI.add("model-timeline-list", function(Y) {
                     include_rts : true
                 }
             });
+            
+            this.set("url", "/lists/" + this.get("id_str"));
         }
     }, {
         type : {

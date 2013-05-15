@@ -45,6 +45,9 @@ YUI.add("model-timeline-base", function(Y) {
                 count : count
             });
         }
+    }, {
+        url  : null,
+        type : null
     });
     
     models.TimelineBase = TimelineBase;

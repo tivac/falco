@@ -16,6 +16,10 @@ YUI.add("model-timeline-mentions", function(Y) {
             
             type : {
                 value : "mentions"
+            },
+            
+            url : {
+                value : "/mentions"
             }
         }
     });

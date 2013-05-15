@@ -31,6 +31,10 @@ YUI.add("model-timeline-home", function(Y) {
             
             type : {
                 value : "home"
+            },
+            
+            url  : {
+                value : "/"
             }
         }
     });
