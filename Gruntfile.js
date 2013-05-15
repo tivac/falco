@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         
         watch : {
             templates : {
-                files : "src/templates/raw/**",
+                files : [ "src/templates/**", "!src/templates/compiled/**" ],
                 tasks : "template"
             },
             
