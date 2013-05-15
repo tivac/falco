@@ -10,7 +10,8 @@ YUI.add("model-list-tweets", function(Y) {
         Y.namespace("Extensions").ModelListMore
     ], {
         sync : function(action, options, done) {
-            var args = {};
+            var self = this,
+                args = {};
             
             if(action === "more") {
                 if(this.size()) {
@@ -24,7 +25,16 @@ YUI.add("model-list-tweets", function(Y) {
                 args
             );
             
-            tristis.twitter.get(this.get("api"), args, done);
+            tristis.twitter.get(this.get("api"), args, function(err, resp) {
+                if(err) {
+                    return done(err);
+                }
+                
+                self.loaded = true;
+                
+                // TODO: ensure we don't add dupe tweets somehow
+                done(err, resp);
+            });
         },
         
         // Sort tweets by date
