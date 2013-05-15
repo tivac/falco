@@ -1,8 +1,8 @@
 <div class="user">
-    <a href="https://twitter.com/<%= this.user.screen_name %>" data-external>
-        <img class="icon" src="<%= this.user.profile_image_url %>">
+    <a href="https://twitter.com/<%= data.user.screen_name %>" data-external>
+        <img class="icon" src="<%= data.user.profile_image_url %>">
     </a>
 </div>
 <ol class="timelines">
-    <%== this._t.timelines.apply(this) %>
+    <%== data._t.timelines(data) %>
 </ol>

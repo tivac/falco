@@ -2,22 +2,18 @@ YUI.add("template-nav-timelines", function(Y) {
     "use strict";
     Y.namespace("Tristis.Templates")["nav-timelines"] = Y.Template.Micro.revive(function (Y, $e, data) {
 var $b='', $v=function (v){return v || v === 0 ? v : $b;}, $t='';
- Y.Array.each(this.timelines, function(timeline) { 
+ data.timelines.forEach(function(timeline) { 
 $t+='\r\n<li class="timeline '+
 $e($v( timeline.slug ))+
-'" data-id="'+
-$e($v( timeline.id_str || timeline.id ))+
-'">\r\n    ';
- if(timeline.type === "home") { 
-$t+='\r\n    <a href="/">\r\n    ';
- } else if(timeline.type === "mentions") { 
-$t+='\r\n    <a href="/mentions">\r\n    ';
- } else { 
-$t+='\r\n    <a href="/lists/'+
-$e($v( timeline.id_str ))+
-'">\r\n    ';
+'';
+ if(timeline.url === data.path) { 
+$t+=' active';
  } 
-$t+='\r\n        '+
+$t+='"\r\n    data-id="'+
+$e($v( timeline.id_str || timeline.id ))+
+'"\r\n>\r\n    <a href="'+
+$e($v( timeline.url ))+
+'">\r\n        '+
 $e($v( timeline.name ))+
 '\r\n    </a>\r\n</li>\r\n';
  }); 

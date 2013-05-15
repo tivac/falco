@@ -1,8 +1,8 @@
-<% if(this.name) { %>
-<h2><%= this.name %> <small><%= this.full_name %></small></h2>
+<% if(data.name) { %>
+<h2><%= data.name %> <small><%= data.full_name %></small></h2>
 <% } %>
 <ol>
-    <% this.tweets.forEach(function(tweet) { %>
-    <li><%== this._t.tweet.apply(tweet) %></li>
+    <% data.tweets.forEach(function(tweet) { %>
+    <li><%== data._t.tweet(tweet) %></li>
     <% }); %>
 </ol>
