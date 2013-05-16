@@ -3,10 +3,9 @@ YUI.add("app-tristis", function(Y) {
     
     var gui      = require("nw.gui"),
         conf     = require("config").Twitter,
-        //Twitter  = require("ntwitter"),
-        Twitter   = require("twit"),
-        extensions    = Y.namespace("Extensions"),
+        Twitter  = require("twit"),
         
+        extensions    = Y.namespace("Extensions"),
         tristis       = Y.namespace("Tristis"),
         appExtensions = Y.namespace("Tristis.Extensions"),
         views         = Y.namespace("Tristis.Views"),
