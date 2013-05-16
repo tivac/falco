@@ -1,8 +1,13 @@
 YUI.add("view-timeline", function(Y) {
     "use strict";
     
-    var templates = Y.namespace("Tristis.Templates"),
-        Timeline;
+    var tristis   = Y.namespace("Tristis"),
+        templates = Y.namespace("Tristis.Templates"),
+        options, Timeline;
+    
+    options = {
+        "data-external" : ""
+    };
     
     Timeline = Y.Base.create("timeline", Y.View, [], {
         template : templates.timeline,
@@ -23,10 +28,14 @@ YUI.add("view-timeline", function(Y) {
         },
         
         render : function() {
+            var timeline = this.get("model").toJSON();
+            
+            timeline.tweets = timeline.tweets.map(this._tweetTransform);
+            
             this.get("container").setHTML(
                 this.template(
                     Y.merge(
-                        this.get("model").toJSON(),
+                        timeline,
                         { _t : templates }
                     )
                 )
@@ -38,7 +47,8 @@ YUI.add("view-timeline", function(Y) {
         },
         
         _renderUpdate : function(e) {
-            var models;
+            var self = this,
+                models;
             
             if(!this.rendered) {
                 return this.render();
@@ -48,9 +58,17 @@ YUI.add("view-timeline", function(Y) {
             
             this.get("container").one("ol").prepend(
                 models.reduce(function(prev, curr) {
+                    curr = self._tweetTransform(curr);
+                    
                     return prev + templates.tweet(curr);
                 }, "")
             );
+        },
+        
+        _tweetTransform : function(tweet) {
+            tweet.html = tristis.txt.autoLinkWithJSON(tweet.text, tweet.entities, options);
+            
+            return tweet;
         }
     });
     

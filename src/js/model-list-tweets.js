@@ -37,14 +37,6 @@ YUI.add("model-list-tweets", function(Y) {
             });
         },
         
-        parse : function(response) {
-            return response.map(function(tweet) {
-                tweet.html = tristis.txt.autoLinkWithJSON(tweet.text, tweet.entities);
-                
-                return tweet;
-            });
-        },
-        
         // Sort tweets by date
         comparator : function(model) {
             return Date.parse(model.created_at);
