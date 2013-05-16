@@ -1,13 +1,37 @@
 YUI.add("view-timeline", function(Y) {
     "use strict";
     
-    var tristis   = Y.namespace("Tristis"),
+    var moment    = require("moment"),
+    
+        tristis   = Y.namespace("Tristis"),
         templates = Y.namespace("Tristis.Templates"),
+        
         options, Timeline;
     
     options = {
         "data-external" : ""
     };
+    
+    moment.lang("en", {
+        relativeTime : {
+            // our custom values
+            s  : "s",
+            m  : "1m",
+            mm : "%dm",
+            h  : "1h",
+            hh : "%dh",
+            
+            // default moment.js values
+            future : "in %s",
+            past   : "%s ago",
+            d      : "a day",
+            dd     : "%d days",
+            M      : "a month",
+            MM     : "%d months",
+            y      : "a year",
+            yy     : "%d years"
+        }
+    });
     
     Timeline = Y.Base.create("timeline", Y.View, [], {
         template : templates.timeline,
@@ -30,13 +54,13 @@ YUI.add("view-timeline", function(Y) {
         render : function() {
             var timeline = this.get("model").toJSON();
             
-            timeline.tweets = timeline.tweets.map(this._tweetTransform);
-            
             this.get("container").setHTML(
                 this.template(
                     Y.merge(
-                        timeline,
-                        { _t : templates }
+                        timeline, {
+                            tweets : this._renderTweets(timeline.tweets),
+                            _t     : templates
+                        }
                     )
                 )
             );
@@ -47,8 +71,7 @@ YUI.add("view-timeline", function(Y) {
         },
         
         _renderUpdate : function(e) {
-            var self = this,
-                models;
+            var models;
             
             if(!this.rendered) {
                 return this.render();
@@ -57,18 +80,24 @@ YUI.add("view-timeline", function(Y) {
             models = e.models ? e.models : [ e.model ];
             
             this.get("container").one("ol").prepend(
-                models.reduce(function(prev, curr) {
-                    curr = self._tweetTransform(curr);
-                    
-                    return prev + templates.tweet(curr);
-                }, "")
+                this._renderTweets(models)
             );
         },
         
-        _tweetTransform : function(tweet) {
-            tweet.html = tristis.txt.autoLinkWithJSON(tweet.text, tweet.entities, options);
+        _renderTweets : function(tweets) {
+            var now = moment();
             
-            return tweet;
+            return tweets.reduce(function(prev, tweet) {
+                var time = moment(tweet.created_at),
+                    diff = now.diff(time, "hours");
+            
+                tweet.html = tristis.txt.autoLinkWithJSON(tweet.text, tweet.entities, options);
+                
+                // TODO: .fromNow is a little over-eager about showing "1 day", should figure out why
+                tweet.date = diff > 24 ? time.format("DD MMM") : time.fromNow(true);
+                
+                return prev + templates.tweet(tweet);
+            }, "");
         }
     });
     

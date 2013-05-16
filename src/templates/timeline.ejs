@@ -1,8 +1,6 @@
 <% if(data.name) { %>
 <h2><%= data.name %> <small><%= data.full_name %></small></h2>
 <% } %>
-<ol>
-    <% data.tweets.forEach(function(tweet) { %>
-    <li><%== data._t.tweet(tweet) %></li>
-    <% }); %>
+<ol class="tweets">
+    <%== data.tweets %>
 </ol>
