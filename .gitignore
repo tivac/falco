@@ -8,7 +8,7 @@ Desktop.ini
 bin
 node_modules
 npm*
-src/yui
+src/templates/compiled/*.js
 
 # Ignore configuration files
 config/*
