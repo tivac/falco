@@ -5,7 +5,6 @@ YUI.add("app-tristis", function(Y) {
         conf     = require("config").Twitter,
         //Twitter  = require("ntwitter"),
         Twitter   = require("twit"),
-        
         extensions    = Y.namespace("Extensions"),
         
         tristis       = Y.namespace("Tristis"),
@@ -120,6 +119,8 @@ YUI.add("app-tristis", function(Y) {
         
         return;
     }
+    
+    tristis.txt = require("twitter-text");
     
     tristis.app = new App({
         viewContainer : ".views"
