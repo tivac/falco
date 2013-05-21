@@ -3,7 +3,7 @@
 
 module.exports = function(grunt) {
     
-    var nwDir = grunt.option("nwdir") || "./bin/node-webkit-v0.5.1-win-ia32/";
+    var nwdir = global.nwdir = grunt.option("nwdir") || "node-webkit-v0.5.1-win-ia32";
     
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-contrib-watch");
@@ -13,6 +13,8 @@ module.exports = function(grunt) {
     grunt.loadTasks("./build/");
     
     grunt.initConfig({
+        pkg : grunt.file.readJSON("./package.json"),
+        
         mkdir : {
             bin : {
                 options : {
@@ -36,10 +38,44 @@ module.exports = function(grunt) {
         
         compress : {
             tristis : {
-                src  : [ "src/*", "package.json" ],
+                src : [
+                    "config/**",
+                    "src/**",
+                    "node_modules/**",
+                    "!node_modules/grunt*/**",
+                    "!node_modules/yui-configger/**",
+                    "!node_modules/yui/**/*.swf",
+                    "!node_modules/yui/**/*-coverage.js",
+                    "!node_modules/yui/**/*-debug.js",
+                    "!node_modules/yui/**/*-min.js",
+                    "package.json"
+                ],
+                
                 options : {
                     mode    : "zip",
+                    level   : 0,
                     archive : "./bin/tristis.nw"
+                }
+            },
+            
+            release : {
+                files : [
+                    {
+                        expand: true,
+                        src : "./tristis.exe",
+                        cwd : "./bin"
+                    }, {
+                        expand  : true,
+                        flatten : true,
+                        src     : [ "**/*.dll", "**/*.pak" ],
+                        cwd     : "./bin/" + nwdir
+                    }
+                ],
+                
+                options : {
+                    mode    : "zip",
+                    level   : 7,
+                    archive : "./bin/tristis-v<%= pkg.version %>.zip"
                 }
             }
         },
@@ -49,7 +85,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../",
                 options : {
                     execOptions : {
-                        cwd : nwDir
+                        cwd : "./bin/" + nwdir + "/"
                     }
                 }
             },
@@ -58,7 +94,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../ --debug",
                 options : {
                     execOptions : {
-                        cwd : nwDir
+                        cwd : "./bin/" + nwdir + "/"
                     }
                 }
             }
@@ -67,5 +103,5 @@ module.exports = function(grunt) {
     
     grunt.registerTask("default",     [ "shell:launch" ]);
     grunt.registerTask("debug",       [ "shell:debug" ]);
-    grunt.registerTask("release",     [ "template", "mkdir", "compress", "package" ]);
+    grunt.registerTask("release",     [ "template", "mkdir", "compress:tristis", "package", "compress:release" ]);
 };

@@ -11,13 +11,13 @@ module.exports = function(grunt) {
         var done = this.async();
         
         grunt.task.requires("mkdir");
-        grunt.task.requires("compress");
+        grunt.task.requires("compress:tristis");
         
         grunt.log.writeln("Reading buffers");
         
         async.waterfall([
             function readNodeWebkit(callback) {
-                fs.readFile(nwDir + "nw.exe", function(err, data) {
+                fs.readFile("./bin/" + global.nwdir + "/nw.exe", function(err, data) {
                     if(err) {
                         return callback(err);
                     }
