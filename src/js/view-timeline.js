@@ -3,8 +3,9 @@ YUI.add("view-timeline", function(Y) {
     
     var moment    = require("moment"),
     
-        tristis   = Y.namespace("Tristis"),
-        templates = Y.namespace("Tristis.Templates"),
+        tristis    = Y.namespace("Tristis"),
+        extensions = Y.namespace("Tristis.Extensions"),
+        templates  = Y.namespace("Tristis.Templates"),
         
         options, Timeline;
     
@@ -33,7 +34,9 @@ YUI.add("view-timeline", function(Y) {
         }
     });
     
-    Timeline = Y.Base.create("timeline", Y.View, [], {
+    Timeline = Y.Base.create("timeline", Y.View, [
+        extensions.TimelineMenus
+    ], {
         template : templates.timeline,
         
         initializer : function() {
@@ -108,6 +111,9 @@ YUI.add("view-timeline", function(Y) {
         // YUI
         "base-build",
         "view",
+        
+        // Extensions
+        "extension-timeline-menus",
         
         // Templates
         "template-timeline",

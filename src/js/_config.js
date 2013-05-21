@@ -40,6 +40,10 @@ var tristis_config = {
                             "stream-users"
                         ]
                     },
+                    "extension-timeline-menus": {
+                        path: "extension-timeline-menus.js",
+                        requires: ["node-event-html5"]
+                    },
                     "extension-tristis-events": {
                         path: "extension-tristis-events.js",
                         requires: [
@@ -160,6 +164,7 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "view",
+                            "extension-timeline-menus",
                             "template-timeline",
                             "template-tweet"
                         ]
