@@ -13,6 +13,18 @@ var tristis_config = {
                     }
                 }
             },
+            "css": {
+                base: "css/",
+                patterns: {
+                    "css-": {
+                        configFn: function (me) {
+                            "use strict";
+                            me.path = me.name.replace("css-", "") + ".css";
+                            me.type = "css";
+                        }
+                    }
+                }
+            },
             "/": {
                 base: "js/",
                 modules: {
@@ -28,6 +40,8 @@ var tristis_config = {
                             "model-user",
                             "model-list-timelines",
                             "view-nav",
+                            "css-app",
+                            "css-nav",
                             "stream-user",
                             "stream-users"
                         ]
@@ -166,7 +180,8 @@ var tristis_config = {
                             "view",
                             "extension-timeline-menus",
                             "template-timeline",
-                            "template-tweet"
+                            "template-tweet",
+                            "css-timeline"
                         ]
                     }
                 }

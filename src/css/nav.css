@@ -1,0 +1,10 @@
+/*csslint adjoining-classes:false */
+
+.child.nav { min-width: 150px; background: #666; }
+
+.child.nav .timelines { list-style-type: none; }
+
+.child.nav .timeline { position: relative; }
+.child.nav .timeline[data-updates]:after {
+    content: attr(data-updates); position: absolute; left: -55px; bottom: 2px; width: 50px; text-align: right; font-size: 85%;
+}
