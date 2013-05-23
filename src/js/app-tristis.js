@@ -147,6 +147,7 @@ YUI.add("app-tristis", function(Y) {
         "view-nav",
         
         // CSS
+        "css-app",
         "css-nav",
         
         // Streams
