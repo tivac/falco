@@ -117,6 +117,9 @@ YUI.add("view-timeline", function(Y) {
         
         // Templates
         "template-timeline",
-        "template-tweet"
+        "template-tweet",
+        
+        // CSS
+        "css-timeline"
     ]
 });

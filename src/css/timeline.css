@@ -1,0 +1,2 @@
+.yui3-app-view.timeline .tweet { list-style-type: none; }
+.yui3-app-view.timeline .tweet:nth-child(odd) { background: #EEE; }
