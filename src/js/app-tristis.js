@@ -146,6 +146,10 @@ YUI.add("app-tristis", function(Y) {
         // Views
         "view-nav",
         
+        // CSS
+        "css-app",
+        "css-nav",
+        
         // Streams
         "stream-user",
         "stream-users"
