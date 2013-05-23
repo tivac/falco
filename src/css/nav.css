@@ -1,0 +1,5 @@
+/*csslint adjoining-classes:false */
+.child.nav .timeline { position: relative; }
+.child.nav .timeline[data-updates]:after {
+    content: attr(data-updates); position: absolute; right: 0; bottom: 2px; font-size: 85%;
+}
