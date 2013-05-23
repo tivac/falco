@@ -43,7 +43,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 tweets = home.get("tweets");
                 
                 // Load first page of tweets via REST api if needed
-                if(!tweets.loaded) {
+                if(!tweets.loaded && !tweets.loading) {
                     tweets.load();
                 }
                 
@@ -99,7 +99,7 @@ YUI.add("extension-tristis-routes", function(Y) {
                 tweets   = mentions.get("tweets");
                 
                 // Load first page of tweets via REST api if needed
-                if(!tweets.loaded) {
+                if(!tweets.loaded && !tweets.loading) {
                     tweets.load();
                 }
                 
