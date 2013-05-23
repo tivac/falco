@@ -16,7 +16,8 @@ YUI.add("model-list-timelines", function(Y) {
         
         initializer : function() {
             this._handles = [
-                this.after("*:tweets", this._tweetsEvent, this)
+                this.after("*:tweets", this._tweetsEvent, this),
+                this.after("reset", this._resetEvent, this)
             ];
             
             this.publish("updated", { preventable : false });
@@ -85,11 +86,18 @@ YUI.add("model-list-timelines", function(Y) {
             return a.slug.localeCompare(b.slug);
         },
         
-        // refire tweets
+        // Refire tweets
         _tweetsEvent : function(e) {
             this.fire("updated", {
                 count : e.count,
                 src   : e.target.get("id_str") || e.target.get("id")
+            });
+        },
+        
+        // Have each timeline load its tweets
+        _resetEvent : function(e) {
+            e.models.forEach(function(model) {
+                model.get("tweets").load();
             });
         }
     });
