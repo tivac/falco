@@ -9,6 +9,10 @@ YUI.add("model-list-tweets", function(Y) {
     Tweets = Y.Base.create("tweets", Y.LazyModelList, [
         Y.namespace("Extensions").ModelListMore
     ], {
+        
+        loading : false,
+        loaded  : false,
+        
         sync : function(action, options, done) {
             var self = this,
                 args = {};
@@ -25,26 +29,35 @@ YUI.add("model-list-tweets", function(Y) {
                 args
             );
             
+            this.loading = true;
+            
             tristis.twitter.get(this.get("api"), args, function(err, resp) {
                 if(err) {
                     return done(err);
                 }
                 
                 self.loaded = true;
+                self.loading = false;
                 
                 // TODO: ensure we don't add dupe tweets somehow
                 done(err, resp);
             });
         },
         
-        // Sort tweets by date
-        comparator : function(model) {
-            return Date.parse(model.created_at);
-        },
-        
-        // Sort tweets by newest first
-        _compare : function(a, b) {
-            return b - a;
+        // Override toJSON so we always return most-recently-added tweets first
+        // We explicitly DO NOT sort the list
+        toJSON : function() {
+            var data = this.toArray(),
+                left, right, temp;
+            
+            // http://jsperf.com/js-array-reverse-vs-while-loop/9
+            for(left = 0, right = data.length - 1; left < right; left += 1, right -= 1) {
+                temp        = data[left];
+                data[left]  = data[right];
+                data[right] = temp;
+            }
+            
+            return data;
         }
     }, {
         ATTRS : {
