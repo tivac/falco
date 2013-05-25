@@ -1,2 +1,22 @@
-.yui3-app-view.timeline .tweet { list-style-type: none; }
-.yui3-app-view.timeline .tweet:nth-child(odd) { background: #EEE; }
+/*csslint adjoining-classes:false */
+.yui3-app-view.timeline {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.yui3-app-view.timeline .tweets {
+    margin: 0; padding: 0;
+}
+
+.yui3-app-view.timeline .tweet {
+    list-style-type: none;
+    padding: 10px;
+}
+
+.yui3-app-view.timeline .tweet:nth-child(odd) {
+    background: #EEE;
+}
