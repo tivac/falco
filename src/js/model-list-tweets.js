@@ -10,6 +10,8 @@ YUI.add("model-list-tweets", function(Y) {
         Y.namespace("Extensions").ModelListMore
     ], {
         
+        model   : models.Tweet,
+        
         loading : false,
         loaded  : false,
         
@@ -75,6 +77,9 @@ YUI.add("model-list-tweets", function(Y) {
         "lazy-model-list",
         
         // Extensions
-        "extension-model-list-more"
+        "extension-model-list-more",
+        
+        // Models
+        "model-tweet"
     ]
 });

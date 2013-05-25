@@ -92,7 +92,8 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "lazy-model-list",
-                            "extension-model-list-more"
+                            "extension-model-list-more",
+                            "model-tweet"
                         ]
                     },
                     "model-timeline-base": {
@@ -123,6 +124,13 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "model-timeline-base"
+                        ]
+                    },
+                    "model-tweet": {
+                        path: "model-tweet.js",
+                        requires: [
+                            "base-build",
+                            "model"
                         ]
                     },
                     "model-user": {
