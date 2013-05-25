@@ -1,8 +1,10 @@
 /*csslint adjoining-classes:false */
 
-.child.nav { min-width: 150px; background: #666; }
+.child.nav {
+    position: fixed; top: 0; bottom: 0; left: 0;
+    min-width: 150px; background: #666;  }
 
-.child.nav .timelines { list-style-type: none; }
+.child.nav .timelines { list-style-type: none; margin: 0; padding: 0; }
 
 .child.nav .timeline { position: relative; }
 .child.nav .timeline[data-updates]:after {
