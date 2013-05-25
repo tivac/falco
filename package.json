@@ -1,7 +1,7 @@
 {
     "name"        : "Tristis",
     "description" : "Node-Webkit + Twitter experiment",
-    "version"     : "0.0.2",
+    "version"     : "0.0.3",
     "keywords"    : [ "twitter" ],
     "maintainers" : [ {
         "name"  : "Pat Cavit",
