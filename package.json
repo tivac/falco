@@ -1,7 +1,7 @@
 {
     "name": "Tristis",
     "description": "Node-Webkit + Twitter experiment",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "keywords": [
         "twitter"
     ],
@@ -12,7 +12,6 @@
         }
     ],
     "main": "src/index.html",
-    
     "dependencies": {
         "config": "0.4.x",
         "oauth": "0.9.x",
@@ -21,7 +20,6 @@
         "twitter-text": "1.6.x",
         "yui": "3.x.x"
     },
-    
     "devDependencies": {
         "grunt": "0.4.x",
         "grunt-contrib-compress": "0.4.x",
