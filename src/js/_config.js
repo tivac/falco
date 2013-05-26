@@ -2,6 +2,17 @@ var tristis_config = {
         base: "../node_modules/yui/",
         filter: "raw",
         groups: {
+            "external": {
+                base: "js/external/",
+                patterns: {
+                    "external-": {
+                        configFn: function (me) {
+                            "use strict";
+                            me.path = me.name.replace("external-", "") + ".js";
+                        }
+                    }
+                }
+            },
             "template": {
                 patterns: {
                     "template-": {
