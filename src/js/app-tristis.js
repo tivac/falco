@@ -52,7 +52,7 @@ YUI.add("app-tristis", function(Y) {
                 access_token_secret : localStorage.access_secret
             });
             
-            tristis.lawnchair = new Lawnchair();
+            tristis.lawnchair = new Lawnchair(function() {});
             
             models.user      = new models.User();
             models.timelines = new models.Timelines();
