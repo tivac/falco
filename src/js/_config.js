@@ -69,6 +69,7 @@ var tristis_config = {
                         path: "extension-tristis-routes.js",
                         requires: ["gallery-lazy-load"]
                     },
+                    "extension-tweet-actions": { path: "extension-tweet-actions.js" },
                     "model-list-friends": {
                         path: "model-list-friends.js",
                         requires: [
@@ -187,9 +188,12 @@ var tristis_config = {
                             "base-build",
                             "view",
                             "extension-timeline-menus",
+                            "extension-tweet-actions",
                             "template-timeline",
                             "template-tweet",
-                            "css-timeline"
+                            "css-timeline",
+                            "css-tweet",
+                            "css-icons"
                         ]
                     }
                 }
