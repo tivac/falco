@@ -11,12 +11,3 @@
 .yui3-app-view.timeline .tweets {
     margin: 0; padding: 0;
 }
-
-.yui3-app-view.timeline .tweet {
-    list-style-type: none;
-    padding: 10px;
-}
-
-.yui3-app-view.timeline .tweet:nth-child(odd) {
-    background: #EEE;
-}
