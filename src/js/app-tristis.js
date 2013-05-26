@@ -52,6 +52,8 @@ YUI.add("app-tristis", function(Y) {
                 access_token_secret : localStorage.access_secret
             });
             
+            tristis.lawnchair = new Lawnchair();
+            
             models.user      = new models.User();
             models.timelines = new models.Timelines();
             
@@ -130,6 +132,10 @@ YUI.add("app-tristis", function(Y) {
         // YUI
         "base-build",
         "app",
+        
+        // Lawnchair
+        "external-lawnchair",
+        "external-lawnchair-indexed-db",
         
         // Generic Extensions
         "extension-view-classes",

@@ -44,6 +44,8 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "app",
+                            "external-lawnchair",
+                            "external-lawnchair-indexed-db",
                             "extension-view-classes",
                             "extension-view-parent",
                             "extension-tristis-events",
