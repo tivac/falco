@@ -41,14 +41,18 @@ module.exports = function(grunt) {
             },
             
             function write(tristis, callback) {
+                grunt.log.writeln("Writing exe");
+                
                 fs.writeFile("./bin/tristis.exe", tristis, function(err) {
                     callback(err);
                 });
             }
         ], function(err) {
-            console.error(err);
+            if(err) {
+                grunt.log.error(err);
+            }
             
-            done();
+            done(!err);
         });
     });
 };
