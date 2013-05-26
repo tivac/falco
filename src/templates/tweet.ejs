@@ -1,22 +1,26 @@
 <li class="tweet" data-id="<%= data.id_str %>">
-    <img class="icon" src="<%= data.user.profile_image_url %>" >
+    <div class="icon">
+        <img src="<%= data.user.profile_image_url %>" >
+    </div>
     
-    <div class="bd">
-        <p class="name">
-            <%= data.user.name %>
-            <span class="screen-name">@<%= data.user.screen_name %></span>
-        </p>
+    <div class="content">
+        <div class="hd">
+            <p class="name">
+                <%= data.user.name %>
+                <span class="screen-name">@<%= data.user.screen_name %></span>
+            </p>
+            
+            <p class="time">
+                <%= data.date %>
+            </p>
+        </div>
+        
         <p class="text">
             <%== data.html %>
         </p>
-        <div class="meta">
-            <p class="">
+        
+        <div class="actions">
+            <button class="retweet icon-retweet" <% if(data.retweeted) { %>disabled<% } %>>Retweet</button>
         </div>
-    </div>
-    
-    <div class="time">
-        <p>
-            <%= data.date %>
-        </p>
     </div>
 </li>

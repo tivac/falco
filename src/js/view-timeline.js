@@ -35,7 +35,8 @@ YUI.add("view-timeline", function(Y) {
     });
     
     Timeline = Y.Base.create("timeline", Y.View, [
-        extensions.TimelineMenus
+        extensions.TimelineMenus,
+        extensions.TweetActions
     ], {
         template : templates.timeline,
         
@@ -114,12 +115,15 @@ YUI.add("view-timeline", function(Y) {
         
         // Extensions
         "extension-timeline-menus",
+        "extension-tweet-actions",
         
         // Templates
         "template-timeline",
         "template-tweet",
         
         // CSS
-        "css-timeline"
+        "css-timeline",
+        "css-tweet",
+        "css-icons"
     ]
 });
