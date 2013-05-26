@@ -7,10 +7,11 @@ module.exports = {
         "consumerSecret" : ""
     },
     
-    "Ftp" : {
+    "Deploy" : {
         "host" : "",
         "port" : 21,
         "user" : "",
-        "pass" : ""
+        "pass" : "",
+        "dir"  : ""
     }
 };

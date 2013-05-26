@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     
     var fs   = require("fs"),
         Ftp  = require("jsftp"),
-        conf = require("config").Ftp;
+        conf = require("config").Deploy;
     
     grunt.registerTask("ftp", "Copy the current version zip to a FTP server", function() {
         var done = this.async(),
