@@ -28,6 +28,7 @@ module.exports = function(grunt) {
                     // Filter dev node_modules
                     "!node_modules/grunt*/**",
                     "!node_modules/yui-configger/**",
+                    "!node_modules/jsftp/**",
                     // Filter un-used yui code
                     "!node_modules/yui/**/*.swf",
                     "!node_modules/yui/**/*-coverage.js",
