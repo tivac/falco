@@ -125,12 +125,12 @@ module.exports = function(grunt) {
             // yui,
             "template",
             "mkdir",
-            "tag",
+            "tag:version",
             "compress:tristis",
             "package",
             "compress:release"
         );
     });
     
-    grunt.registerTask("deploy", [ "ftp" ]);
+    grunt.registerTask("deploy", [ "ftp", "tag:push" ]);
 };
