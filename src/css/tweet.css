@@ -1,0 +1,13 @@
+.tweet {
+    list-style-type: none;
+    padding: 10px;
+}
+
+.tweet:nth-child(odd) {
+    background: #EEE;
+}
+
+
+.tweet .actions button {
+    -webkit-appearance: none;
+}

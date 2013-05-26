@@ -1,14 +1,17 @@
 YUI.add("model-list-tweets", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
-        models  = Y.namespace("Tristis.Models"),
+    var tristis    = Y.namespace("Tristis"),
+        models     = Y.namespace("Tristis.Models"),
+        extensions = Y.namespace("Extensions"),
         
         Tweets;
     
     Tweets = Y.Base.create("tweets", Y.LazyModelList, [
-        Y.namespace("Extensions").ModelListMore
+        extensions.ModelListMore,
     ], {
+        
+        model   : models.Tweet,
         
         loading : false,
         loaded  : false,
@@ -44,6 +47,15 @@ YUI.add("model-list-tweets", function(Y) {
             });
         },
         
+        // Ensure that tweets use string IDs instead of Numbers
+        parse : function(response) {
+            return response.map(function(tweet) {
+                tweet.id = tweet.id_str;
+                
+                return tweet;
+            });
+        },
+        
         // Override toJSON so we always return most-recently-added tweets first
         // We explicitly DO NOT sort the list
         toJSON : function() {
@@ -75,6 +87,9 @@ YUI.add("model-list-tweets", function(Y) {
         "lazy-model-list",
         
         // Extensions
-        "extension-model-list-more"
+        "extension-model-list-more",
+        
+        // Models
+        "model-tweet"
     ]
 });
