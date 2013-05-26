@@ -120,11 +120,11 @@ module.exports = function(grunt) {
         
         grunt.task.run(
             "bumpup:" + type,
+            "updatePkg",
             // yui,
             "template",
             "mkdir",
             "tag",
-            "updatePkg",
             "compress:tristis",
             "package",
             "compress:release"
