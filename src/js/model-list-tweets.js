@@ -46,6 +46,15 @@ YUI.add("model-list-tweets", function(Y) {
             });
         },
         
+        // Ensure that tweets use string IDs instead of Numbers
+        parse : function(response) {
+            return response.map(function(tweet) {
+                tweet.id = tweet.id_str;
+                
+                return tweet;
+            });
+        },
+        
         // Override toJSON so we always return most-recently-added tweets first
         // We explicitly DO NOT sort the list
         toJSON : function() {

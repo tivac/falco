@@ -20,8 +20,6 @@ YUI.add("extension-tweet-actions", function(Y) {
             
             e.preventDefault();
             
-            debugger;
-            
             tweets = this.get("model").get("tweets");
             id     = e.target.ancestor(".tweet").getData("id");
             tweet  = tweets.getById(id);
