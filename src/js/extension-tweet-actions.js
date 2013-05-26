@@ -22,7 +22,15 @@ YUI.add("extension-tweet-actions", function(Y) {
             
             tweets = this.get("model").get("tweets");
             id     = e.target.ancestor(".tweet").getData("id");
-            tweet  = tweets.getById(id);
+            tweet  = tweets.revive(tweets.getById(id));
+            
+            tweet.retweet(function(err, result) {
+                if(err) {
+                    return console.error(err);
+                }
+                
+                e.target.setAttribute("disabled", "");
+            });
         }
     };
     

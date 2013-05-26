@@ -27,20 +27,16 @@ YUI.add("model-tweet", function(Y) {
         },
         
         _syncRetweet : function(options, done) {
-            tristis.twitter.get("statuses/retweet/" + this.get("id_str"), function() {
-                console.log("retweeted!", arguments);
-                
-                done();
-            });
+            tristis.twitter.post("statuses/retweet/" + this.get("id_str"), done);
         }
     }, {
         ATTRS : {
         },
         
         ACTIONS : {
-            read   : "Read",
-            reweet : "Reweet",
-            write  : "Write"
+            read    : "Read",
+            retweet : "Retweet",
+            write   : "Write"
         }
     });
     

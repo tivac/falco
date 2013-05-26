@@ -1,13 +1,14 @@
 YUI.add("model-list-tweets", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
-        models  = Y.namespace("Tristis.Models"),
+    var tristis    = Y.namespace("Tristis"),
+        models     = Y.namespace("Tristis.Models"),
+        extensions = Y.namespace("Extensions"),
         
         Tweets;
     
     Tweets = Y.Base.create("tweets", Y.LazyModelList, [
-        Y.namespace("Extensions").ModelListMore
+        extensions.ModelListMore,
     ], {
         
         model   : models.Tweet,
