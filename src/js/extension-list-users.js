@@ -14,12 +14,12 @@ YUI.add("extension-list-users", function(Y) {
                 streams.users.on("tweet", this._streamTweet, this),
                 streams.user.on("tweet", this._streamTweet, this)
             );
+            
+            this._users = {};
         },
         
         _listUsers : function() {
             var self = this;
-            
-            this._users = {};
             
             Y.batch.apply(
                 this,
