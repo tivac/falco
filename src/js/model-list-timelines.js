@@ -39,14 +39,6 @@ YUI.add("model-list-timelines", function(Y) {
             
             this._handles = null;
             
-            this.save();
-        },
-        
-        save : function() {
-            this.each(function(timeline) {
-                timeline.save({ sync : "lawnchair" });
-            });
-            
             this.sync("update", { sync : "lawnchair" });
         },
         
@@ -88,7 +80,7 @@ YUI.add("model-list-timelines", function(Y) {
             return response;
         },
         
-        // Timelines list only serializes ids of lists in it, the lists themselves
+        // Timelines only serializes ids of lists in it, the lists themselves
         // serialize their contents
         serialize : function() {
             return this.map(function(timeline) {
@@ -139,8 +131,6 @@ YUI.add("model-list-timelines", function(Y) {
         // Have each timeline load its tweets
         _resetEvent : function(e) {
             e.models.forEach(function(model) {
-                debugger;
-                
                 model.load({ sync : "lawnchair" });
                 //model.get("tweets").load();
             });

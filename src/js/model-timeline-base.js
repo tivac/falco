@@ -12,25 +12,21 @@ YUI.add("model-timeline-base", function(Y) {
         syncs.Multi
     ], {
         initializer : function(config) {
-            var tweetsList, tweets;
+            var tweets;
             
             config || (config = {});
             
             // Since Y.Base.create isn't copying it for us...
             this.constructor.SYNCS = TimelineBase.SYNCS;
             
-            debugger;
-            
-            tweets = config.tweets || [];
-            
-            tweetsList = new models.Tweets({
-                items : tweets
+            tweets = new models.Tweets({
+                items : config.tweets || []
             });
             
-            this.set("tweets", tweetsList);
+            this.set("tweets", tweets);
             
             this._handles = [
-                tweetsList.after([ "more", "add" ], this._tweetAdd, this)
+                tweets.after([ "more", "add" ], this._tweetAdd, this)
             ];
             
             this.publish("tweets", { preventable : false });
@@ -40,6 +36,21 @@ YUI.add("model-timeline-base", function(Y) {
             new Y.EventTarget(this._handles).detach();
             
             this._handles = null;
+            
+            this.save({ sync : "lawnchair" });
+        },
+        
+        // Make sure that tweets are added to the child list correctly
+        parse : function(response) {
+            if(!response.tweets) {
+                return response;
+            }
+            
+            this.get("tweets").add(response.tweets, { cached : true });
+            
+            delete response.tweets;
+            
+            return response;
         },
         
         // Override .toJSON() to make sure tweets are included
@@ -54,6 +65,11 @@ YUI.add("model-timeline-base", function(Y) {
         _tweetAdd : function(e) {
             var count = 1;
             
+            // Don't notify for tweets from cache
+            if(e.cached) {
+                return;
+            }
+            
             if(e.response || e.models) {
                 count = (e.response || e.models).lenth;
             }
@@ -63,20 +79,6 @@ YUI.add("model-timeline-base", function(Y) {
             });
         }
     }, {
-        ATTRS : {
-            tweets : {
-                setter : function(value) {
-                    var tweets = this.get("tweets");
-                    
-                    if(tweets && Array.isArray(value)) {
-                        tweets.add(value);
-                    }
-                    
-                    return tweets || value;
-                }
-            }
-        },
-        
         SYNCS : {
             lawnchair : syncs.Lawnchair,
             twitter   : syncs.Twitter

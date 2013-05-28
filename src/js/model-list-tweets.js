@@ -20,8 +20,6 @@ YUI.add("model-list-tweets", function(Y) {
             var self = this,
                 args = {};
             
-            debugger;
-            
             if(this.size()) {
                 args.since_id = this.item(0).id_str;
             }
