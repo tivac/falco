@@ -34,9 +34,7 @@ YUI.add("model-tweet", function(Y) {
         },
         
         ACTIONS : {
-            read    : "Read",
-            retweet : "Retweet",
-            write   : "Write"
+            retweet : "Retweet"
         }
     });
     

@@ -2,18 +2,35 @@ YUI.add("model-timeline-base", function(Y) {
     "use strict";
     
     var models = Y.namespace("Tristis.Models"),
+        syncs  = Y.namespace("ModelSync"),
+        
         TimelineBase;
         
-    TimelineBase = Y.Base.create("timeline", Y.Model, [], {
-        initializer : function() {
-            var tweets;
+    TimelineBase = Y.Base.create("timeline", Y.Model, [
+        syncs.Lawnchair,
+        syncs.Twitter,
+        syncs.Multi
+    ], {
+        initializer : function(config) {
+            var tweetsList, tweets;
             
-            tweets = new models.Tweets();
+            config || (config = {});
             
-            this.set("tweets", tweets);
+            // Since Y.Base.create isn't copying it for us...
+            this.constructor.SYNCS = TimelineBase.SYNCS;
+            
+            debugger;
+            
+            tweets = config.tweets || [];
+            
+            tweetsList = new models.Tweets({
+                items : tweets
+            });
+            
+            this.set("tweets", tweetsList);
             
             this._handles = [
-                tweets.after([ "more", "add" ], this._tweetAdd, this)
+                tweetsList.after([ "more", "add" ], this._tweetAdd, this)
             ];
             
             this.publish("tweets", { preventable : false });
@@ -46,8 +63,24 @@ YUI.add("model-timeline-base", function(Y) {
             });
         }
     }, {
-        url  : null,
-        type : null
+        ATTRS : {
+            tweets : {
+                setter : function(value) {
+                    var tweets = this.get("tweets");
+                    
+                    if(tweets && Array.isArray(value)) {
+                        tweets.add(value);
+                    }
+                    
+                    return tweets || value;
+                }
+            }
+        },
+        
+        SYNCS : {
+            lawnchair : syncs.Lawnchair,
+            twitter   : syncs.Twitter
+        }
     });
     
     models.TimelineBase = TimelineBase;
@@ -59,6 +92,11 @@ YUI.add("model-timeline-base", function(Y) {
         "model",
         
         // Models
-        "model-list-tweets"
+        "model-list-tweets",
+        
+        // Sync Layers
+        "model-sync-lawnchair",
+        "model-sync-twitter",
+        "gallery-model-sync-multi"
     ]
 });

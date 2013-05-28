@@ -20,10 +20,10 @@ YUI.add("model-list-tweets", function(Y) {
             var self = this,
                 args = {};
             
-            if(action === "more") {
-                if(this.size()) {
-                    args.since_id = this.item(0).id_str;
-                }
+            debugger;
+            
+            if(this.size()) {
+                args.since_id = this.item(0).id_str;
             }
             
             args = Y.merge(
@@ -33,6 +33,8 @@ YUI.add("model-list-tweets", function(Y) {
             );
             
             this.loading = true;
+            
+            console.log("Getting tweets from twitter");
             
             tristis.twitter.get(this.get("api"), args, function(err, resp) {
                 if(err) {
