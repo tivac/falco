@@ -79,16 +79,12 @@ YUI.add("app-tristis", function(Y) {
                 }
                 
                 models.timelines.load({ sync : "lawnchair" }, function(err) {
-                    if(!err) {
-                        return;
-                    }
-                    
                     models.timelines.load({ sync : "twitter" });
                 });
                 
                 streams.user.start();
                 
-                self.navigate("/");
+                self.navigate("/home");
                 
                 self._render();
             });
