@@ -41,7 +41,7 @@ YUI.add("model-timeline-home", function(Y) {
             },
             
             url  : {
-                value : "/"
+                value : "/home"
             }
         }
     });
