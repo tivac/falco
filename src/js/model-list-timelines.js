@@ -40,6 +40,11 @@ YUI.add("model-list-timelines", function(Y) {
             this._handles = null;
             
             this.sync("update", { sync : "lawnchair" });
+            
+            // destroy all our component models
+            this.each(function(timeline) {
+                timeline.destroy();
+            });
         },
         
         // Twitter sync implementation
@@ -53,6 +58,15 @@ YUI.add("model-list-timelines", function(Y) {
             if(!Array.isArray(response)) {
                 response = response ? [ response ] : [];
             }
+            
+            // Make sure we use id_str everywhere
+            response = response.map(function(timeline) {
+                if(timeline.id_str) {
+                    timeline.id = timeline.id_str;
+                }
+                
+                return timeline;
+            });
             
             // Filter out home & mentions, we need to update the existing objects correctly
             response = response.filter(function(timeline) {
