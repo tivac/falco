@@ -38,15 +38,25 @@ YUI.add("model-timeline-base", function(Y) {
             this._handles = null;
             
             this.save({ sync : "lawnchair" });
+            
+            this.get("tweets").destroy();
         },
         
         // Make sure that tweets are added to the child list correctly
         parse : function(response) {
+            var tweets;
+            
             if(!response.tweets) {
                 return response;
             }
             
-            this.get("tweets").add(response.tweets, { cached : true });
+            tweets = this.get("tweets");
+            
+            if(!tweets.size()) {
+                tweets.reset(response.tweets);
+            } else {
+                tweets.add(response.tweets, { cached : true });
+            }
             
             delete response.tweets;
             
@@ -71,7 +81,7 @@ YUI.add("model-timeline-base", function(Y) {
             }
             
             if(e.response || e.models) {
-                count = (e.response || e.models).lenth;
+                count = (e.response || e.models).length;
             }
             
             this.fire("tweets", {
