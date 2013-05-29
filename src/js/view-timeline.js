@@ -16,7 +16,7 @@ YUI.add("view-timeline", function(Y) {
     moment.lang("en", {
         relativeTime : {
             // our custom values
-            s  : "s",
+            s  : "%ds",
             m  : "1m",
             mm : "%dm",
             h  : "1h",
@@ -45,7 +45,7 @@ YUI.add("view-timeline", function(Y) {
             
             this._handles = [
                 model.after("reset", this.render, this),
-                model.get("tweets").after([ "reset", "add" ], this._renderUpdate, this)
+                model.get("tweets").after([ "reset", "add", "more" ], this._renderUpdate, this)
             ];
         },
         
@@ -81,7 +81,7 @@ YUI.add("view-timeline", function(Y) {
                 return this.render();
             }
             
-            models = e.models ? e.models : [ e.model ];
+            models = e.models || e.parsed || [ e.model ];
             
             this.get("container").one("ol").prepend(
                 this._renderTweets(models)
