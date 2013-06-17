@@ -3,7 +3,7 @@
 
 module.exports = function(grunt) {
     
-    var nwdir = global.nwdir = grunt.option("nwdir") || "node-webkit-v0.5.1-win-ia32";
+    var nwdir = global.nwdir = grunt.option("nwdir") || "node-webkit-v0.6.0-win-ia32";
     
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-contrib-watch");
