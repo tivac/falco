@@ -55,7 +55,10 @@ YUI.add("model-timeline-base", function(Y) {
             if(!tweets.size()) {
                 tweets.reset(response.tweets);
             } else {
-                tweets.add(response.tweets, { cached : true });
+                // Force new tweets to be added to the top of the list.
+                // When this is re-loaded later from the persistence layer
+                // they'll be sorted into the right spot
+                tweets.add(response.tweets, { cached : true, index : 0 });
             }
             
             delete response.tweets;

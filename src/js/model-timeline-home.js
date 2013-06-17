@@ -24,7 +24,7 @@ YUI.add("model-timeline-home", function(Y) {
                 return;
             }
             
-            this.get("tweets").add(e.tweet);
+            this.get("tweets").add(e.tweet, { index : 0 });
         }
     }, {
         ATTRS : {
