@@ -1,8 +1,11 @@
 YUI.add("extension-list-users", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
+    var async = require("async"),
+    
+        tristis = Y.namespace("Tristis"),
         streams = Y.namespace("Tristis.Streams"),
+        
         ListUsers;
     
     ListUsers = function() {};
@@ -12,7 +15,7 @@ YUI.add("extension-list-users", function(Y) {
             this._handles.push(
                 this.after([ "reset", "add" ], this._listUsers, this),
                 streams.users.on("tweet", this._streamTweet, this),
-                streams.user.on("tweet", this._streamTweet, this)
+                streams.user.on("tweet",  this._streamTweet, this)
             );
             
             this._users = {};
@@ -21,49 +24,45 @@ YUI.add("extension-list-users", function(Y) {
         _listUsers : function() {
             var self = this;
             
-            Y.batch.apply(
-                this,
-                this.map(function(list) {
-                    return new Y.Promise(function(resolve, reject) {
-                        var id = list.get("id_str");
-                
-                        // Ignore non-list timelines
-                        if(!id) {
-                            resolve();
+            async.map(
+                this.toArray(),
+                function(timeline, done) {
+                    var id = timeline.get("id");
+                    
+                    // Ignore non-list timelines
+                    if(timeline.get("type") !== "list") {
+                        return done();
+                    }
+                    
+                    tristis.twitter.get("lists/members", {
+                        list_id          : id,
+                        include_entities : false,
+                        skip_status      : true
+                    }, function(err, resp) {
+                        if(err) {
+                            return done(err);
                         }
                         
-                        tristis.twitter.get("lists/members", {
-                            list_id          : id,
-                            include_entities : false,
-                            skip_status      : true
-                        }, function(err, resp) {
-                            if(err) {
-                                return reject(err);
+                        // update lookup object
+                        resp.users.forEach(function(user) {
+                            if(user.id_str in self._users) {
+                                self._users[user.id_str].push(id);
+                            } else {
+                                self._users[user.id_str] = [ id ];
                             }
-                            
-                            // update lookup object
-                            resp.users.forEach(function(user) {
-                                if(user.id_str in self._users) {
-                                    self._users[user.id_str].push(id);
-                                } else {
-                                    self._users[user.id_str] = [ id ];
-                                }
-                            });
-                            
-                            resolve(resp.users.map(function(user) {
-                                return user.id_str;
-                            }));
                         });
+                        
+                        done(null, resp.users.map(function(user) {
+                            return user.id_str;
+                        }));
                     });
-                })
-            ).then(
-                function success(data) {
-                    var ids = Y.Array.flatten(data);
-                    
-                    streams.users.ids(ids);
                 },
-                function failure(err) {
-                    console.error(err);
+                function(err, results) {
+                    if(err) {
+                        return console.error(err);
+                    }
+                    
+                    streams.users.ids(Y.Array.flatten(results));
                 }
             );
         },
@@ -86,7 +85,6 @@ YUI.add("extension-list-users", function(Y) {
 }, "@VERSION@", {
     requires : [
         // YUI
-        "promise",
         "array-extras",
         
         // Streams
