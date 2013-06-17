@@ -2,6 +2,7 @@ YUI.add("model-timeline-list", function(Y) {
     "use strict";
     
     var models  = Y.namespace("Tristis.Models"),
+        streams = Y.namespace("Tristis.Streams"),
         
         List;
         
@@ -15,11 +16,13 @@ YUI.add("model-timeline-list", function(Y) {
                 }
             });
             
-            this.set("url", "/lists/" + this.get("id_str"));
+            this.set("url", "/lists/" + this.get("id"));
         }
     }, {
-        type : {
-            value : "list"
+        ATTRS : {
+            type : {
+                value : "list"
+            }
         }
     });
     
