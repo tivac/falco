@@ -4,13 +4,22 @@ YUI.add("model-list-timelines", function(Y) {
     var tristis = Y.namespace("Tristis"),
         models  = Y.namespace("Tristis.Models"),
         
+        syncs   = Y.namespace("ModelSync"),
+        
         Timelines;
         
     Timelines = Y.Base.create("timelines", Y.ModelList, [
-        Y.namespace("Tristis.Extensions").ListUsers
+        Y.namespace("Tristis.Extensions").ListUsers,
+        
+        // Sync Layers
+        syncs.Lawnchair,
+        syncs.Twitter,
+        syncs.Multi
     ], {
-        _home : new models.Home(),
-        _mentions : new models.Mentions(),
+        _models : {
+            home : new models.Home(),
+            mentions : new models.Mentions()
+        },
         
         model : models.List,
         
@@ -22,35 +31,74 @@ YUI.add("model-list-timelines", function(Y) {
             
             this.publish("updated", { preventable : false });
             
-            this.add(
-                this._home,
-                this._mentions
-            );
+            this.add(Y.Object.values(this._models));
         },
         
         destructor : function() {
             new Y.EventTarget(this._handles).detach();
             
-            this.stop();
+            this._handles = null;
             
-            this._handles = this._stream = this._tweetsEvent = null;
+            this.sync("update", { sync : "lawnchair" });
+            
+            // destroy all our component models
+            this.each(function(timeline) {
+                timeline.destroy();
+            });
         },
         
-        sync : function(action, options, done) {
-            var self = this;
+        // Twitter sync implementation
+        _twitterRead : function(options, done) {
+            console.log("reading lists from twitter");
             
-            if(action !== "read") {
-                return done("Unsupported action");
+            tristis.twitter.get("lists/list", done);
+        },
+        
+        parse : function(response) {
+            if(!Array.isArray(response)) {
+                response = response ? [ response ] : [];
             }
             
-            tristis.twitter.get("lists/list", function(err, resp) {
-                if(err) {
-                    return done(err);
+            // Make sure we use id_str everywhere
+            response = response.map(function(timeline) {
+                if(timeline.id_str) {
+                    timeline.id = timeline.id_str;
                 }
                 
-                resp.unshift(self._home, self._mentions);
+                return timeline;
+            });
+            
+            // Filter out home & mentions, we need to update the existing objects correctly
+            response = response.filter(function(timeline) {
+                var id, tweets;
                 
-                done(null, resp);
+                if(timeline.id !== "home" && timeline.id !== "mentions") {
+                    return true;
+                }
+                
+                id = timeline.id;
+                
+                if(timeline.tweets) {
+                    // Tweets are special!
+                    tweets = timeline.tweets;
+                    delete timeline.tweets;
+                    
+                    this._models[id].get("tweets").add(tweets);
+                }
+                
+                this._models[id].setAttrs(timeline);
+            }, this);
+            
+            response.unshift(this._models.home, this._models.mentions);
+            
+            return response;
+        },
+        
+        // Timelines only serializes ids of lists in it, the lists themselves
+        // serialize their contents
+        serialize : function() {
+            return this.map(function(timeline) {
+                return { id : timeline.get("id") };
             });
         },
         
@@ -97,8 +145,23 @@ YUI.add("model-list-timelines", function(Y) {
         // Have each timeline load its tweets
         _resetEvent : function(e) {
             e.models.forEach(function(model) {
-                model.get("tweets").load();
+                model.load({ sync : "lawnchair" });
             });
+        }
+    }, {
+        SYNCS : {
+            "lawnchair" : syncs.Lawnchair,
+            "twitter"   : syncs.Twitter
+        },
+        
+        ATTRS : {
+            name : {
+                value : "Timelines"
+            },
+            
+            id : {
+                value : 1
+            }
         }
     });
     
@@ -115,7 +178,14 @@ YUI.add("model-list-timelines", function(Y) {
         "model-timeline-mentions",
         "model-timeline-list",
         
+        // Model Sync Layers
+        "model-sync-lawnchair",
+        "model-sync-twitter",
+        
         // Extensions
-        "extension-list-users"
+        "extension-list-users",
+        
+        // Gallery
+        "gallery-model-sync-multi"
     ]
 });

@@ -19,6 +19,7 @@ YUI.add("app-tristis", function(Y) {
     App = Y.Base.create("tristis", Y.App, [
         extensions.ViewClasses,
         extensions.ViewParent,
+        
         appExtensions.Routes,
         appExtensions.Events
     ], {
@@ -29,6 +30,8 @@ YUI.add("app-tristis", function(Y) {
                 localStorage.y      = win.y;
                 localStorage.width  = win.width;
                 localStorage.height = win.height;
+                
+                tristis.app.destroy();
                 
                 process.nextTick(function() {
                     win.close(true);
@@ -42,6 +45,11 @@ YUI.add("app-tristis", function(Y) {
             this._setup();
         },
         
+        destructor : function() {
+            models.user.destroy();
+            models.timelines.destroy();
+        },
+        
         _setup : function() {
             var self = this;
             
@@ -50,6 +58,10 @@ YUI.add("app-tristis", function(Y) {
                 consumer_secret     : conf.consumerSecret,
                 access_token        : localStorage.access_token,
                 access_token_secret : localStorage.access_secret
+            });
+            
+            tristis.lawnchair = new Lawnchair(function() {
+                console.log("lawnchair ready");
             });
             
             models.user      = new models.User();
@@ -66,15 +78,15 @@ YUI.add("app-tristis", function(Y) {
                     return self._auth();
                 }
                 
-                models.timelines.load(function(err) {
-                    if(err) {
-                        console.error(err);
-                    }
+                models.timelines.load({ sync : "lawnchair" }, function(err) {
+                    // TODO: this shouldn't be a .load call, it should be something like
+                    // .update or something similar. Need to add a custom sync action.
+                    models.timelines.load({ sync : "twitter" });
                 });
                 
                 streams.user.start();
                 
-                self.navigate("/");
+                self.navigate("/home");
                 
                 self._render();
             });
@@ -130,6 +142,10 @@ YUI.add("app-tristis", function(Y) {
         // YUI
         "base-build",
         "app",
+        
+        // Lawnchair
+        "external-lawnchair",
+        "external-lawnchair-indexed-db",
         
         // Generic Extensions
         "extension-view-classes",

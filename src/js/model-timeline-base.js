@@ -2,13 +2,26 @@ YUI.add("model-timeline-base", function(Y) {
     "use strict";
     
     var models = Y.namespace("Tristis.Models"),
+        syncs  = Y.namespace("ModelSync"),
+        
         TimelineBase;
         
-    TimelineBase = Y.Base.create("timeline", Y.Model, [], {
-        initializer : function() {
+    TimelineBase = Y.Base.create("timeline", Y.Model, [
+        syncs.Lawnchair,
+        syncs.Twitter,
+        syncs.Multi
+    ], {
+        initializer : function(config) {
             var tweets;
             
-            tweets = new models.Tweets();
+            config || (config = {});
+            
+            // Since Y.Base.create isn't copying it for us...
+            this.constructor.SYNCS = TimelineBase.SYNCS;
+            
+            tweets = new models.Tweets({
+                items : config.tweets || []
+            });
             
             this.set("tweets", tweets);
             
@@ -23,6 +36,34 @@ YUI.add("model-timeline-base", function(Y) {
             new Y.EventTarget(this._handles).detach();
             
             this._handles = null;
+            
+            this.save({ sync : "lawnchair" });
+            
+            this.get("tweets").destroy();
+        },
+        
+        // Make sure that tweets are added to the child list correctly
+        parse : function(response) {
+            var tweets;
+            
+            if(!response.tweets) {
+                return response;
+            }
+            
+            tweets = this.get("tweets");
+            
+            if(!tweets.size()) {
+                tweets.reset(response.tweets);
+            } else {
+                // Force new tweets to be added to the top of the list.
+                // When this is re-loaded later from the persistence layer
+                // they'll be sorted into the right spot
+                tweets.add(response.tweets, { cached : true, index : 0 });
+            }
+            
+            delete response.tweets;
+            
+            return response;
         },
         
         // Override .toJSON() to make sure tweets are included
@@ -37,8 +78,13 @@ YUI.add("model-timeline-base", function(Y) {
         _tweetAdd : function(e) {
             var count = 1;
             
+            // Don't notify for tweets from cache
+            if(e.cached) {
+                return;
+            }
+            
             if(e.response || e.models) {
-                count = (e.response || e.models).lenth;
+                count = (e.response || e.models).length;
             }
             
             this.fire("tweets", {
@@ -46,8 +92,10 @@ YUI.add("model-timeline-base", function(Y) {
             });
         }
     }, {
-        url  : null,
-        type : null
+        SYNCS : {
+            lawnchair : syncs.Lawnchair,
+            twitter   : syncs.Twitter
+        }
     });
     
     models.TimelineBase = TimelineBase;
@@ -59,6 +107,11 @@ YUI.add("model-timeline-base", function(Y) {
         "model",
         
         // Models
-        "model-list-tweets"
+        "model-list-tweets",
+        
+        // Sync Layers
+        "model-sync-lawnchair",
+        "model-sync-twitter",
+        "gallery-model-sync-multi"
     ]
 });
