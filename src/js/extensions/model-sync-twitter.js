@@ -6,7 +6,7 @@ YUI.add("model-sync-twitter", function(Y) {
     TwitterSync = function() {};
     
     TwitterSync.prototype = {
-        serialize : function(action) {
+        serialize : function() {
             return this.toJSON();
         },
         
