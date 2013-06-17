@@ -1,6 +1,6 @@
 <% data.timelines.forEach(function(timeline) { %>
 <li class="timeline <%= timeline.slug %><% if(timeline.url === data.path) { %> active<% } %>"
-    data-id="<%= timeline.id_str || timeline.id %>"
+    data-id="<%= timeline.id %>"
 >
     <a href="<%= timeline.url %>">
         <%= timeline.name %>
