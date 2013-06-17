@@ -8,7 +8,7 @@ YUI.add("model-sync-lawnchair", function(Y) {
     
     LawnchairSync.prototype = {
         
-        initializer : function(config) {
+        initializer : function() {
             var self = this;
             
             this._lawnchairKey = Y.cached(function() {
@@ -16,7 +16,7 @@ YUI.add("model-sync-lawnchair", function(Y) {
             });
         },
         
-        serialize : function(action) {
+        serialize : function() {
             return this.toJSON();
         },
         
@@ -77,6 +77,7 @@ YUI.add("model-sync-lawnchair", function(Y) {
     };
     
     Y.namespace("ModelSync").Lawnchair = LawnchairSync;
+    
 }, "@VERSION@", {
     requires : [
         // lawnchair
