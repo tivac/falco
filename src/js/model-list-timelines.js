@@ -146,7 +146,6 @@ YUI.add("model-list-timelines", function(Y) {
         _resetEvent : function(e) {
             e.models.forEach(function(model) {
                 model.load({ sync : "lawnchair" });
-                //model.get("tweets").load();
             });
         }
     }, {
