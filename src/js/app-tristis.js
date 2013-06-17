@@ -79,6 +79,8 @@ YUI.add("app-tristis", function(Y) {
                 }
                 
                 models.timelines.load({ sync : "lawnchair" }, function(err) {
+                    // TODO: this shouldn't be a .load call, it should be something like
+                    // .update or something similar. Need to add a custom sync action.
                     models.timelines.load({ sync : "twitter" });
                 });
                 
