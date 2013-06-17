@@ -20,7 +20,7 @@ YUI.add("model-list-tweets", function(Y) {
             }
             
             args = Y.merge(
-                { count : 50 },
+                { count : 200 },
                 this.get("config") || {},
                 args
             );
@@ -43,6 +43,14 @@ YUI.add("model-list-tweets", function(Y) {
                 
                 return tweet;
             });
+        },
+        
+        comparator : function(tweet) {
+            return Date.parse(tweet.created_at);
+        },
+        
+        _sort : function(a, b) {
+            return this.comparator(b) - this.comparator(a);
         }
     }, {
         ATTRS : {
