@@ -29,7 +29,8 @@
         "grunt-bumpup": "0.2.x",
         "async": "0.2.x",
         "yui-configger": "0.1.x",
-        "jsftp": "0.6.x"
+        "jsftp": "0.6.x",
+        "progress": "0.1.x"
     },
     "window": {
         "show": true,
