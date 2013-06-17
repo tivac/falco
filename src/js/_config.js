@@ -2,6 +2,17 @@ var tristis_config = {
         base: "../node_modules/yui/",
         filter: "raw",
         groups: {
+            "external": {
+                base: "js/external/",
+                patterns: {
+                    "external-": {
+                        configFn: function (me) {
+                            "use strict";
+                            me.path = me.name.replace("external-", "") + ".js";
+                        }
+                    }
+                }
+            },
             "template": {
                 patterns: {
                     "template-": {
@@ -33,6 +44,8 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "app",
+                            "external-lawnchair",
+                            "external-lawnchair-indexed-db",
                             "extension-view-classes",
                             "extension-view-parent",
                             "extension-tristis-events",
@@ -85,7 +98,10 @@ var tristis_config = {
                             "model-timeline-home",
                             "model-timeline-mentions",
                             "model-timeline-list",
-                            "extension-list-users"
+                            "model-sync-lawnchair",
+                            "model-sync-twitter",
+                            "extension-list-users",
+                            "gallery-model-sync-multi"
                         ]
                     },
                     "model-list-tweets": {
@@ -102,7 +118,10 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "model",
-                            "model-list-tweets"
+                            "model-list-tweets",
+                            "model-sync-lawnchair",
+                            "model-sync-twitter",
+                            "gallery-model-sync-multi"
                         ]
                     },
                     "model-timeline-home": {
@@ -212,7 +231,12 @@ var tristis_config = {
                             "view",
                             "event-custom"
                         ]
-                    }
+                    },
+                    "model-sync-lawnchair": {
+                        path: "model-sync-lawnchair.js",
+                        requires: ["external-lawnchair"]
+                    },
+                    "model-sync-twitter": { path: "model-sync-twitter.js" }
                 }
             },
             "/gallery/": {
@@ -222,7 +246,8 @@ var tristis_config = {
                     "gallery-lazy-load": {
                         path: "gallery-lazy-load.js",
                         requires: ["oop"]
-                    }
+                    },
+                    "gallery-model-sync-multi": { path: "model-sync-multi.js" }
                 }
             },
             "/oauth/": {

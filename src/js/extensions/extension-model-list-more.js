@@ -35,10 +35,14 @@ YUI.add("extension-model-list-more", function(Y) {
                         });
                     }
                     
-                    parsed = facade.parsed = self.parse(response);
+                    parsed = self.parse(response);
+                    parsed = self.add(parsed, Y.merge(options, { silent : true }));
+                    parsed = parsed.filter(function(item) {
+                        return !!item;
+                    });
                     
-                    self.add(parsed, Y.merge(options, { silent : true }));
-                    
+                    facade.parsed = parsed;
+                        
                     self.fire("more", facade);
                 }
 

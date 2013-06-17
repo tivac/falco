@@ -10,20 +10,13 @@ YUI.add("model-list-tweets", function(Y) {
     Tweets = Y.Base.create("tweets", Y.LazyModelList, [
         extensions.ModelListMore,
     ], {
-        
         model   : models.Tweet,
         
-        loading : false,
-        loaded  : false,
-        
         sync : function(action, options, done) {
-            var self = this,
-                args = {};
+            var args = {};
             
-            if(action === "more") {
-                if(this.size()) {
-                    args.since_id = this.item(0).id_str;
-                }
+            if(this.size()) {
+                args.since_id = this.item(0).id_str;
             }
             
             args = Y.merge(
@@ -39,10 +32,6 @@ YUI.add("model-list-tweets", function(Y) {
                     return done(err);
                 }
                 
-                self.loaded = true;
-                self.loading = false;
-                
-                // TODO: ensure we don't add dupe tweets somehow
                 done(err, resp);
             });
         },
@@ -54,22 +43,6 @@ YUI.add("model-list-tweets", function(Y) {
                 
                 return tweet;
             });
-        },
-        
-        // Override toJSON so we always return most-recently-added tweets first
-        // We explicitly DO NOT sort the list
-        toJSON : function() {
-            var data = this.toArray(),
-                left, right, temp;
-            
-            // http://jsperf.com/js-array-reverse-vs-while-loop/9
-            for(left = 0, right = data.length - 1; left < right; left += 1, right -= 1) {
-                temp        = data[left];
-                data[left]  = data[right];
-                data[right] = temp;
-            }
-            
-            return data;
         }
     }, {
         ATTRS : {
