@@ -2,10 +2,9 @@
 "use strict";
 
 var fs   = require("fs"),
-    path = require("path"),
     
     unzip    = require("unzip"),
-    Progress = require("progress");;
+    Progress = require("progress");
 
 module.exports = function(grunt) {
     
@@ -23,40 +22,37 @@ module.exports = function(grunt) {
                 return false;
             }
             
-            config = {
-                src  : grunt.template.process(config.src),
-                dest : grunt.template.process(config.dest)
-            };
-            
             grunt.log.writeln("Unzipping " + config.src + " to " + config.dest);
-            bar = new Progress("[:bar] :percent", {
-                incomplete : " ",
-                width      : "50",
-                total      : fs.statSync(config.src).size
-            });
+            
+            if(grunt.option("verbose")) {
+                bar = new Progress("[:bar] :percent", {
+                    incomplete : " ",
+                    width      : "50",
+                    total      : fs.statSync(config.src).size
+                });
+            }
             
             done = this.async();
             
-            stream = fs.createReadStream(grunt.template.process(config.src));
+            stream = fs.createReadStream(config.src);
             stream.pause();
             
             stream.pipe(unzip.Extract({
-                path : grunt.template.process(config.dest)
+                path : config.dest
             }));
             
-            stream.on("data", function(data) {
-                bar.tick(data.length);
-            });
+            if(grunt.option("verbose")) {
+                stream.on("data", function(data) {
+                    bar.tick(data.length);
+                });
+            }
             
             stream.on("close", function() {
-                //TODO: deal with the zip containing a top-level folder
-                
-                
                 done();
             });
             
             stream.on("error", function(error) {
-                grunt.log.error("Unzip error");
+                grunt.fail.warn("Unzip error");
                 grunt.log.error(error);
                 
                 done(false);

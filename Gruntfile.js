@@ -9,12 +9,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-shell");
     grunt.loadNpmTasks("grunt-bumpup");
     grunt.loadNpmTasks("grunt-curl");
-    //grunt.loadNpmTasks("grunt-zip");
     
     grunt.loadTasks("./build/");
     
     grunt.initConfig({
         pkg : grunt.file.readJSON("./package.json"),
+        
+        nodewebkit : {
+            name : "node-webkit-v<%= pkg.nodewebkit.version %>-win-ia32"
+        },
         
         bumpup : "package.json",
         
@@ -53,22 +56,22 @@ module.exports = function(grunt) {
                         expand  : true,
                         flatten : true,
                         src     : [ "**/*.dll", "**/*.pak" ],
-                        cwd     : "./bin/<% pkg.nodewebkit.dir %>"
+                        cwd     : "./bin/<%= nodewebkit.name %>"
                     }
                 ],
                 
                 options : {
                     mode    : "zip",
                     level   : 7,
-                    archive : "./bin/tristis-v<% pkg.version %>.zip"
+                    archive : "./bin/tristis-v<%= pkg.version %>.zip"
                 }
             }
         },
         
         curl : {
             nw : {
-                src  : "https://s3.amazonaws.com/node-webkit/v<%= pkg.nodewebkit.version %>/node-webkit-v<%= pkg.nodewebkit.version %>-win-ia32.zip",
-                dest : "./bin/node-webkit-v<%= pkg.nodewebkit.version %>-win-ia32.zip"
+                src  : "https://s3.amazonaws.com/node-webkit/v<%= pkg.nodewebkit.version %>/<%= nodewebkit.name %>.zip",
+                dest : "./bin/<%= nodewebkit.name %>.zip"
             }
         },
         
@@ -85,7 +88,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../",
                 options : {
                     execOptions : {
-                        cwd : "<%= unzip.nw.dest %>"
+                        cwd : "<%= unzip.nw.dest %>/<%= nodewebkit.name %>"
                     }
                 }
             },
@@ -94,7 +97,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../ --debug",
                 options : {
                     execOptions : {
-                        cwd : "<%= unzip.nw.dest %>"
+                        cwd : "<%= unzip.nw.dest %>/<%= nodewebkit.name %>"
                     }
                 }
             }
@@ -123,30 +126,54 @@ module.exports = function(grunt) {
     
     // Task for updating the pkg config property. Needs to be run after
     // bumpup so the next tasks in queue can work with updated values.
-    grunt.registerTask("update:package", function () {
-        grunt.config.set("pkg", grunt.file.readJSON("package.json"));
-    });
+    grunt.registerTask(
+        "update:package",
+        "Re-read package.json from disk to pick up changes from bumpup",
+        function () {
+            grunt.config.set("pkg", grunt.file.readJSON("package.json"));
+        }
+    );
     
-    grunt.registerTask("default", [ "shell:launch" ]);
-    grunt.registerTask("debug",   [ "shell:debug" ]);
+    grunt.registerTask(
+        "default",
+        "Run local version of the app",
+        "shell:launch"
+    );
     
-    grunt.registerTask("release", "", function(type) {
-        type || (type = "patch");
-        
-        grunt.task.run(
-            "bumpup:" + type,
-            "update:package",
-            // yui,
-            "template",
-            "mkdir",
-            "tag:version",
-            "compress:tristis",
-            "package",
-            "compress:release"
-        );
-    });
+    grunt.registerTask(
+        "debug",
+        "Run local version of the app with developer tools open",
+        "shell:debug"
+    );
     
-    grunt.registerTask("deploy", [ "ftp", "tag:push" ]);
+    grunt.registerTask(
+        "release",
+        "Build a release executable & tag the current revision",
+        function(type) {
+            type || (type = "patch");
+            
+            grunt.task.run(
+                "bumpup:" + type,
+                "update:package",
+                // yui,
+                "template",
+                "mkdir",
+                "compress:tristis",
+                "package",
+                "compress:release"
+            );
+        }
+    );
     
-    grunt.registerTask("node-webkit", [ "curl:nw", "unzip:nw" ]);
+    grunt.registerTask(
+        "deploy",
+        "Push the current release & tags",
+        [ "ftp", "tag:version", "tag:push" ]
+    );
+    
+    grunt.registerTask(
+        "node-webkit",
+        "Fetch & extract the version of node-webkit specified in package.json",
+        [ "curl:nw", "unzip:nw" ]
+    );
 };

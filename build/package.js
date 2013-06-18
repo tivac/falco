@@ -2,6 +2,7 @@
 "use strict";
 
 var fs    = require("fs"),
+    path  = require("path"),
     async = require("async");
 
 module.exports = function(grunt) {
@@ -18,7 +19,11 @@ module.exports = function(grunt) {
         async.waterfall([
             function readNodeWebkit(callback) {
                 fs.readFile(
-                    grunt.template.process("<%= unzip.nw.dest %>") + "/nw.exe",
+                    path.join(
+                        grunt.config("unzip.nw.dest"),
+                        grunt.config("nodewebkit.name"),
+                        "nw.exe"
+                    ),
                     function(err, data) {
                         if(err) {
                             return callback(err);
