@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         conf     = require("config").Deploy,
         Progress = require("progress");
     
-    grunt.registerTask("ftp", "Copy the current version zip to a FTP server", function() {
+    grunt.registerTask("ftp", "Upload a release via FTP", function() {
         var done = this.async(),
             ftp  = new Ftp(conf),
             file = "tristis-v" + grunt.config.get("pkg").version + ".zip",

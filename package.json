@@ -1,40 +1,45 @@
 {
-    "name": "Tristis",
-    "description": "Node-Webkit + Twitter experiment",
-    "version": "0.0.5",
-    "keywords": [
-        "twitter"
-    ],
-    "maintainers": [
-        {
-            "name": "Pat Cavit",
-            "email": "pcavit@gmail.com"
-        }
-    ],
-    "main": "src/index.html",
-    "dependencies": {
-        "config": "0.4.x",
-        "oauth": "0.9.x",
-        "moment": "2.0.x",
-        "twit": "1.1.x",
-        "twitter-text": "1.6.x",
-        "yui": "3.x.x"
-    },
-    "devDependencies": {
-        "grunt": "0.4.x",
-        "grunt-contrib-compress": "0.4.x",
-        "grunt-contrib-watch": "0.4.x",
-        "grunt-mkdir": "0.1.x",
-        "grunt-shell": "0.2.x",
-        "grunt-bumpup": "0.2.x",
-        "async": "0.2.x",
-        "yui-configger": "0.1.x",
-        "jsftp": "0.6.x",
-        "progress": "0.1.x"
-    },
-    "window": {
-        "show": true,
-        "toolbar": true,
-        "title": "Tristis"
+  "name": "Tristis",
+  "description": "Node-Webkit + Twitter experiment",
+  "version": "0.0.5",
+  "keywords": [
+    "twitter"
+  ],
+  "maintainers": [
+    {
+      "name": "Pat Cavit",
+      "email": "pcavit@gmail.com"
     }
+  ],
+  "main": "src/index.html",
+  "dependencies": {
+    "config": "0.4.x",
+    "oauth": "0.9.x",
+    "moment": "2.0.x",
+    "twit": "1.1.x",
+    "twitter-text": "1.6.x",
+    "yui": "3.x.x"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-compress": "0.4.x",
+    "grunt-contrib-watch": "0.4.x",
+    "grunt-mkdir": "0.1.x",
+    "grunt-shell": "0.2.x",
+    "grunt-bumpup": "0.2.x",
+    "async": "0.2.x",
+    "yui-configger": "0.1.x",
+    "jsftp": "0.6.x",
+    "progress": "0.1.x",
+    "grunt-curl": "1.1.x",
+    "unzip": "0.1.x"
+  },
+  "window": {
+    "show": true,
+    "toolbar": true,
+    "title": "Tristis"
+  },
+  "nodewebkit": {
+    "version": "0.6.0"
+  }
 }
