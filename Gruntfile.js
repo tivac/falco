@@ -3,13 +3,13 @@
 
 module.exports = function(grunt) {
     
-    var nwdir = global.nwdir = grunt.option("nwdir") || "node-webkit-v0.6.0-win-ia32";
-    
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-mkdir");
     grunt.loadNpmTasks("grunt-shell");
     grunt.loadNpmTasks("grunt-bumpup");
+    grunt.loadNpmTasks("grunt-curl");
+    //grunt.loadNpmTasks("grunt-zip");
     
     grunt.loadTasks("./build/");
     
@@ -53,15 +53,22 @@ module.exports = function(grunt) {
                         expand  : true,
                         flatten : true,
                         src     : [ "**/*.dll", "**/*.pak" ],
-                        cwd     : "./bin/" + nwdir
+                        cwd     : "./bin/<% pkg.nodewebkit.dir %>"
                     }
                 ],
                 
                 options : {
                     mode    : "zip",
                     level   : 7,
-                    archive : "./bin/tristis-v<%= pkg.version %>.zip"
+                    archive : "./bin/tristis-v<% pkg.version %>.zip"
                 }
+            }
+        },
+        
+        curl : {
+            nw : {
+                src  : "https://s3.amazonaws.com/node-webkit/v<%= pkg.nodewebkit.version %>/node-webkit-v<%= pkg.nodewebkit.version %>-win-ia32.zip",
+                dest : "./bin/node-webkit-v<%= pkg.nodewebkit.version %>-win-ia32.zip"
             }
         },
         
@@ -78,7 +85,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../",
                 options : {
                     execOptions : {
-                        cwd : "./bin/" + nwdir + "/"
+                        cwd : "<%= unzip.nw.dest %>"
                     }
                 }
             },
@@ -87,7 +94,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../ --debug",
                 options : {
                     execOptions : {
-                        cwd : "./bin/" + nwdir + "/"
+                        cwd : "<%= unzip.nw.dest %>"
                     }
                 }
             }
@@ -104,24 +111,31 @@ module.exports = function(grunt) {
                 files : [ "src/js/**", "!src/js/_config*", "!src/js/debug.js" ],
                 tasks : "yui"
             }*/
+        },
+        
+        unzip : {
+            nw : {
+                src  : "<%= curl.nw.dest %>",
+                dest : "./bin/node-webkit-v<%= pkg.nodewebkit.version %>/"
+            }
         }
     });
     
     // Task for updating the pkg config property. Needs to be run after
     // bumpup so the next tasks in queue can work with updated values.
-    grunt.registerTask("updatePkg", function () {
+    grunt.registerTask("update:package", function () {
         grunt.config.set("pkg", grunt.file.readJSON("package.json"));
     });
     
-    grunt.registerTask("default",     [ "shell:launch" ]);
-    grunt.registerTask("debug",       [ "shell:debug" ]);
+    grunt.registerTask("default", [ "shell:launch" ]);
+    grunt.registerTask("debug",   [ "shell:debug" ]);
     
     grunt.registerTask("release", "", function(type) {
         type || (type = "patch");
         
         grunt.task.run(
             "bumpup:" + type,
-            "updatePkg",
+            "update:package",
             // yui,
             "template",
             "mkdir",

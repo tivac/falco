@@ -17,13 +17,16 @@ module.exports = function(grunt) {
         
         async.waterfall([
             function readNodeWebkit(callback) {
-                fs.readFile("./bin/" + global.nwdir + "/nw.exe", function(err, data) {
-                    if(err) {
-                        return callback(err);
-                    }
+                fs.readFile(
+                    grunt.template.process("<%= unzip.nw.dest %>") + "/nw.exe",
+                    function(err, data) {
+                        if(err) {
+                            return callback(err);
+                        }
                     
-                    callback(null, data);
-                });
+                        callback(null, data);
+                    }
+                );
             },
             
             function readTristis(nw, callback) {
