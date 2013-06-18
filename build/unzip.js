@@ -1,7 +1,8 @@
 /*jshint node:true */
 "use strict";
 
-var fs = require("fs"),
+var fs   = require("fs"),
+    path = require("path"),
     
     unzip    = require("unzip"),
     Progress = require("progress");;
@@ -17,7 +18,7 @@ module.exports = function(grunt) {
                 done, stream, bar;
             
             if(!config.src || !config.dest) {
-                grunt.log.error("Missing src or dest");
+                grunt.fail.warn("Missing src or dest");
                 
                 return false;
             }
@@ -48,6 +49,9 @@ module.exports = function(grunt) {
             });
             
             stream.on("close", function() {
+                //TODO: deal with the zip containing a top-level folder
+                
+                
                 done();
             });
             

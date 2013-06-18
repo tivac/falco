@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         unzip : {
             nw : {
                 src  : "<%= curl.nw.dest %>",
-                dest : "./bin/node-webkit-v<%= pkg.nodewebkit.version %>/"
+                dest : "./bin/"
             }
         }
     });
@@ -147,4 +147,6 @@ module.exports = function(grunt) {
     });
     
     grunt.registerTask("deploy", [ "ftp", "tag:push" ]);
+    
+    grunt.registerTask("node-webkit", [ "curl:nw", "unzip:nw" ]);
 };
