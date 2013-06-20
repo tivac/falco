@@ -18,7 +18,7 @@
     "moment": "2.0.x",
     "twit": "1.1.x",
     "twitter-text": "1.6.x",
-    "yui": "3.x.x"
+    "yui": "3.10.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",
