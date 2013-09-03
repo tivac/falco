@@ -1,6 +1,11 @@
-## Intro ##
+Tristis
+=======
 
 I made a Twitter client. Well, I've started a Twitter client. We shall see how far I take it.
+
+[![Packages](https://david-dm.org/tivac/tristis/status.png)](https://david-dm.org/tivac/tristis/)
+[![Dev Packages](https://david-dm.org/tivac/tristis/dev-status.png)](https://david-dm.org/tivac/tristis/)
+
 
 ## Features ##
 
