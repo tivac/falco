@@ -1,3 +1,4 @@
+/*jshint browser:true, yui:true */
 YUI.add("app-tristis", function(Y) {
     "use strict";
     

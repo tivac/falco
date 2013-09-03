@@ -1,3 +1,4 @@
+/*jshint browser:true, yui:true */
 YUI.add("model-list-timelines", function(Y) {
     "use strict";
     

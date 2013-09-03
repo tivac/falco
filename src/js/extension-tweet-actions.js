@@ -1,3 +1,4 @@
+/*jshint browser:true, yui:true */
 YUI.add("extension-tweet-actions", function(Y) {
     "use strict";
     
