@@ -21,7 +21,6 @@ module.exports = function(grunt) {
                 fs.readFile(
                     path.join(
                         grunt.config("unzip.nw.dest"),
-                        grunt.config("nodewebkit.name"),
                         "nw.exe"
                     ),
                     function(err, data) {

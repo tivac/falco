@@ -1,7 +1,7 @@
 {
   "name": "Tristis",
   "description": "Node-Webkit + Twitter experiment",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "keywords": [
     "twitter"
   ],
@@ -29,8 +29,6 @@
     "grunt-bumpup": "0.2.x",
     "async": "0.2.x",
     "yui-configger": "~0.2.1",
-    "jsftp": "1.1.x",
-    "progress": "1.0.x",
     "grunt-curl": "1.1.x",
     "unzip": "0.1.x"
   },

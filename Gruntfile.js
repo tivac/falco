@@ -168,7 +168,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         "deploy",
         "Push the current release & tags",
-        [ "ftp", "tag:version", "tag:push" ]
+        [ "tag:version", "tag:push" ]
     );
     
     grunt.registerTask(
