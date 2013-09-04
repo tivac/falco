@@ -2,12 +2,10 @@
 "use strict";
 
 module.exports = function(grunt) {
+    var Configger = require("yui-configger");
     
     grunt.registerTask("yui", "Build YUI config information", function() {
-        var Configger = require("yui-configger"),
-            configger;
-        
-        configger = new Configger({
+        var configger = new Configger({
             root   : "./src/js/",
             quiet  : !grunt.option("verbose")
         });

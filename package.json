@@ -28,7 +28,7 @@
     "grunt-shell": "0.3.x",
     "grunt-bumpup": "0.2.x",
     "async": "0.2.x",
-    "yui-configger": "0.2.x",
+    "yui-configger": "~0.2.1",
     "jsftp": "1.1.x",
     "progress": "1.0.x",
     "grunt-curl": "1.1.x",
@@ -40,6 +40,6 @@
     "title": "Tristis"
   },
   "nodewebkit": {
-    "version": "0.6.0"
+    "version": "0.7.2"
   }
 }

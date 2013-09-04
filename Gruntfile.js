@@ -88,7 +88,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../",
                 options : {
                     execOptions : {
-                        cwd : "<%= unzip.nw.dest %>/<%= nodewebkit.name %>"
+                        cwd : "<%= unzip.nw.dest %>"
                     }
                 }
             },
@@ -97,7 +97,7 @@ module.exports = function(grunt) {
                 command : "nw.exe ../../ --debug",
                 options : {
                     execOptions : {
-                        cwd : "<%= unzip.nw.dest %>/<%= nodewebkit.name %>"
+                        cwd : "<%= unzip.nw.dest %>"
                     }
                 }
             }
@@ -110,16 +110,16 @@ module.exports = function(grunt) {
             },
             
             // Disabled until I figure out some configger issues
-            /*modules : {
+            modules : {
                 files : [ "src/js/**", "!src/js/_config*", "!src/js/debug.js" ],
                 tasks : "yui"
-            }*/
+            }
         },
         
         unzip : {
             nw : {
                 src  : "<%= curl.nw.dest %>",
-                dest : "./bin/"
+                dest : "./bin/<%= nodewebkit.name %>/"
             }
         }
     });

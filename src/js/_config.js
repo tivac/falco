@@ -1,4 +1,3 @@
-/*exported tristis_config */
 var tristis_config = {
         base: "../node_modules/yui/",
         filter: "raw",
@@ -63,7 +62,6 @@ var tristis_config = {
                     "extension-list-users": {
                         path: "extension-list-users.js",
                         requires: [
-                            "promise",
                             "array-extras",
                             "stream-users"
                         ]
