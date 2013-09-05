@@ -37,7 +37,7 @@ YUI.add("model-timeline-base", function(Y) {
         parse : function(response) {
             var tweets;
             
-            if(!response.tweets) {
+            if(!resonse || !response.tweets) {
                 return response;
             }
             
