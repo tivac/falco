@@ -13,7 +13,7 @@ YUI.add("model-list-timelines", function(Y) {
         Y.namespace("Tristis.Extensions").ListUsers
     ], {
         _models : {
-            home : new models.Home(),
+            home     : new models.Home(),
             mentions : new models.Mentions()
         },
         
@@ -41,11 +41,12 @@ YUI.add("model-list-timelines", function(Y) {
             });
         },
         
-        // Twitter sync implementation
-        _twitterRead : function(options, done) {
-            console.log("reading lists from twitter");
+        sync : function(action, options, done) {
+            if(action !== "read") {
+                done("Unsupported action");
+            }
             
-            tristis.twitter.get("lists/list", done);
+            this._read(options, done);
         },
         
         parse : function(response) {
@@ -87,6 +88,15 @@ YUI.add("model-list-timelines", function(Y) {
             
             return response;
         },
+        
+        // Sync implementation
+        _read : function(options, done) {
+            console.log("reading lists from twitter");
+            
+            tristis.twitter.get("lists/list", done);
+        },
+        
+
         
         // Timelines only serializes ids of lists in it, the lists themselves
         // serialize their contents
