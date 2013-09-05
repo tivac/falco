@@ -41,7 +41,8 @@ YUI.add("view-list", function(Y) {
         },
         
         _renderTweets : function(e) {
-            var models;
+            var models,
+                list;
             
             // Render first if necessary
             if(!this._rendered) {
@@ -51,11 +52,16 @@ YUI.add("view-list", function(Y) {
             // Handle results from "reset"/"more"/"add" events
             models = e.models || e.response || [ e.model ];
             
-            this.get("container").one("ol").prepend(
+            list = this.get("container").one("ol");
+            
+            list.prepend(
                 models.reduce(function tweetTemplates(prev, curr) {
                     return prev + templates.tweet(curr);
                 }, "")
             );
+            
+            // TODO: Update timestamps for the rest of the tweets
+            // TODO: How to approach that? DOM? ModelList? Dunno yet.
         }
     });
     
