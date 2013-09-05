@@ -49,15 +49,19 @@ YUI.add("view-nav", function(Y) {
         },
         
         updated : function(args) {
-            var list  = this.get("container").one("[data-id='" + args.id + "']"),
-                count = parseInt(list.getData("updates"), 10) || 0;
+            var list = this.get("container").one("[data-id='" + args.id + "']"),
+                count;
             
             // only update inactive links
-            if(!list.hasClass("active")) {
-                console.log(args.id + " has " + (args.count + count) + " updates");
-                
-                list.setAttribute("data-updates", args.count + count);
+            if(list.hasClass("active")) {
+                return;
             }
+            
+            count = parseInt(list.getData("updates"), 10) || 0;
+            
+            console.log(args.id + " has " + (args.count + count) + " updates");
+            
+            list.setAttribute("data-updates", args.count + count);
         },
         
         _renderLists : function() {
