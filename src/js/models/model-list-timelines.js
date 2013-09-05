@@ -35,8 +35,6 @@ YUI.add("model-list-timelines", function(Y) {
             
             this._handles = null;
             
-            this.sync("update", { sync : "lawnchair" });
-            
             // destroy all our component models
             this.each(function(timeline) {
                 timeline.destroy();
@@ -141,7 +139,7 @@ YUI.add("model-list-timelines", function(Y) {
         // Have each timeline load its tweets
         _resetEvent : function(e) {
             e.models.forEach(function(model) {
-                model.load({ sync : "lawnchair" });
+                model.load();
             });
         }
     }, {
@@ -168,10 +166,6 @@ YUI.add("model-list-timelines", function(Y) {
         "model-timeline-home",
         "model-timeline-mentions",
         "model-timeline-list",
-        
-        // Model Sync Layers
-        "model-sync-lawnchair",
-        "model-sync-twitter",
         
         // Extensions
         "extension-list-users"

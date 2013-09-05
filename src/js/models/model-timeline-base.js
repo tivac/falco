@@ -33,8 +33,6 @@ YUI.add("model-timeline-base", function(Y) {
             
             this._handles = null;
             
-            this.save({ sync : "lawnchair" });
-            
             this.get("tweets").destroy();
         },
         
@@ -98,11 +96,6 @@ YUI.add("model-timeline-base", function(Y) {
         "model",
         
         // Models
-        "model-list-tweets",
-        
-        // Sync Layers
-        "model-sync-lawnchair",
-        "model-sync-twitter",
-        "gallery-model-sync-multi"
+        "model-list-tweets"
     ]
 });

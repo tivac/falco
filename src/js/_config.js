@@ -127,8 +127,6 @@ var tristis_config = {
                             "model-timeline-home",
                             "model-timeline-mentions",
                             "model-timeline-list",
-                            "model-sync-lawnchair",
-                            "model-sync-twitter",
                             "extension-list-users"
                         ]
                     },
@@ -146,10 +144,7 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "model",
-                            "model-list-tweets",
-                            "model-sync-lawnchair",
-                            "model-sync-twitter",
-                            "gallery-model-sync-multi"
+                            "model-list-tweets"
                         ]
                     },
                     "model-timeline-home": {
