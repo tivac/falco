@@ -13,6 +13,7 @@ YUI.add("extension-tristis-events", function(Y) {
     
     Events = function() {};
     Events.prototype = {
+        // App-level DOM events
         events : {
             "[data-external]" : {
                 click : "_eventExternalClick"
