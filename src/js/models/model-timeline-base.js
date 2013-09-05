@@ -12,9 +12,6 @@ YUI.add("model-timeline-base", function(Y) {
             
             config || (config = {});
             
-            // Since Y.Base.create isn't copying it for us...
-            this.constructor.SYNCS = TimelineBase.SYNCS;
-            
             tweets = new models.Tweets({
                 items : config.tweets || []
             });

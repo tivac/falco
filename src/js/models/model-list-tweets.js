@@ -10,7 +10,7 @@ YUI.add("model-list-tweets", function(Y) {
     Tweets = Y.Base.create("tweets", Y.LazyModelList, [
         extensions.ModelListMore,
     ], {
-        model   : models.Tweet,
+        model : models.Tweet,
         
         sync : function(action, options, done) {
             var args = {};
@@ -45,10 +45,12 @@ YUI.add("model-list-tweets", function(Y) {
             });
         },
         
+        // Compare using parsed Date values
         comparator : function(tweet) {
             return Date.parse(tweet.created_at);
         },
         
+        // Sort in reverse chronological order
         _sort : function(a, b) {
             return this.comparator(b) - this.comparator(a);
         }
