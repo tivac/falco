@@ -44,8 +44,6 @@ var tristis_config = {
                         requires: [
                             "base-build",
                             "app",
-                            "external-lawnchair",
-                            "external-lawnchair-indexed-db",
                             "extension-view-classes",
                             "extension-view-parent",
                             "extension-tristis-events",
@@ -58,7 +56,12 @@ var tristis_config = {
                             "stream-user",
                             "stream-users"
                         ]
-                    },
+                    }
+                }
+            },
+            "/extensions/": {
+                base: "js/extensions/",
+                modules: {
                     "extension-list-users": {
                         path: "extension-list-users.js",
                         requires: [
@@ -66,6 +69,7 @@ var tristis_config = {
                             "stream-users"
                         ]
                     },
+                    "extension-model-list-more": { path: "extension-model-list-more.js" },
                     "extension-timeline-menus": {
                         path: "extension-timeline-menus.js",
                         requires: ["node-event-html5"]
@@ -82,6 +86,32 @@ var tristis_config = {
                         requires: ["gallery-lazy-load"]
                     },
                     "extension-tweet-actions": { path: "extension-tweet-actions.js" },
+                    "extension-view-classes": {
+                        path: "extension-view-classes.js",
+                        requires: ["event-custom"]
+                    },
+                    "extension-view-parent": {
+                        path: "extension-view-parent.js",
+                        requires: [
+                            "view",
+                            "event-custom"
+                        ]
+                    }
+                }
+            },
+            "/gallery/": {
+                base: "js/gallery/",
+                modules: {
+                    "gallery-debounce": { path: "gallery-debounce.js" },
+                    "gallery-lazy-load": {
+                        path: "gallery-lazy-load.js",
+                        requires: ["oop"]
+                    }
+                }
+            },
+            "/models/": {
+                base: "js/models/",
+                modules: {
                     "model-list-friends": {
                         path: "model-list-friends.js",
                         requires: [
@@ -158,7 +188,33 @@ var tristis_config = {
                             "base-build",
                             "model"
                         ]
+                    }
+                }
+            },
+            "/oauth/": {
+                base: "js/oauth/",
+                modules: {
+                    "model-oauth": {
+                        path: "model-oauth.js",
+                        requires: [
+                            "base-build",
+                            "model"
+                        ]
                     },
+                    "view-link": {
+                        path: "view-link.js",
+                        requires: [
+                            "base-build",
+                            "view",
+                            "model-oauth",
+                            "template-oauth-link"
+                        ]
+                    }
+                }
+            },
+            "/streams/": {
+                base: "js/streams/",
+                modules: {
                     "stream-base": {
                         path: "stream-base.js",
                         requires: [
@@ -181,7 +237,12 @@ var tristis_config = {
                             "event-custom",
                             "stream-base"
                         ]
-                    },
+                    }
+                }
+            },
+            "/views/": {
+                base: "js/views/",
+                modules: {
                     "view-list": {
                         path: "view-list.js",
                         requires: [
@@ -212,60 +273,6 @@ var tristis_config = {
                             "css-timeline",
                             "css-tweet",
                             "css-icons"
-                        ]
-                    }
-                }
-            },
-            "/extensions/": {
-                base: "js/extensions/",
-                modules: {
-                    "extension-model-list-more": { path: "extension-model-list-more.js" },
-                    "extension-view-classes": {
-                        path: "extension-view-classes.js",
-                        requires: ["event-custom"]
-                    },
-                    "extension-view-parent": {
-                        path: "extension-view-parent.js",
-                        requires: [
-                            "view",
-                            "event-custom"
-                        ]
-                    },
-                    "model-sync-lawnchair": {
-                        path: "model-sync-lawnchair.js",
-                        requires: ["external-lawnchair"]
-                    },
-                    "model-sync-twitter": { path: "model-sync-twitter.js" }
-                }
-            },
-            "/gallery/": {
-                base: "js/gallery/",
-                modules: {
-                    "gallery-debounce": { path: "gallery-debounce.js" },
-                    "gallery-lazy-load": {
-                        path: "gallery-lazy-load.js",
-                        requires: ["oop"]
-                    },
-                    "gallery-model-sync-multi": { path: "model-sync-multi.js" }
-                }
-            },
-            "/oauth/": {
-                base: "js/oauth/",
-                modules: {
-                    "model-oauth": {
-                        path: "model-oauth.js",
-                        requires: [
-                            "base-build",
-                            "model"
-                        ]
-                    },
-                    "view-link": {
-                        path: "view-link.js",
-                        requires: [
-                            "base-build",
-                            "view",
-                            "model-oauth",
-                            "template-oauth-link"
                         ]
                     }
                 }

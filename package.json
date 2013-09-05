@@ -30,7 +30,8 @@
     "async": "0.2.x",
     "yui-configger": "~0.2.1",
     "grunt-curl": "1.1.x",
-    "unzip": "0.1.x"
+    "unzip": "0.1.x",
+    "progress": "~1.0.0"
   },
   "window": {
     "show": true,
