@@ -25,20 +25,6 @@ YUI.add("app-tristis", function(Y) {
         appExtensions.Events
     ], {
         initializer : function() {
-            // Save window size & location when closing
-            win.on("close", function() {
-                localStorage.x      = win.x;
-                localStorage.y      = win.y;
-                localStorage.width  = win.width;
-                localStorage.height = win.height;
-                
-                tristis.app.destroy();
-                
-                process.nextTick(function() {
-                    win.close(true);
-                });
-            });
-            
             if(!localStorage.access_token || !localStorage.access_secret) {
                 return this._auth();
             }
@@ -70,9 +56,12 @@ YUI.add("app-tristis", function(Y) {
             });
             
             // go load user details
-            models.user.load(function(err) {
+            models.user.load(function userLoad(err) {
                 if(err) {
-                    return self._auth();
+                    console.log("userLoad Error", err);
+                    
+                    // TODO: Getting ECONNRESET here on the first attempt, not sure what the deal is...
+                    //return self._auth();
                 }
                 
                 models.timelines.load();
