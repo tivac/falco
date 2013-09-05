@@ -96,8 +96,6 @@ YUI.add("model-list-timelines", function(Y) {
             tristis.twitter.get("lists/list", done);
         },
         
-
-        
         // Timelines only serializes ids of lists in it, the lists themselves
         // serialize their contents
         serialize : function() {
