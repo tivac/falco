@@ -52,7 +52,7 @@ YUI.add("view-list", function(Y) {
             models = e.models || e.response || [ e.model ];
             
             this.get("container").one("ol").prepend(
-                models.reduce(function(prev, curr) {
+                models.reduce(function tweetTemplates(prev, curr) {
                     return prev + templates.tweet(curr);
                 }, "")
             );
