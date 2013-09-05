@@ -65,7 +65,10 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         _updatedEvent : function(e) {
-            this.get("children").nav.updated({ id : e.src, count : e.count });
+            this.get("children").nav.updated({
+                id    : e.src,
+                count : e.count
+            });
         },
         
         _friendsEvent : function(friends) {
