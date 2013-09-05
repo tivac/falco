@@ -129,8 +129,7 @@ var tristis_config = {
                             "model-timeline-list",
                             "model-sync-lawnchair",
                             "model-sync-twitter",
-                            "extension-list-users",
-                            "gallery-model-sync-multi"
+                            "extension-list-users"
                         ]
                     },
                     "model-list-tweets": {

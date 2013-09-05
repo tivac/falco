@@ -6,11 +6,7 @@ YUI.add("model-timeline-base", function(Y) {
         
         TimelineBase;
         
-    TimelineBase = Y.Base.create("timeline", Y.Model, [
-        syncs.Lawnchair,
-        syncs.Twitter,
-        syncs.Multi
-    ], {
+    TimelineBase = Y.Base.create("timeline", Y.Model, [], {
         initializer : function(config) {
             var tweets;
             
@@ -90,11 +86,6 @@ YUI.add("model-timeline-base", function(Y) {
             this.fire("tweets", {
                 count : count
             });
-        }
-    }, {
-        SYNCS : {
-            lawnchair : syncs.Lawnchair,
-            twitter   : syncs.Twitter
         }
     });
     

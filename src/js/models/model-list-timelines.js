@@ -10,12 +10,7 @@ YUI.add("model-list-timelines", function(Y) {
         Timelines;
         
     Timelines = Y.Base.create("timelines", Y.ModelList, [
-        Y.namespace("Tristis.Extensions").ListUsers,
-        
-        // Sync Layers
-        syncs.Lawnchair,
-        syncs.Twitter,
-        syncs.Multi
+        Y.namespace("Tristis.Extensions").ListUsers
     ], {
         _models : {
             home : new models.Home(),
@@ -150,11 +145,6 @@ YUI.add("model-list-timelines", function(Y) {
             });
         }
     }, {
-        SYNCS : {
-            "lawnchair" : syncs.Lawnchair,
-            "twitter"   : syncs.Twitter
-        },
-        
         ATTRS : {
             name : {
                 value : "Timelines"
@@ -184,9 +174,6 @@ YUI.add("model-list-timelines", function(Y) {
         "model-sync-twitter",
         
         // Extensions
-        "extension-list-users",
-        
-        // Gallery
-        "gallery-model-sync-multi"
+        "extension-list-users"
     ]
 });

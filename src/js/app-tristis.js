@@ -25,7 +25,7 @@ YUI.add("app-tristis", function(Y) {
         appExtensions.Events
     ], {
         initializer : function() {
-            // Save window size when closing
+            // Save window size & location when closing
             win.on("close", function() {
                 localStorage.x      = win.x;
                 localStorage.y      = win.y;
@@ -98,7 +98,7 @@ YUI.add("app-tristis", function(Y) {
                     parseInt(localStorage.y, 10)
                 );
             }
-
+            
             this.render();
             win.show();
         },
