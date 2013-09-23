@@ -8,7 +8,6 @@ var fs   = require("fs"),
 
 module.exports = function(grunt) {
     
-    // NodeJS powered binary concatenation, a bit longer than "copy /BY" but cross-platform :D
     grunt.registerMultiTask(
         "unzip",
         "Unzip a file somewhere",
