@@ -75,33 +75,59 @@ YUI.add("view-timeline", function(Y) {
         },
         
         _renderUpdate : function(e) {
-            var models;
+            var self = this,
+                ol,
+                now,
+                models,
+                updates;
             
             if(!this.rendered) {
                 return this.render();
             }
             
-            models = e.models || e.parsed || [ e.model ];
+            models  = e.models || e.parsed || [ e.model ];
+            updates = models.length;
             
-            this.get("container").one("ol").prepend(
+            ol = this.get("container").one("ol");
+            ol.prepend(
                 this._renderTweets(models)
             );
+            
+            if(updates === this.get("model").get("tweets").size()) {
+                return;
+            }
+            
+            now = moment();
+            
+            // Update timestamps for all other tweets
+            this.get("model").get("tweets").each(function(tweet, idx) {
+                // skip the models we just rendered
+                if(idx < updates) {
+                    return;
+                }
+                
+                ol.one("[data-id='" + tweet.id_str + "'] .time").setHTML(self._tweetDate(now, tweet));
+            });
         },
         
         _renderTweets : function(tweets) {
-            var now = moment();
+            var self = this,
+                now  = moment();
             
             return tweets.reduce(function(prev, tweet) {
-                var time = moment(tweet.created_at),
-                    diff = now.diff(time, "hours");
-            
                 tweet.html = tristis.txt.autoLinkWithJSON(tweet.text, tweet.entities, options);
-                
-                // TODO: .fromNow is a little over-eager about showing "1 day", should figure out why
-                tweet.date = diff > 24 ? time.format("DD MMM") : time.fromNow(true);
+                tweet.date = self._tweetDate(now, tweet);
                 
                 return prev + templates.tweet(tweet);
             }, "");
+        },
+        
+        _tweetDate : function(now, tweet) {
+            var time = moment(tweet.created_at),
+                diff = now.diff(time, "hours");
+        
+            // TODO: .fromNow is a little over-eager about showing "1 day", should figure out why
+            return (diff > 24) ? time.format("DD MMM") : time.fromNow(true);
         }
     });
     
