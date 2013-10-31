@@ -1,16 +1,16 @@
-<li class="tweet" data-id="<%= data.id_str %>">
-    <div class="icon">
+<li class="tweet pure-g" data-id="<%= data.id_str %>">
+    <div class="icon pure-u">
         <img src="<%= data.user.profile_image_url %>" >
     </div>
     
-    <div class="content">
-        <div class="hd">
-            <p class="name">
+    <div class="content pure-u">
+        <div class="hd pure-g">
+            <p class="name pure-u-2-3">
                 <%= data.user.name %>
                 <span class="screen-name">@<%= data.user.screen_name %></span>
             </p>
             
-            <p class="time">
+            <p class="time pure-u-1-3">
                 <%= data.date %>
             </p>
         </div>
