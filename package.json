@@ -17,10 +17,10 @@
   },
   "main": "src/index.html",
   "dependencies": {
-    "config": "~0.4.29",
+    "config": "~0.4.32",
     "oauth": "~0.9.10",
     "moment": "~2.1.0",
-    "twit": "~1.1.9",
+    "twit": "~1.1.11",
     "twitter-text": "~1.6.1",
     "yui": "~3.12.0",
     "async": "~0.2.9"
