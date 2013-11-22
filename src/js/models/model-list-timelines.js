@@ -10,15 +10,10 @@ YUI.add("model-list-timelines", function(Y) {
         Timelines;
         
     Timelines = Y.Base.create("timelines", Y.ModelList, [
-        Y.namespace("Tristis.Extensions").ListUsers,
-        
-        // Sync Layers
-        syncs.Lawnchair,
-        syncs.Twitter,
-        syncs.Multi
+        Y.namespace("Tristis.Extensions").ListUsers
     ], {
         _models : {
-            home : new models.Home(),
+            home     : new models.Home(),
             mentions : new models.Mentions()
         },
         
@@ -40,19 +35,18 @@ YUI.add("model-list-timelines", function(Y) {
             
             this._handles = null;
             
-            this.sync("update", { sync : "lawnchair" });
-            
             // destroy all our component models
             this.each(function(timeline) {
                 timeline.destroy();
             });
         },
         
-        // Twitter sync implementation
-        _twitterRead : function(options, done) {
-            console.log("reading lists from twitter");
+        sync : function(action, options, done) {
+            if(action !== "read") {
+                done("Unsupported action");
+            }
             
-            tristis.twitter.get("lists/list", done);
+            this._read(options, done);
         },
         
         parse : function(response) {
@@ -93,6 +87,13 @@ YUI.add("model-list-timelines", function(Y) {
             response.unshift(this._models.home, this._models.mentions);
             
             return response;
+        },
+        
+        // Sync implementation
+        _read : function(options, done) {
+            console.log("reading lists from twitter");
+            
+            tristis.twitter.get("lists/list", done);
         },
         
         // Timelines only serializes ids of lists in it, the lists themselves
@@ -146,15 +147,10 @@ YUI.add("model-list-timelines", function(Y) {
         // Have each timeline load its tweets
         _resetEvent : function(e) {
             e.models.forEach(function(model) {
-                model.load({ sync : "lawnchair" });
+                model.load();
             });
         }
     }, {
-        SYNCS : {
-            "lawnchair" : syncs.Lawnchair,
-            "twitter"   : syncs.Twitter
-        },
-        
         ATTRS : {
             name : {
                 value : "Timelines"
@@ -179,14 +175,7 @@ YUI.add("model-list-timelines", function(Y) {
         "model-timeline-mentions",
         "model-timeline-list",
         
-        // Model Sync Layers
-        "model-sync-lawnchair",
-        "model-sync-twitter",
-        
         // Extensions
-        "extension-list-users",
-        
-        // Gallery
-        "gallery-model-sync-multi"
+        "extension-list-users"
     ]
 });

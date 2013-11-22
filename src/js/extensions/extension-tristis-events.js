@@ -1,8 +1,11 @@
+/*jshint browser:true, yui:true, node:true */
 YUI.add("extension-tristis-events", function(Y) {
     "use strict";
     
     var gui = require("nw.gui"),
-    
+        win = gui.Window.get(),
+        
+        tristis = Y.namespace("Tristis"),
         models  = Y.namespace("Tristis.Models"),
         streams = Y.namespace("Tristis.Streams"),
         
@@ -10,6 +13,7 @@ YUI.add("extension-tristis-events", function(Y) {
     
     Events = function() {};
     Events.prototype = {
+        // App-level DOM events
         events : {
             "[data-external]" : {
                 click : "_eventExternalClick"
@@ -23,6 +27,8 @@ YUI.add("extension-tristis-events", function(Y) {
                     "*:url"    : this._urlEvent
                 }, null, this)
             ];
+            
+            win.on("close", this._closeEvent);
             
             // Have to adjust this based on main app startup flow
             if(models.timelines) {
@@ -59,12 +65,29 @@ YUI.add("extension-tristis-events", function(Y) {
         },
         
         _updatedEvent : function(e) {
-            this.get("children").nav.updated({ id : e.src, count : e.count });
+            this.get("children").nav.updated({
+                id    : e.src,
+                count : e.count
+            });
         },
         
         _friendsEvent : function(friends) {
             models.friends = new models.Friends({
                 items : friends
+            });
+        },
+        
+        // Node-Webkit events
+        _closeEvent : function() {
+            localStorage.x      = win.x;
+            localStorage.y      = win.y;
+            localStorage.width  = win.width;
+            localStorage.height = win.height;
+            
+            tristis.app.destroy();
+            
+            process.nextTick(function forceClose() {
+                win.close(true);
             });
         }
     };

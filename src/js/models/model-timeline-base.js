@@ -6,18 +6,11 @@ YUI.add("model-timeline-base", function(Y) {
         
         TimelineBase;
         
-    TimelineBase = Y.Base.create("timeline", Y.Model, [
-        syncs.Lawnchair,
-        syncs.Twitter,
-        syncs.Multi
-    ], {
+    TimelineBase = Y.Base.create("timeline", Y.Model, [], {
         initializer : function(config) {
             var tweets;
             
             config || (config = {});
-            
-            // Since Y.Base.create isn't copying it for us...
-            this.constructor.SYNCS = TimelineBase.SYNCS;
             
             tweets = new models.Tweets({
                 items : config.tweets || []
@@ -37,8 +30,6 @@ YUI.add("model-timeline-base", function(Y) {
             
             this._handles = null;
             
-            this.save({ sync : "lawnchair" });
-            
             this.get("tweets").destroy();
         },
         
@@ -46,7 +37,7 @@ YUI.add("model-timeline-base", function(Y) {
         parse : function(response) {
             var tweets;
             
-            if(!response.tweets) {
+            if(!response || !response.tweets) {
                 return response;
             }
             
@@ -91,11 +82,6 @@ YUI.add("model-timeline-base", function(Y) {
                 count : count
             });
         }
-    }, {
-        SYNCS : {
-            lawnchair : syncs.Lawnchair,
-            twitter   : syncs.Twitter
-        }
     });
     
     models.TimelineBase = TimelineBase;
@@ -107,11 +93,6 @@ YUI.add("model-timeline-base", function(Y) {
         "model",
         
         // Models
-        "model-list-tweets",
-        
-        // Sync Layers
-        "model-sync-lawnchair",
-        "model-sync-twitter",
-        "gallery-model-sync-multi"
+        "model-list-tweets"
     ]
 });

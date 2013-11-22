@@ -25,20 +25,6 @@ YUI.add("app-tristis", function(Y) {
         appExtensions.Events
     ], {
         initializer : function() {
-            // Save window size when closing
-            win.on("close", function() {
-                localStorage.x      = win.x;
-                localStorage.y      = win.y;
-                localStorage.width  = win.width;
-                localStorage.height = win.height;
-                
-                tristis.app.destroy();
-                
-                process.nextTick(function() {
-                    win.close(true);
-                });
-            });
-            
             if(!localStorage.access_token || !localStorage.access_secret) {
                 return this._auth();
             }
@@ -61,10 +47,6 @@ YUI.add("app-tristis", function(Y) {
                 access_token_secret : localStorage.access_secret
             });
             
-            tristis.lawnchair = new Lawnchair(function() {
-                console.log("lawnchair ready");
-            });
-            
             models.user      = new models.User();
             models.timelines = new models.Timelines();
             
@@ -72,18 +54,17 @@ YUI.add("app-tristis", function(Y) {
             this.set("children", {
                 nav : new views.Nav()
             });
-
+            
             // go load user details
-            models.user.load(function(err) {
+            models.user.load(function userLoad(err) {
                 if(err) {
-                    return self._auth();
+                    console.log("userLoad Error", err);
+                    
+                    // TODO: Getting ECONNRESET here on the first attempt, not sure what the deal is...
+                    //return self._auth();
                 }
                 
-                models.timelines.load({ sync : "lawnchair" }, function(err) {
-                    // TODO: this shouldn't be a .load call, it should be something like
-                    // .update or something similar. Need to add a custom sync action.
-                    models.timelines.load({ sync : "twitter" });
-                });
+                models.timelines.load();
                 
                 streams.user.start();
                 
@@ -106,7 +87,7 @@ YUI.add("app-tristis", function(Y) {
                     parseInt(localStorage.y, 10)
                 );
             }
-
+            
             this.render();
             win.show();
         },
@@ -143,10 +124,6 @@ YUI.add("app-tristis", function(Y) {
         // YUI
         "base-build",
         "app",
-        
-        // Lawnchair
-        "external-lawnchair",
-        "external-lawnchair-indexed-db",
         
         // Generic Extensions
         "extension-view-classes",

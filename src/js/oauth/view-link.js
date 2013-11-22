@@ -1,4 +1,4 @@
-/*jshint maxparams:5 */
+/*jshint maxparams:5, yui:true */
 YUI.add("view-link", function(Y) {
     "use strict";
 
@@ -49,7 +49,7 @@ YUI.add("view-link", function(Y) {
             
             pin = this.get("container").one("[name='pin']").get("value");
             
-            models.oauth.accessToken(pin, function(error) {
+            models.oauth.accessToken(pin, function accessToken(error) {
                 if(error) {
                     return console.error(error);
                 }
