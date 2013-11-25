@@ -1,8 +1,9 @@
 YUI.add("view-timeline", function(Y) {
     "use strict";
     
-    var moment    = require("moment"),
-    
+    var moment     = require("moment"),
+        text       = require("twitter-text"),
+        
         tristis    = Y.namespace("Tristis"),
         extensions = Y.namespace("Tristis.Extensions"),
         templates  = Y.namespace("Tristis.Templates"),
@@ -115,7 +116,7 @@ YUI.add("view-timeline", function(Y) {
                 now  = moment();
             
             return tweets.reduce(function(prev, tweet) {
-                tweet.html = tristis.txt.autoLinkWithJSON(tweet.text, tweet.entities, options);
+                tweet.html = text.autoLinkWithJSON(tweet.text, tweet.entities, options);
                 tweet.date = self._tweetDate(now, tweet);
                 
                 return prev + templates.tweet(tweet);

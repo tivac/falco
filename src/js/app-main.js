@@ -1,5 +1,5 @@
 /*jshint browser:true, yui:true */
-YUI.add("app-tristis", function(Y) {
+YUI.add("app-main", function(Y) {
     "use strict";
     
     var gui      = require("nw.gui"),
@@ -13,11 +13,9 @@ YUI.add("app-tristis", function(Y) {
         models        = Y.namespace("Tristis.Models"),
         streams       = Y.namespace("Tristis.Streams"),
         
-        win = gui.Window.get(),
+        win = gui.Window.get();
         
-        App;
-    
-    App = Y.Base.create("tristis", Y.App, [
+    tristis.App = Y.Base.create("app", Y.App, [
         extensions.ViewClasses,
         extensions.ViewParent,
         
@@ -75,19 +73,6 @@ YUI.add("app-tristis", function(Y) {
         },
         
         _render : function() {
-            // Restore size & position
-            if(localStorage.width && localStorage.height) {
-                win.resizeTo(
-                    parseInt(localStorage.width, 10),
-                    parseInt(localStorage.height, 10)
-                );
-                
-                win.moveTo(
-                    parseInt(localStorage.x, 10),
-                    parseInt(localStorage.y, 10)
-                );
-            }
-            
             this.render();
             win.show();
         },
@@ -112,12 +97,6 @@ YUI.add("app-tristis", function(Y) {
         
         return;
     }
-    
-    tristis.txt = require("twitter-text");
-    
-    tristis.app = new App({
-        viewContainer : ".views"
-    });
     
 }, "@VERSION@", {
     requires : [
