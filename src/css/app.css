@@ -12,3 +12,21 @@ body {
     -webkit-flex: 1 1 auto;
     position: relative;
 }
+
+button.link {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    line-height: normal;
+    
+    /* These values should match whatever links are set to */
+    color: -webkit-link;
+    text-decoration: underline;
+}
+
+/* Make sure keyboard users get visual feedback */
+.text:hover,
+.text:focus {
+}

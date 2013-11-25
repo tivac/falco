@@ -1,14 +1,28 @@
 .tweet {
     list-style-type: none;
     padding: 10px;
-}
-
-.tweet:nth-child(odd) {
-    background: #EEE;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .tweet .icon {
-    width: 60px;
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.tweet .content {
+    flex: 1;
+}
+
+.tweet .hd {
+    display: flex;
+}
+
+.tweet .hd .name {
+    flex: 1;
 }
 
 .tweet .hd .time {
@@ -16,5 +30,5 @@
 }
 
 .tweet .actions button {
-    -webkit-appearance: none;
+    -webkit-appearance: listitem;
 }
