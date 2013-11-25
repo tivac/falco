@@ -1,36 +1,60 @@
+/*jshint node:true, browser:true */
 "use strict";
 
 var gui = require("nw.gui"),
-    win, dev;
+    win = gui.Window.get(),
+    tools, _save, _restore;
+
+_save = function(key, src) {
+    console.log(src.x, src.y, src.width, src.height);
+    
+    localStorage[key + "_x"]       = src.x;
+    localStorage[key + "_y"]       = src.y;
+    localStorage[key + "_width"]   = src.width;
+    localStorage[key + "_height"]  = src.height;
+};
+
+_restore = function(key, tgt) {
+    if(!localStorage[key + "_width"]  ||
+       !localStorage[key + "_height"] ||
+       !localStorage[key + "_x"]      ||
+       !localStorage[key + "_y"]) {
+        return;
+    }
+    
+    tgt.resizeTo(
+        parseInt(localStorage[key + "_width"], 10),
+        parseInt(localStorage[key + "_height"], 10)
+    );
+
+    tgt.moveTo(
+        parseInt(localStorage[key + "_x"], 10),
+        parseInt(localStorage[key + "_y"], 10)
+    );
+};
+
+// Save size/location of main window on close
+win.on("close", function() {
+    console.log("saving main window positions");
+    
+    _save("main", win);
+});
+
+// Update main window
+_restore("main", win);
 
 // support opening devtools via command-line switch
 if(gui.App.argv.indexOf("--debug") === -1) {
     return;
 }
 
-win = gui.Window.get();
-dev = win.showDevTools();
+tools = win.showDevTools();
 
-// Restore size
-if(localStorage.devtools_width && localStorage.devtools_height) {
-    dev.resizeTo(
-        parseInt(localStorage.devtools_width, 10),
-        parseInt(localStorage.devtools_height, 10)
-    );
-}
-
-// Restore position
-if(localStorage.devtools_x && localStorage.devtools_y) {
-    dev.moveTo(
-        parseInt(localStorage.devtools_x, 10),
-        parseInt(localStorage.devtools_y, 10)
-    );
-}
-
-// Save devtools size/location on close
+// Save size/location of main window on close
 win.on("close", function() {
-    localStorage.devtools_x       = dev.x;
-    localStorage.devtools_y       = dev.y;
-    localStorage.devtools_width   = dev.width;
-    localStorage.devtools_height  = dev.height;
+    console.log("saving devtools positions");
+    
+    _save("devtools", tools);
 });
+
+_restore("devtools", tools);
