@@ -1,10 +1,10 @@
-Tristis
+Falco
 =======
 
 I made a Twitter client. Well, I've started a Twitter client. We shall see how far I take it.
 
-[![Packages](https://david-dm.org/tivac/tristis/status.png)](https://david-dm.org/tivac/tristis/)
-[![Dev Packages](https://david-dm.org/tivac/tristis/dev-status.png)](https://david-dm.org/tivac/tristis/)
+[![Packages](https://david-dm.org/tivac/falco/status.png)](https://david-dm.org/tivac/falco/)
+[![Dev Packages](https://david-dm.org/tivac/falco/dev-status.png)](https://david-dm.org/tivac/falco/)
 
 
 ## Features ##
@@ -14,7 +14,7 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 
 ## Install ##
 
-1. `git clone git://github.com/tivac/node-webkit-chirrup.git`
+1. `git clone git://github.com/tivac/falco.git`
 2. `npm i`
 3. `grunt`
 
