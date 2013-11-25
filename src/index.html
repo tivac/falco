@@ -13,12 +13,20 @@
     <script src="js/_config.js"></script>
     <script src="../node_modules/yui/yui/yui.js"></script>
     <script>
+        "use strict";
+        
         var Y = YUI(tristis_config);
         
         // trick YUI into not loading all the nodejs stuff, it's wonky here
         Y.UA.nodejs = 0;
         
-        Y.use("app-tristis");
+        Y.use("app-main", function(Y) {
+            var tristis  = Y.namespace("Tristis");
+            
+            tristis.app = new tristis.App({
+                viewContainer : ".views"
+            });
+        });
     </script>
 </body>
 </html>
