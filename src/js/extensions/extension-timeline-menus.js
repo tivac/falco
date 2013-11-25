@@ -119,7 +119,7 @@ YUI.add("extension-timeline-menus", function(Y) {
         },
     };
     
-    Y.namespace("Tristis.Extensions").TimelineMenus = Menus;
+    Y.namespace("Falco.Extensions").TimelineMenus = Menus;
     
 }, "@VERSION@", {
     requires : [

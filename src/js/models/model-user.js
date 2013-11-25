@@ -1,12 +1,12 @@
 YUI.add("model-user", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
+    var falco = Y.namespace("Falco"),
         User;
     
     User = Y.Base.create("user", Y.Model, [], {
         sync : function(action, options, done) {
-            tristis.twitter.get("account/verify_credentials", done);
+            falco.twitter.get("account/verify_credentials", done);
         }
     }, {
         ATTRS : {
@@ -22,7 +22,7 @@ YUI.add("model-user", function(Y) {
         }
     });
     
-    Y.namespace("Tristis.Models").User = User;
+    Y.namespace("Falco.Models").User = User;
     
 }, "@VERSION@", {
     requires : [

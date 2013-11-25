@@ -2,15 +2,15 @@
 YUI.add("model-list-timelines", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
-        models  = Y.namespace("Tristis.Models"),
+    var falco = Y.namespace("Falco"),
+        models  = Y.namespace("Falco.Models"),
         
         syncs   = Y.namespace("ModelSync"),
         
         Timelines;
         
     Timelines = Y.Base.create("timelines", Y.ModelList, [
-        Y.namespace("Tristis.Extensions").ListUsers
+        Y.namespace("Falco.Extensions").ListUsers
     ], {
         _models : {
             home     : new models.Home(),
@@ -93,7 +93,7 @@ YUI.add("model-list-timelines", function(Y) {
         _read : function(options, done) {
             console.log("reading lists from twitter");
             
-            tristis.twitter.get("lists/list", done);
+            falco.twitter.get("lists/list", done);
         },
         
         // Timelines only serializes ids of lists in it, the lists themselves

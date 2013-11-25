@@ -1,8 +1,8 @@
 YUI.add("stream-user", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
-        streams = Y.namespace("Tristis.Streams"),
+    var falco = Y.namespace("Falco"),
+        streams = Y.namespace("Falco.Streams"),
         User;
     
     User = function() {};
@@ -11,7 +11,7 @@ YUI.add("stream-user", function(Y) {
         _create : function() {
             var stream;
             
-            stream = tristis.twitter.stream("user", {
+            stream = falco.twitter.stream("user", {
                 with : "followings"
             });
             

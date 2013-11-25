@@ -1,5 +1,5 @@
-/* exported tristis_config */
-var tristis_config = {
+/* exported falco_config */
+var falco_config = {
     base   : "../node_modules/yui/",
     filter : "raw",
     groups : {

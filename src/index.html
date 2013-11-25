@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tristis</title>
+    <title>Falco</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/pure-min.css" />
 </head>
@@ -15,15 +15,15 @@
     <script>
         "use strict";
         
-        var Y = YUI(tristis_config);
+        var Y = YUI(falco_config);
         
         // trick YUI into not loading all the nodejs stuff, it's wonky here
         Y.UA.nodejs = 0;
         
         Y.use("app-main", function(Y) {
-            var tristis  = Y.namespace("Tristis");
+            var falco  = Y.namespace("Falco");
             
-            tristis.app = new tristis.App({
+            falco.app = new falco.App({
                 viewContainer : ".views"
             });
         });

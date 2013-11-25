@@ -33,7 +33,7 @@ YUI.add("stream-base", function(Y) {
         preventable : false
     });
     
-    Y.namespace("Tristis.Streams").Base = StreamBase;
+    Y.namespace("Falco.Streams").Base = StreamBase;
     
 }, "@VERSION@", {
     requires : [

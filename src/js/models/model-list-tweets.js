@@ -1,8 +1,8 @@
 YUI.add("model-list-tweets", function(Y) {
     "use strict";
     
-    var tristis    = Y.namespace("Tristis"),
-        models     = Y.namespace("Tristis.Models"),
+    var falco    = Y.namespace("Falco"),
+        models     = Y.namespace("Falco.Models"),
         extensions = Y.namespace("Extensions"),
         
         Tweets;
@@ -27,7 +27,7 @@ YUI.add("model-list-tweets", function(Y) {
             
             this.loading = true;
             
-            tristis.twitter.get(this.get("api"), args, function(err, resp) {
+            falco.twitter.get(this.get("api"), args, function(err, resp) {
                 if(err) {
                     return done(err);
                 }

@@ -1,8 +1,8 @@
 YUI.add("model-timeline-list", function(Y) {
     "use strict";
     
-    var models  = Y.namespace("Tristis.Models"),
-        streams = Y.namespace("Tristis.Streams"),
+    var models  = Y.namespace("Falco.Models"),
+        streams = Y.namespace("Falco.Streams"),
         
         List;
         

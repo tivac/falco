@@ -59,7 +59,7 @@ YUI.add("model-oauth", function(Y) {
         }
     });
        
-    Y.namespace("Tristis.Models").OAuth = OAuth;
+    Y.namespace("Falco.Models").OAuth = OAuth;
     
 }, "@VERSION@", {
     requires : [

@@ -3,8 +3,8 @@ YUI.add("extension-list-users", function(Y) {
     
     var async = require("async"),
     
-        tristis = Y.namespace("Tristis"),
-        streams = Y.namespace("Tristis.Streams"),
+        falco   = Y.namespace("Falco"),
+        streams = Y.namespace("Falco.Streams"),
         
         ListUsers;
     
@@ -34,7 +34,7 @@ YUI.add("extension-list-users", function(Y) {
                         return done();
                     }
                     
-                    tristis.twitter.get("lists/members", {
+                    falco.twitter.get("lists/members", {
                         list_id          : id,
                         include_entities : false,
                         skip_status      : true
@@ -81,7 +81,7 @@ YUI.add("extension-list-users", function(Y) {
         }
     };
     
-    Y.namespace("Tristis.Extensions").ListUsers = ListUsers;
+    Y.namespace("Falco.Extensions").ListUsers = ListUsers;
 }, "@VERSION@", {
     requires : [
         // YUI

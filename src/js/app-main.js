@@ -7,15 +7,15 @@ YUI.add("app-main", function(Y) {
         Twitter  = require("twit"),
         
         extensions    = Y.namespace("Extensions"),
-        tristis       = Y.namespace("Tristis"),
-        appExtensions = Y.namespace("Tristis.Extensions"),
-        views         = Y.namespace("Tristis.Views"),
-        models        = Y.namespace("Tristis.Models"),
-        streams       = Y.namespace("Tristis.Streams"),
+        falco         = Y.namespace("Falco"),
+        appExtensions = Y.namespace("Falco.Extensions"),
+        views         = Y.namespace("Falco.Views"),
+        models        = Y.namespace("Falco.Models"),
+        streams       = Y.namespace("Falco.Streams"),
         
         win = gui.Window.get();
         
-    tristis.App = Y.Base.create("app", Y.App, [
+    falco.App = Y.Base.create("app", Y.App, [
         extensions.ViewClasses,
         extensions.ViewParent,
         
@@ -38,7 +38,7 @@ YUI.add("app-main", function(Y) {
         _setup : function() {
             var self = this;
             
-            tristis.twitter = new Twitter({
+            falco.twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
                 consumer_secret     : conf.consumerSecret,
                 access_token        : localStorage.access_token,
@@ -108,9 +108,9 @@ YUI.add("app-main", function(Y) {
         "extension-view-classes",
         "extension-view-parent",
         
-        // Tristis Extensions
-        "extension-tristis-events",
-        "extension-tristis-routes",
+        // App Extensions
+        "extension-app-events",
+        "extension-app-routes",
         
         // Models
         "model-user",

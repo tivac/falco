@@ -1,9 +1,9 @@
 YUI.add("view-nav", function(Y) {
     "use strict";
     
-    var tristis   = Y.namespace("Tristis"),
-        models    = Y.namespace("Tristis.Models"),
-        templates = Y.namespace("Tristis.Templates"),
+    var falco   = Y.namespace("Falco"),
+        models    = Y.namespace("Falco.Models"),
+        templates = Y.namespace("Falco.Templates"),
         Nav;
     
     Nav = Y.Base.create("nav", Y.View, [], {
@@ -68,7 +68,7 @@ YUI.add("view-nav", function(Y) {
             this.get("container").one(".timelines").setHTML(
                 templates["nav-timelines"]({
                     timelines : models.timelines.toJSON(),
-                    path      : tristis.app.getPath()
+                    path      : falco.app.getPath()
                 })
             );
         },
@@ -93,7 +93,7 @@ YUI.add("view-nav", function(Y) {
         }
     });
     
-    Y.namespace("Tristis.Views").Nav = Nav;
+    Y.namespace("Falco.Views").Nav = Nav;
     
 }, "@VERSION@", {
     requires : [

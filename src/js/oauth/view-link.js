@@ -2,12 +2,12 @@
 YUI.add("view-link", function(Y) {
     "use strict";
 
-    var models = Y.namespace("Tristis.Models"),
+    var models = Y.namespace("Falco.Models"),
         Link;
     
     Link = Y.Base.create("link", Y.View, [], {
         css      : "oauth",
-        template : Y.namespace("Tristis.Templates")["oauth-link"],
+        template : Y.namespace("Falco.Templates")["oauth-link"],
         
         events : {
             ".start" : {
@@ -59,7 +59,7 @@ YUI.add("view-link", function(Y) {
         }
     });
     
-    Y.namespace("Tristis.Views").Link = Link;
+    Y.namespace("Falco.Views").Link = Link;
 
 }, "@VERSION@", {
     requires : [
