@@ -1,7 +1,7 @@
 YUI.add("model-list-friends", function(Y) {
     "use strict";
     
-    var models = Y.namespace("Tristis.Models"),
+    var models = Y.namespace("Falco.Models"),
         Friends;
     
     Friends = Y.Base.create("friends", Y.LazyModelList, []);

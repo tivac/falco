@@ -4,9 +4,9 @@ YUI.add("view-timeline", function(Y) {
     var moment     = require("moment"),
         text       = require("twitter-text"),
         
-        tristis    = Y.namespace("Tristis"),
-        extensions = Y.namespace("Tristis.Extensions"),
-        templates  = Y.namespace("Tristis.Templates"),
+        falco      = Y.namespace("Falco"),
+        extensions = Y.namespace("Falco.Extensions"),
+        templates  = Y.namespace("Falco.Templates"),
         
         options, Timeline;
     
@@ -132,7 +132,7 @@ YUI.add("view-timeline", function(Y) {
         }
     });
     
-    Y.namespace("Tristis.Views").Timeline = Timeline;
+    Y.namespace("Falco.Views").Timeline = Timeline;
     
 }, "@VERSION@", {
     requires : [

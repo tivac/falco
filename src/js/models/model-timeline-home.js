@@ -1,8 +1,8 @@
 YUI.add("model-timeline-home", function(Y) {
     "use strict";
     
-    var models  = Y.namespace("Tristis.Models"),
-        streams = Y.namespace("Tristis.Streams"),
+    var models  = Y.namespace("Falco.Models"),
+        streams = Y.namespace("Falco.Streams"),
         Home;
         
     Home = Y.Base.create("home", models.TimelineBase, [], {

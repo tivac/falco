@@ -1,13 +1,13 @@
 /*jshint browser:true, yui:true, node:true */
-YUI.add("extension-tristis-events", function(Y) {
+YUI.add("extension-app-events", function(Y) {
     "use strict";
     
     var gui = require("nw.gui"),
         win = gui.Window.get(),
         
-        tristis = Y.namespace("Tristis"),
-        models  = Y.namespace("Tristis.Models"),
-        streams = Y.namespace("Tristis.Streams"),
+        falco   = Y.namespace("Falco"),
+        models  = Y.namespace("Falco.Models"),
+        streams = Y.namespace("Falco.Streams"),
         
         Events;
     
@@ -84,7 +84,7 @@ YUI.add("extension-tristis-events", function(Y) {
             localStorage.width  = win.width;
             localStorage.height = win.height;
             
-            tristis.app.destroy();
+            falco.app.destroy();
             
             process.nextTick(function forceClose() {
                 win.close(true);
@@ -92,7 +92,7 @@ YUI.add("extension-tristis-events", function(Y) {
         }
     };
     
-    Y.namespace("Tristis.Extensions").Events = Events;
+    Y.namespace("Falco.Extensions").Events = Events;
     
 }, "@VERSION@", {
     requires : [

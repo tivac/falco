@@ -1,7 +1,7 @@
 YUI.add("model-tweet", function(Y) {
     "use strict";
     
-    var tristis = Y.namespace("Tristis"),
+    var falco = Y.namespace("Falco"),
         Tweet;
     
     Tweet = Y.Base.create("tweet", Y.Model, [], {
@@ -27,7 +27,7 @@ YUI.add("model-tweet", function(Y) {
         },
         
         _syncRetweet : function(options, done) {
-            tristis.twitter.post("statuses/retweet/" + this.get("id_str"), done);
+            falco.twitter.post("statuses/retweet/" + this.get("id_str"), done);
         }
     }, {
         ATTRS : {
@@ -38,7 +38,7 @@ YUI.add("model-tweet", function(Y) {
         }
     });
     
-    Y.namespace("Tristis.Models").Tweet = Tweet;
+    Y.namespace("Falco.Models").Tweet = Tweet;
     
 }, "@VERSION@", {
     requires : [

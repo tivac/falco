@@ -35,6 +35,6 @@ YUI.add("extension-tweet-actions", function(Y) {
         }
     };
     
-    Y.namespace("Tristis.Extensions").TweetActions = Actions;
+    Y.namespace("Falco.Extensions").TweetActions = Actions;
     
 });

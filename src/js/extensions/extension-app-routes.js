@@ -1,8 +1,9 @@
-YUI.add("extension-tristis-routes", function(Y) {
+/*jshint browser:true, yui:true, node:true */
+YUI.add("extension-app-routes", function(Y) {
     "use strict";
     
-    var views  = Y.namespace("Tristis.Views"),
-        models = Y.namespace("Tristis.Models"),
+    var views  = Y.namespace("Falco.Views"),
+        models = Y.namespace("Falco.Models"),
         Routes;
     
     Routes = function() {};
@@ -92,7 +93,7 @@ YUI.add("extension-tristis-routes", function(Y) {
         }
     };
     
-    Y.namespace("Tristis.Extensions").Routes = Routes;
+    Y.namespace("Falco.Extensions").Routes = Routes;
     
 }, "@VERSION@", {
     requires : [
