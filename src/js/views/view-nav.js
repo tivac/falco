@@ -1,7 +1,7 @@
 YUI.add("view-nav", function(Y) {
     "use strict";
     
-    var falco   = Y.namespace("Falco"),
+    var falco     = Y.namespace("Falco"),
         models    = Y.namespace("Falco.Models"),
         templates = Y.namespace("Falco.Templates"),
         Nav;
@@ -9,8 +9,12 @@ YUI.add("view-nav", function(Y) {
     Nav = Y.Base.create("nav", Y.View, [], {
         
         events : {
-            "a" : {
-                click : "_navClick"
+            ".timelines a" : {
+                click : "_timelineClick"
+            },
+            
+            ".options a" : {
+                click : "_optionsClick"
             }
         },
         
@@ -74,7 +78,7 @@ YUI.add("view-nav", function(Y) {
         },
         
         // DOM Events
-        _navClick : function(e) {
+        _timelineClick : function(e) {
             var target = e.target;
             
             e.preventDefault();
@@ -84,6 +88,18 @@ YUI.add("view-nav", function(Y) {
             target.ancestor(".timeline")
                 .removeAttribute("data-updates")
                 .addClass("active");
+            
+            this.fire("url", {
+                // Using "getAttribute" here instead of "get" so we get the
+                // actual value instead of an absolute URL
+                url : target.getAttribute("href")
+            });
+        },
+        
+        _optionsClick : function(e) {
+            var target = e.target;
+            
+            e.preventDefault();
             
             this.fire("url", {
                 // Using "getAttribute" here instead of "get" so we get the
