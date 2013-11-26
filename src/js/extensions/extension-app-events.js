@@ -79,16 +79,7 @@ YUI.add("extension-app-events", function(Y) {
         
         // Node-Webkit events
         _closeEvent : function() {
-            localStorage.x      = win.x;
-            localStorage.y      = win.y;
-            localStorage.width  = win.width;
-            localStorage.height = win.height;
-            
-            falco.app.destroy();
-            
-            process.nextTick(function forceClose() {
-                win.close(true);
-            });
+            this.destroy();
         }
     };
     

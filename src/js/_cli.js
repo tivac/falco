@@ -6,8 +6,6 @@ var gui = require("nw.gui"),
     tools, _save, _restore;
 
 _save = function(key, src) {
-    console.log(src.x, src.y, src.width, src.height);
-    
     localStorage[key + "_x"]       = src.x;
     localStorage[key + "_y"]       = src.y;
     localStorage[key + "_width"]   = src.width;
@@ -33,28 +31,25 @@ _restore = function(key, tgt) {
     );
 };
 
-// Save size/location of main window on close
-win.on("close", function() {
-    console.log("saving main window positions");
-    
-    _save("main", win);
-});
-
 // Update main window
 _restore("main", win);
 
 // support opening devtools via command-line switch
-if(gui.App.argv.indexOf("--debug") === -1) {
-    return;
+if(gui.App.argv.indexOf("--debug") > -1) {
+    tools = win.showDevTools();
+
+    _restore("devtools", tools);
 }
 
-tools = win.showDevTools();
-
-// Save size/location of main window on close
 win.on("close", function() {
-    console.log("saving devtools positions");
+    _save("main", win);
     
-    _save("devtools", tools);
+    if(tools) {
+        _save("devtools", tools);
+    }
+    
+    // Make sure other listeners can fire
+    process.nextTick(function forceClose() {
+        win.close(true);
+    });
 });
-
-_restore("devtools", tools);
