@@ -28,7 +28,7 @@ YUI.add("extension-app-events", function(Y) {
                 }, null, this)
             ];
             
-            win.on("close", this._closeEvent);
+            win.on("close", this._closeEvent.bind(this));
             
             // Have to adjust this based on main app startup flow
             if(models.timelines) {
