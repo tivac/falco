@@ -27,12 +27,6 @@ YUI.add("app-main", function(Y) {
                 return this._auth();
             }
             
-            win.on("close", function() {
-                console.log("Destroying app");
-                
-                this.destroy();
-            }.bind(this));
-            
             this._setup();
         },
         
