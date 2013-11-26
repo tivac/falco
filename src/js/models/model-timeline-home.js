@@ -40,8 +40,12 @@ YUI.add("model-timeline-home", function(Y) {
                 value : "home"
             },
             
+            slug : {
+                value : "home"
+            },
+            
             url  : {
-                value : "/home"
+                value : "/lists/home"
             }
         }
     });

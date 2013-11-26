@@ -49,8 +49,12 @@ YUI.add("model-timeline-mentions", function(Y) {
                 value : "mentions"
             },
             
+            slug : {
+                value : "mentions"
+            },
+            
             url : {
-                value : "/mentions"
+                value : "/lists/mentions"
             }
         }
     });

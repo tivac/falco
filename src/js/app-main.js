@@ -27,6 +27,12 @@ YUI.add("app-main", function(Y) {
                 return this._auth();
             }
             
+            win.on("close", function() {
+                console.log("Destroying app");
+                
+                this.destroy();
+            }.bind(this));
+            
             this._setup();
         },
         
@@ -36,8 +42,6 @@ YUI.add("app-main", function(Y) {
         },
         
         _setup : function() {
-            var self = this;
-            
             falco.twitter = new Twitter({
                 consumer_key        : conf.consumerKey,
                 consumer_secret     : conf.consumerSecret,
@@ -59,22 +63,23 @@ YUI.add("app-main", function(Y) {
                     console.log("userLoad Error", err);
                     
                     // TODO: Getting ECONNRESET here on the first attempt, not sure what the deal is...
-                    //return self._auth();
+                    //return this._auth();
                 }
                 
                 models.timelines.load();
                 
                 streams.user.start();
                 
-                self.navigate("/home");
+                this.navigate("/lists/home");
                 
-                self._render();
-            });
+                this._render();
+            }.bind(this));
         },
         
         _render : function() {
             this.render();
             win.show();
+            win.focus();
         },
         
         _auth : function() {

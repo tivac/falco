@@ -11,8 +11,7 @@ YUI.add("extension-app-routes", function(Y) {
         routes : {
             value : [
                 { path : "/auth",        callbacks : "_routeAuth" },
-                { path : "/home",        callbacks : "_routeHome" },
-                { path : "/mentions",    callbacks : "_routeMentions" },
+                { path : "/options",     callbacks : "_routeOptions" },
                 { path : "/lists/:list", callbacks : "_routeList" },
             ]
         }
@@ -22,8 +21,6 @@ YUI.add("extension-app-routes", function(Y) {
         _loaded : {},
         
         _showTimeline : function(name) {
-            var app = this;
-            
             Y.lazyLoad("view-timeline", function(errors) {
                 var list, tweets;
                 
@@ -32,8 +29,8 @@ YUI.add("extension-app-routes", function(Y) {
                     return console.log(errors);
                 }
                 
-                if(!app.views[name]) {
-                    app.views[name] = {
+                if(!this.views[name]) {
+                    this.views[name] = {
                         type     : views.Timeline,
                         preserve : true
                     };
@@ -43,22 +40,20 @@ YUI.add("extension-app-routes", function(Y) {
                 tweets = list.get("tweets");
                 
                 // Load first page of tweets via REST api if needed
-                if(!app._loaded[name]) {
+                if(!this._loaded[name]) {
                     tweets.more({ sync : "twitter" });
                     
-                    app._loaded[name] = 1;
+                    this._loaded[name] = 1;
                 }
                 
-                app.showView(name, {
+                this.showView(name, {
                     model : list
                 });
-            });
+            }.bind(this));
         },
         
         // Route Handles
         _routeAuth : function() {
-            var app = this;
-            
             Y.lazyLoad("view-link", "model-oauth", function(errors, attached) {
                 // TODO: handle
                 if(errors) {
@@ -70,22 +65,32 @@ YUI.add("extension-app-routes", function(Y) {
                 }
                 
                 if("view-link" in attached) {
-                    app.views.link = {
+                    this.views.link = {
                         type     : views.Link,
                         preserve : false
                     };
                 }
                 
-                app.showView("link");
-            });
+                this.showView("link");
+            }.bind(this));
         },
         
-        _routeHome : function() {
-            this._showTimeline("home");
-        },
-        
-        _routeMentions : function() {
-            this._showTimeline("mentions");
+        _routeOptions : function() {
+            Y.lazyLoad("view-options", function(errors, attached) {
+                // TODO: handle
+                if(errors) {
+                    return console.log(errors);
+                }
+                
+                if("view-options" in attached) {
+                    this.views.options = {
+                        type     : views.Options,
+                        preserve : false
+                    };
+                }
+                
+                this.showView("options");
+            }.bind(this));
         },
         
         _routeList : function(req) {
