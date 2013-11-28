@@ -1,13 +1,17 @@
-<div class="user">
-    <a href="https://twitter.com/<%= data.user.screen_name %>" data-external>
-        <img class="icon" src="<%= data.user.profile_image_url %>">
-    </a>
+<a href="https://twitter.com/<%= data.user.screen_name %>" class="icon" data-external>
+    <img class="icon" src="<%= data.user.profile_image_url %>">
+</a>
+
+<div class="timelines pure-menu pure-menu-open">
+    <ul>
+        <%== data._t.timelines(data) %>
+    </ul>
 </div>
 
-<ol class="timelines">
-    <%== data._t.timelines(data) %>
-</ol>
-
-<div class="options">
-    <a href="/options">Options</a>
+<div class="pure-menu pure-menu-open options">
+    <ul>
+        <li>
+            <a href="/options" class="menu-item-divided">Options</a>
+        </li>
+    </ul>
 </div>

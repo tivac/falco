@@ -57,7 +57,7 @@ YUI.add("view-nav", function(Y) {
                 count;
             
             // only update inactive links
-            if(list.hasClass("active")) {
+            if(list.hasClass(Nav.CSS.active)) {
                 return;
             }
             
@@ -69,7 +69,7 @@ YUI.add("view-nav", function(Y) {
         },
         
         _renderLists : function() {
-            this.get("container").one(".timelines").setHTML(
+            this.get("container").one(".timelines ul").setHTML(
                 templates["nav-timelines"]({
                     timelines : models.timelines.toJSON(),
                     path      : falco.app.getPath()
@@ -83,11 +83,11 @@ YUI.add("view-nav", function(Y) {
             
             e.preventDefault();
             
-            this.get("container").all(".timeline").removeClass("active");
+            this.get("container").all("." + Nav.CSS.active).removeClass(Nav.CSS.active);
             
-            target.ancestor(".timeline")
+            target.ancestor("li")
                 .removeAttribute("data-updates")
-                .addClass("active");
+                .addClass(Nav.CSS.active);
             
             this.fire("url", {
                 // Using "getAttribute" here instead of "get" so we get the
@@ -101,11 +101,20 @@ YUI.add("view-nav", function(Y) {
             
             e.preventDefault();
             
+            this.get("container").all("." + Nav.CSS.active).removeClass(Nav.CSS.active);
+            
+            target.ancestor("li")
+                .addClass(Nav.CSS.active);
+            
             this.fire("url", {
                 // Using "getAttribute" here instead of "get" so we get the
                 // actual value instead of an absolute URL
                 url : target.getAttribute("href")
             });
+        }
+    }, {
+        CSS : {
+            active : "pure-menu-selected"
         }
     });
     
