@@ -5,12 +5,12 @@ html {
 body {
     width: 100%;
     height: 100%;
-    display: -webkit-flex;
+    display: flex;
 }
 
 .views {
-    -webkit-flex: 1 1 auto;
-    position: relative;
+    flex: 1 1 auto;
+    display: flex;
 }
 
 button.link {
@@ -28,5 +28,4 @@ button.link {
 
 /* Make sure keyboard users get visual feedback */
 .text:hover,
-.text:focus {
-}
+.text:focus {}
