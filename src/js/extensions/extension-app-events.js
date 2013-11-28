@@ -24,7 +24,8 @@ YUI.add("extension-app-events", function(Y) {
             this._handles = [
                 this.on({
                     "*:linked" : this._linkedEvent,
-                    "*:url"    : this._urlEvent
+                    "*:url"    : this._urlEvent,
+                    "*:logout" : this._logoutEvent
                 }, null, this)
             ];
             
@@ -75,6 +76,14 @@ YUI.add("extension-app-events", function(Y) {
             models.friends = new models.Friends({
                 items : friends
             });
+        },
+        
+        _logoutEvent : function() {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("access_secret");
+            
+            // We log you out by closing the app. Maybe something more interesting can be done later
+            win.close();
         },
         
         // Node-Webkit events
