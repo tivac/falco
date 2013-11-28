@@ -142,7 +142,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         "debug",
         "Run local version of the app with developer tools open",
-        "shell:debug"
+        [ "yui", "template", "shell:debug" ]
     );
     
     grunt.registerTask(
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
             grunt.task.run(
                 "bumpup:" + type,
                 "update:package",
-                // yui,
+                "yui",
                 "template",
                 "mkdir",
                 "compress:tristis",
