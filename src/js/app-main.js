@@ -77,7 +77,7 @@ YUI.add("app-main", function(Y) {
         },
         
         _auth : function() {
-            this.navigate("/auth");
+            this.navigate("/oauth");
             
             this._render();
         }

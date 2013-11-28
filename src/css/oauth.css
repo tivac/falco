@@ -1,15 +1,13 @@
-.yui3-app-view.link {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+.yui3-app-view.oauth {
+    display: flex;
+    flex: 1 1 auto;
 }
 
-.start {
-    height: 100%;
+.content {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1 1 auto;
 }
 
+.pin .pure-controls { margin-top: 20px; }

@@ -1,17 +1,16 @@
 /*jshint maxparams:5, yui:true */
-YUI.add("view-link", function(Y) {
+YUI.add("view-oauth", function(Y) {
     "use strict";
 
-    var models = Y.namespace("Falco.Models"),
-        Link;
-    
-    Link = Y.Base.create("link", Y.View, [], {
-        css      : "oauth",
-        template : Y.namespace("Falco.Templates")["oauth-link"],
+    var models    = Y.namespace("Falco.Models"),
+        templates = Y.namespace("Falco.Templates"),
         
+        OAuth;
+    
+    OAuth = Y.Base.create("oauth", Y.View, [], {
         events : {
-            ".start" : {
-                click : "_startClick"
+            ".launch-auth" : {
+                click : "_launchClick"
             },
             
             ".pin" : {
@@ -20,14 +19,12 @@ YUI.add("view-link", function(Y) {
         },
         
         render : function() {
-            this.get("container").setHTML(this.template());
+            this.get("container").setHTML(templates["oauth-start"]());
             
             return this;
         },
         
-        _startClick : function(e) {
-            var self = this;
-            
+        _launchClick : function(e) {
             e.preventDefault();
             
             models.oauth.requestToken(function(error, token) {
@@ -38,12 +35,13 @@ YUI.add("view-link", function(Y) {
                 require("nw.gui").Shell.openExternal(
                     "https://twitter.com/oauth/authenticate?oauth_token=" + token
                 );
-            });
+                
+                this.get("container").setHTML(templates["oauth-pin"]());
+            }.bind(this));
         },
         
         _pinSubmit : function(e) {
-            var self = this,
-                pin;
+            var pin;
             
             e.preventDefault();
             
@@ -54,12 +52,12 @@ YUI.add("view-link", function(Y) {
                     return console.error(error);
                 }
                 
-                self.fire("linked");
-            });
+                this.fire("linked");
+            }.bind(this));
         }
     });
     
-    Y.namespace("Falco.Views").Link = Link;
+    Y.namespace("Falco.Views").OAuth = OAuth;
 
 }, "@VERSION@", {
     requires : [
@@ -71,6 +69,10 @@ YUI.add("view-link", function(Y) {
         "model-oauth",
         
         // Templates
-        "template-oauth-link"
+        "template-oauth-start",
+        "template-oauth-pin",
+        
+        // CSS
+        "css-oauth"
     ]
 });

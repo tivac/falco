@@ -10,7 +10,7 @@ YUI.add("extension-app-routes", function(Y) {
     Routes.ATTRS = {
         routes : {
             value : [
-                { path : "/auth",        callbacks : "_routeAuth" },
+                { path : "/oauth",       callbacks : "_routeOAuth" },
                 { path : "/options",     callbacks : "_routeOptions" },
                 { path : "/lists/:list", callbacks : "_routeList" },
             ]
@@ -53,8 +53,8 @@ YUI.add("extension-app-routes", function(Y) {
         },
         
         // Route Handles
-        _routeAuth : function() {
-            Y.lazyLoad("view-link", "model-oauth", function(errors, attached) {
+        _routeOAuth : function() {
+            Y.lazyLoad("view-oauth", function(errors, attached) {
                 // TODO: handle
                 if(errors) {
                     return console.log(errors);
@@ -64,14 +64,14 @@ YUI.add("extension-app-routes", function(Y) {
                     models.oauth = new models.OAuth();
                 }
                 
-                if("view-link" in attached) {
-                    this.views.link = {
-                        type     : views.Link,
+                if("view-oauth" in attached) {
+                    this.views.oauth = {
+                        type     : views.OAuth,
                         preserve : false
                     };
                 }
                 
-                this.showView("link");
+                this.showView("oauth");
             }.bind(this));
         },
         
