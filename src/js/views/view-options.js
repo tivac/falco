@@ -3,10 +3,18 @@ YUI.add("view-options", function(Y) {
     
     var falco      = Y.namespace("Falco"),
         templates  = Y.namespace("Falco.Templates"),
+        models     = Y.namespace("Falco.Models"),
         
         Options;
     
     Options = Y.Base.create("options", Y.View, [], {
+        
+        events : {
+            ".logout" : {
+                click : "_logoutClick"
+            }
+        },
+        
         template : templates.options,
         
         initializer : function() {
@@ -21,12 +29,19 @@ YUI.add("view-options", function(Y) {
         
         render : function() {
             this.get("container").setHTML(
-                this.template()
+                this.template({
+                    user : models.user.toJSON()
+                })
             );
             
             return this;
         },
         
+        _logoutClick : function(e) {
+            e.preventDefault();
+            
+            this.fire("logout");
+        }
     });
     
     Y.namespace("Falco.Views").Options = Options;
@@ -36,6 +51,9 @@ YUI.add("view-options", function(Y) {
         // YUI
         "base-build",
         "view",
+        
+        // Models
+        "model-user",
         
         // Templates
         "template-options",
