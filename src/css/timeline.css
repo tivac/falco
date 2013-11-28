@@ -1,15 +1,11 @@
 /*csslint adjoining-classes:false */
 .yui3-app-view.timeline {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     overflow-y: auto;
 }
 
 .yui3-app-view.timeline .tweets {
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .yui3-app-view.timeline .tweets .tweet:nth-child(odd) {

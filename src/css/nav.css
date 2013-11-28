@@ -2,30 +2,73 @@
 
 .child.nav {
     flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
     min-width: 150px;
-    background: #666;
+    max-width: 200px;
+    background: #191818;
+}
+
+.child.nav .icon {
+    
 }
 
 .child.nav .timelines {
+    flex: 1;
+}
+
+/*.child.nav .timelines {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}*/
+
+.child.nav .pure-menu {
+    border: none;
+    background: transparent;
 }
 
-.child.nav .timeline {
-    position: relative;
+.child.nav .menu-item-divided {
+    border-top: 1px solid #333;
+}
+
+.child.nav a {
+    color: #999;
+    border: none;
+    padding: 0.6em 0 0.6em 0.6em;
+}
+
+.child.nav a:hover,
+.child.nav a:focus {
+   background: #333;
+}
+
+.child.nav .pure-menu-selected {
+    background: #1f8dd6;
+}
+
+.child.nav .pure-menu-selected a {
+    color: #fff;
 }
 
 .child.nav .timeline[data-updates]:after {
     content: attr(data-updates);
     position: absolute;
-    left: -55px;
-    bottom: 2px;
-    width: 50px;
-    text-align: right;
-    font-size: 85%;
+    top: 25%;
+    right: 5px;
+    min-width: 8px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: -11px;
+    padding: 0 7px 0 6px;
+    font-weight: normal;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, #67A7E9, #2580DF) repeat scroll 0% 0% #3B8DE2;
+    border: 1px solid #215A96;
+    border-radius: 11px;
+    box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.1) inset, 0 1px rgba(0, 0, 0, 0.12);
 }
 
-.child.nav .timeline.active {
-    font-weight: bold;
-}
+.child.nav .options { }

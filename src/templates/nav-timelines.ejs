@@ -1,5 +1,9 @@
-<% data.timelines.forEach(function(timeline) { %>
-<li class="timeline <%= timeline.slug %><% if(timeline.url === data.path) { %> active<% } %>"
+<% data.timelines.forEach(function(timeline, idx) { %>
+<li class="
+        timeline
+        <%= timeline.slug %>
+        <% if(timeline.url === data.path) { %> pure-menu-selected<% } %>
+        <% if(idx - 1 > 0 && data.timelines[idx - 1].type === "mentions") { %> menu-item-divided<% } %>"
     data-id="<%= timeline.id %>"
 >
     <a href="<%= timeline.url %>">
