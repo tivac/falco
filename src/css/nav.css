@@ -9,19 +9,21 @@
     background: #191818;
 }
 
-.child.nav .icon {
-    
+.child.nav .hd {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px 0;
+}
+
+.child.nav .twitter-icon {
+    border: 4px solid #FFF;
+    background-color: #FFF;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .child.nav .timelines {
     flex: 1;
 }
-
-/*.child.nav .timelines {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}*/
 
 .child.nav .pure-menu {
     border: none;
