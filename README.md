@@ -6,7 +6,7 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 [![Packages](https://david-dm.org/tivac/falco/status.png)](https://david-dm.org/tivac/falco/)
 [![Dev Packages](https://david-dm.org/tivac/falco/dev-status.png)](https://david-dm.org/tivac/falco/)
 
-![Client Screenshot](http://tivac.com/upload/images/pdJBq5a_falco.png)
+![Client Screenshot](http://tivac.com/upload/images/pBp8OCu_falco.png)
 
 ## Features ##
 
