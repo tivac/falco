@@ -8,6 +8,8 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 
 ![Client Screenshot](http://tivac.com/upload/images/pBp8OCu_falco.png)
 
+(Ignore the URL bar, that's just for dev!)
+
 ## Features ##
 
 * It auths against Twitter
