@@ -22,10 +22,20 @@
     flex: 1;
 }
 
+.tweet .hd .name .screen-name {
+    color: #999;
+    font-size: 85%;
+}
+
 .tweet .hd .time {
     text-align: right;
 }
 
 .tweet .actions button {
-    -webkit-appearance: listitem;
+    color: #CCC;
+    text-decoration: none;
+}
+
+.tweet .actions button:hover {
+    color: #333;
 }
