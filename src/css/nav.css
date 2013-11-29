@@ -48,31 +48,37 @@
 }
 
 .child.nav .pure-menu-selected {
-    background: #1f8dd6;
+    background: #1F8DD6;
 }
 
 .child.nav .pure-menu-selected a {
-    color: #fff;
+    color: #FFF;
+}
+
+.child.nav .timeline a {
+    padding-right: 1em;
 }
 
 .child.nav .timeline[data-updates]:after {
     content: attr(data-updates);
     position: absolute;
-    top: 25%;
+    top: 50%;
     right: 5px;
     min-width: 8px;
     height: 20px;
     line-height: 20px;
     margin-top: -11px;
-    padding: 0 7px 0 6px;
-    font-weight: normal;
+    padding: 0 6px;
     color: #FFF;
     text-align: center;
     text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(to bottom, #67A7E9, #2580DF) repeat scroll 0% 0% #3B8DE2;
-    border: 1px solid #215A96;
+    background: #1F8DD6;
+    border: 0;
     border-radius: 11px;
-    box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.1) inset, 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.child.nav .pure-menu-selected[data-updates]:after {
+    border: 1px solid #EEE;
 }
 
 .child.nav .options { }
