@@ -3,6 +3,10 @@
     overflow-y: auto;
 }
 
+.yui3-app-view.timeline h2 {
+    margin-left: 8px;
+}
+
 .yui3-app-view.timeline .tweets {
     margin: 0;
     padding: 0;
