@@ -29,3 +29,9 @@ button.link {
 /* Make sure keyboard users get visual feedback */
 .text:hover,
 .text:focus {}
+
+.twitter-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+}
