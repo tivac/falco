@@ -2,7 +2,6 @@ YUI.add("model-timeline-list", function(Y) {
     "use strict";
     
     var models  = Y.namespace("Falco.Models"),
-        streams = Y.namespace("Falco.Streams"),
         
         List;
         
@@ -16,7 +15,7 @@ YUI.add("model-timeline-list", function(Y) {
                 }
             });
             
-            this.set("url", "/lists/" + this.get("id"));
+            this.set("url", "/lists/" + this.get("id_str"));
         }
     }, {
         ATTRS : {

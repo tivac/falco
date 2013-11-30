@@ -1,8 +1,8 @@
+/*jshint node:true, yui:true, browser:true */
 YUI.add("model-timeline-base", function(Y) {
     "use strict";
     
     var models = Y.namespace("Falco.Models"),
-        syncs  = Y.namespace("ModelSync"),
         
         TimelineBase;
         
