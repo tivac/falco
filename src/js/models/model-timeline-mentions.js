@@ -46,7 +46,7 @@ YUI.add("model-timeline-mentions", function(Y) {
             },
             
             type : {
-                value : "mentions"
+                value : "base"
             },
             
             slug : {

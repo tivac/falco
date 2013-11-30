@@ -1,11 +1,9 @@
-/*jshint browser:true, yui:true */
+/*jshint node:true, browser:true, yui:true */
 YUI.add("model-list-timelines", function(Y) {
     "use strict";
     
     var falco = Y.namespace("Falco"),
         models  = Y.namespace("Falco.Models"),
-        
-        syncs   = Y.namespace("ModelSync"),
         
         Timelines;
         
@@ -46,7 +44,8 @@ YUI.add("model-list-timelines", function(Y) {
                 done("Unsupported action");
             }
             
-            this._read(options, done);
+            // Todo: smarter sync impl that nicely mixes in defaults & also reads from "saved_searches/list"
+            falco.twitter.get("lists/list", done);
         },
         
         parse : function(response) {
@@ -67,7 +66,7 @@ YUI.add("model-list-timelines", function(Y) {
             response = response.filter(function(timeline) {
                 var id, tweets;
                 
-                if(timeline.id !== "home" && timeline.id !== "mentions") {
+                if(timeline.type !== "base") {
                     return true;
                 }
                 
@@ -84,16 +83,10 @@ YUI.add("model-list-timelines", function(Y) {
                 this._models[id].setAttrs(timeline);
             }, this);
             
+            // inject default timelines back in
             response.unshift(this._models.home, this._models.mentions);
             
             return response;
-        },
-        
-        // Sync implementation
-        _read : function(options, done) {
-            console.log("reading lists from twitter");
-            
-            falco.twitter.get("lists/list", done);
         },
         
         // Timelines only serializes ids of lists in it, the lists themselves
@@ -108,32 +101,42 @@ YUI.add("model-list-timelines", function(Y) {
         comparator : function(model) {
             return {
                 id   : model.get("id"),
-                slug : model.get("slug")
+                slug : model.get("slug"),
+                type : model.get("type")
             };
         },
         
         // Override comparisons so things line up like so: home, mentions, lists in alphabetical order
         _compare : function(a, b) {
-            // Home should be first
-            if(a.id === "home") {
+            // Same type? Sort on alpha
+            if(a.type === b.type) {
+                return a.slug.localeCompare(b.slug);
+            }
+            
+            // Otherwise order is built-in timelines, lists, then searches
+            if(a.type === "base") {
                 return -1;
             }
             
-            if(b.id === "home") {
+            if(b.type === "base") {
                 return 1;
             }
             
-            // Mentions should be second
-            if(a.id === "mentions") {
+            if(a.type === "list") {
                 return -1;
             }
-            
-            if(b.id === "mentions") {
+
+            if(b.type === "list") {
                 return 1;
             }
-            
-            // Everyone else is sorted by name
-            return a.slug.localeCompare(b.slug);
+
+            if(a.type === "search") {
+                return -1;
+            }
+
+            if(b.type === "search") {
+                return 1;
+            }
         },
         
         // Refire tweets
@@ -174,6 +177,7 @@ YUI.add("model-list-timelines", function(Y) {
         "model-timeline-home",
         "model-timeline-mentions",
         "model-timeline-list",
+        "model-timeline-search",
         
         // Extensions
         "extension-list-users"

@@ -36,12 +36,12 @@ YUI.add("model-timeline-home", function(Y) {
                 value : "Home"
             },
             
-            type : {
+            slug : {
                 value : "home"
             },
             
-            slug : {
-                value : "home"
+            type : {
+                value : "base"
             },
             
             url  : {

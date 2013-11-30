@@ -41,9 +41,11 @@ YUI.add("view-nav", function(Y) {
             this.get("container").setHTML(
                 this.template({
                     user      : models.user.toJSON(),
-                    timelines : models.timelines.toJSON(),
+                    path      : falco.app.getPath(),
+                    timelines : this._organizeTimelines(),
                     
                     _t : {
+                        timeline  : templates["nav-timeline"],
                         timelines : templates["nav-timelines"]
                     }
                 })
@@ -68,11 +70,37 @@ YUI.add("view-nav", function(Y) {
             list.setAttribute("data-updates", args.count + count);
         },
         
+        _organizeTimelines : function() {
+            var timelines = {
+                    base   : [],
+                    list   : [],
+                    search : []
+                };
+            
+            models.timelines.toJSON().forEach(function(timeline) {
+                timelines[timeline.type].push(timeline);
+            });
+            
+            if(timelines.list.length) {
+                timelines.list[0].divider = true;
+            }
+            
+            if(timelines.search.length) {
+                timelines.search[0].divider = true;
+            }
+            
+            return timelines;
+        },
+        
         _renderLists : function() {
             this.get("container").one(".timelines ul").setHTML(
                 templates["nav-timelines"]({
-                    timelines : models.timelines.toJSON(),
-                    path      : falco.app.getPath()
+                    timelines : this._organizeTimelines(),
+                    path      : falco.app.getPath(),
+                    
+                    _t : {
+                        timeline  : templates["nav-timeline"]
+                    }
                 })
             );
         },
@@ -128,6 +156,7 @@ YUI.add("view-nav", function(Y) {
         
         // Templates
         "template-nav",
+        "template-nav-timeline",
         "template-nav-timelines"
     ]
 });
