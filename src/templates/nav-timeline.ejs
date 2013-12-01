@@ -2,7 +2,7 @@
         timeline
         <%= data.timeline.slug %>
         <% if(data.timeline.url === data.path) { %> pure-menu-selected<% } %>
-        <% if(data.timeline.divider) { %> menu-item-divided<% } %>"
+        <% if(data.divider) { %> menu-item-divided<% } %>"
     data-id="<%= data.timeline.id %>"
 >
     <a href="<%= data.timeline.url %>">

@@ -23,8 +23,13 @@ YUI.add("view-nav", function(Y) {
         initializer : function() {
             this._handles = [
                 models.user.after([ "change", "reset" ], this.render, this),
-                models.timelines.after([ "change", "reset" ], this._renderLists, this)
             ];
+            
+            Y.Object.each(models.timelines, function(timelines) {
+                this._handles.push(
+                    timelines.after([ "change", "reset" ], this._renderTimelines, this)
+                );
+            }, this);
             
             this.publish("url", {
                 preventable : false
@@ -42,7 +47,7 @@ YUI.add("view-nav", function(Y) {
                 this.template({
                     user      : models.user.toJSON(),
                     path      : falco.app.getPath(),
-                    timelines : this._organizeTimelines(),
+                    timelines : this._prepareTimelines(),
                     
                     _t : {
                         timeline  : templates["nav-timeline"],
@@ -51,7 +56,7 @@ YUI.add("view-nav", function(Y) {
                 })
             );
             
-            this._renderLists();
+            this._renderTimelines();
         },
         
         updated : function(args) {
@@ -70,32 +75,20 @@ YUI.add("view-nav", function(Y) {
             list.setAttribute("data-updates", args.count + count);
         },
         
-        _organizeTimelines : function() {
-            var timelines = {
-                    base   : [],
-                    list   : [],
-                    search : []
-                };
+        _prepareTimelines : function() {
+            var json = {};
             
-            models.timelines.toJSON().forEach(function(timeline) {
-                timelines[timeline.type].push(timeline);
+            Y.Object.each(models.timelines, function(timeline, name) {
+                json[name] = timeline.toJSON();
             });
             
-            if(timelines.list.length) {
-                timelines.list[0].divider = true;
-            }
-            
-            if(timelines.search.length) {
-                timelines.search[0].divider = true;
-            }
-            
-            return timelines;
+            return json;
         },
         
-        _renderLists : function() {
+        _renderTimelines : function() {
             this.get("container").one(".timelines ul").setHTML(
                 templates["nav-timelines"]({
-                    timelines : this._organizeTimelines(),
+                    timelines : this._prepareTimelines(),
                     path      : falco.app.getPath(),
                     
                     _t : {

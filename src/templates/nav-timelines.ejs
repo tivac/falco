@@ -1,11 +1,28 @@
-<% data.timelines.base.forEach(function(timeline) { %>
-    <%== data._t.timeline({ timeline : timeline, path : data.path }) %>
+<% data.timelines.common.forEach(function(timeline, idx) { %>
+    <%==
+        data._t.timeline({
+            timeline : timeline,
+            path     : data.path
+        })
+    %>
 <% }) %>
 
-<% data.timelines.list.forEach(function(timeline) { %>
-    <%== data._t.timeline({ timeline : timeline, path : data.path }) %>
+<% data.timelines.lists.forEach(function(timeline, idx) { %>
+    <%==
+        data._t.timeline({
+            timeline : timeline,
+            path     : data.path,
+            divider  : (idx === 0)
+        })
+    %>
 <% }) %>
 
-<% data.timelines.search.forEach(function(timeline) { %>
-    <%== data._t.timeline({ timeline : timeline, path : data.path }) %>
+<% data.timelines.searches.forEach(function(timeline, idx) { %>
+    <%==
+        data._t.timeline({
+            timeline : timeline,
+            path     : data.path,
+            divider  : (idx === 0)
+        })
+    %>
 <% }) %>
