@@ -32,7 +32,10 @@ YUI.add("app-main", function(Y) {
         
         destructor : function() {
             models.user.destroy();
-            models.timelines.destroy();
+            
+            Y.Object.each(models.timelines, function(timelines) {
+                timelines.destroy();
+            });
         },
         
         _setup : function() {
@@ -44,7 +47,11 @@ YUI.add("app-main", function(Y) {
             });
             
             models.user      = new models.User();
-            models.timelines = new models.Timelines();
+            models.timelines = {
+                common   : new models.TimelinesCommon(),
+                lists    : new models.TimelinesLists(),
+                searches : new models.TimelinesSearches()
+            };
             
             // add child view now because they depend on model references existing
             this.set("children", {
@@ -60,7 +67,9 @@ YUI.add("app-main", function(Y) {
                     //return this._auth();
                 }
                 
-                models.timelines.load();
+                Y.Object.each(models.timelines, function(model) {
+                    model.load();
+                });
                 
                 streams.user.start();
                 
@@ -113,7 +122,9 @@ YUI.add("app-main", function(Y) {
         
         // Models
         "model-user",
-        "model-list-timelines",
+        "model-list-timelines-common",
+        "model-list-timelines-lists",
+        "model-list-timelines-searches",
         
         // Views
         "view-nav",

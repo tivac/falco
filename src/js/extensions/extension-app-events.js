@@ -1,4 +1,3 @@
-/*jshint browser:true, yui:true, node:true */
 YUI.add("extension-app-events", function(Y) {
     "use strict";
     
@@ -42,9 +41,14 @@ YUI.add("extension-app-events", function(Y) {
         // Called after main app's _setup fn
         _eventsSetup : function() {
             this._handles.push(
-                models.timelines.on("updated", this._updatedEvent, this),
                 streams.user.on("friends", this._friendsEvent, this)
             );
+            
+            Y.Object.each(models.timelines, function(timelines) {
+                this._handles.push(
+                    timelines.on("updated", this._updatedEvent, this)
+                );
+            }, this);
         },
         
         // DOM events

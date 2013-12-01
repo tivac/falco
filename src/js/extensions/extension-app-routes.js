@@ -1,4 +1,3 @@
-/*jshint browser:true, yui:true, node:true */
 YUI.add("extension-app-routes", function(Y) {
     "use strict";
     
@@ -10,9 +9,10 @@ YUI.add("extension-app-routes", function(Y) {
     Routes.ATTRS = {
         routes : {
             value : [
-                { path : "/oauth",       callbacks : "_routeOAuth" },
-                { path : "/options",     callbacks : "_routeOptions" },
-                { path : "/lists/:list", callbacks : "_routeList" },
+                { path : "/oauth",            callbacks : "_routeOAuth" },
+                { path : "/options",          callbacks : "_routeOptions" },
+                { path : "/lists/:list",      callbacks : "_routeList" },
+                { path : "/searches/:search", callbacks : "_routeSearch" },
             ]
         }
     };
@@ -36,7 +36,12 @@ YUI.add("extension-app-routes", function(Y) {
                     };
                 }
                 
-                list   = models.timelines.getById(name);
+                Y.Object.some(models.timelines, function(timelines) {
+                    list = timelines.getById(name);
+                    
+                    return list;
+                });
+                
                 tweets = list.get("tweets");
                 
                 // Load first page of tweets via REST api if needed
@@ -95,6 +100,10 @@ YUI.add("extension-app-routes", function(Y) {
         
         _routeList : function(req) {
             this._showTimeline(req.params.list);
+        },
+        
+        _routeSearch : function(req) {
+            this._showTimeline(req.params.search);
         }
     };
     
