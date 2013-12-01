@@ -1,7 +1,7 @@
 YUI.add("model-list-tweets", function(Y) {
     "use strict";
     
-    var falco    = Y.namespace("Falco"),
+    var falco      = Y.namespace("Falco"),
         models     = Y.namespace("Falco.Models"),
         extensions = Y.namespace("Extensions"),
         
@@ -38,7 +38,24 @@ YUI.add("model-list-tweets", function(Y) {
         
         // Ensure that tweets use string IDs instead of Numbers
         parse : function(response) {
-            return response.map(function(tweet) {
+            var tweets = response,
+                path   = this.get("selector");
+            
+            if(path) {
+                tweets = Y.Object.getValue(response, path);
+                
+                if(!tweets) {
+                    this.fire("error", {
+                        error    : "Invalid selector path",
+                        response : response,
+                        src      : "parse"
+                    });
+                    
+                    return null;
+                }
+            }
+            
+            return tweets.map(function(tweet) {
                 tweet.id = tweet.id_str;
                 
                 return tweet;
@@ -56,8 +73,9 @@ YUI.add("model-list-tweets", function(Y) {
         }
     }, {
         ATTRS : {
-            api     : null,
-            config  : null
+            api      : null,
+            config   : null,
+            selector : null
         }
     });
     
