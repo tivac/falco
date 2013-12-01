@@ -1,11 +1,9 @@
 /*csslint adjoining-classes:false */
 
 .child.nav {
-    flex: 0 1 auto;
+    flex: 0 1 150px;
     display: flex;
     flex-direction: column;
-    min-width: 150px;
-    max-width: 200px;
     background: #191818;
     
     font-size: 14px;
@@ -57,6 +55,9 @@
 
 .child.nav .timeline a {
     padding-right: 1em;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .child.nav .timeline[data-updates]:after {
