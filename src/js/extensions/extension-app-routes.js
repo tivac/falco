@@ -46,7 +46,7 @@ YUI.add("extension-app-routes", function(Y) {
                 
                 // Load first page of tweets via REST api if needed
                 if(!this._loaded[name]) {
-                    tweets.more({ sync : "twitter" });
+                    tweets.load();
                     
                     this._loaded[name] = 1;
                 }
