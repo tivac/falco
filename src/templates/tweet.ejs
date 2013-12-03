@@ -3,13 +3,11 @@
     
     <div class="content">
         <div class="hd">
-            <div class="name">
-                <strong class="real-name">
-                    <a href="https://twitter.com/<%= data.details.user.screen_name %>" data-external>
-                        <%= data.details.user.name %>
-                    </a>
-                </strong>
-                <span class="screen-name">@<%= data.details.user.screen_name %></span>
+            <div class="source">
+                <a href="https://twitter.com/<%= data.details.user.screen_name %>" data-external class="name">
+                    <strong class="real-name"><%= data.details.user.name %></strong>
+                    <span class="screen-name">@<%= data.details.user.screen_name %></span>
+                </a>
             </div>
             
             <div class="time">
@@ -23,14 +21,12 @@
         
         <div class="actions">
             <% if(data.tweet.retweeted_status) { %>
-            <p class="retweeted name">
+            <p class="retweeted">
                 Retweeted by
-                <strong class="real-name">
-                   <a href="https://twitter.com/<%= data.tweet.user.screen_name %>" data-external>
-                       <%= data.tweet.user.name %>
-                   </a>
-               </strong>
-                <span class="screen-name">@<%= data.tweet.user.screen_name %></span>
+                <a href="https://twitter.com/<%= data.tweet.user.screen_name %>" data-external class="name">
+                    <strong class="real-name"><%= data.tweet.user.name %></strong>
+                    <span class="screen-name">@<%= data.tweet.user.screen_name %></span>
+                </a>
             </p>
             <% } %>
             <button class="retweet icon-retweet link" <% if(data.details.retweeted) { %>disabled<% } %>>Retweet</button>

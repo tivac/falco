@@ -6,6 +6,20 @@
     justify-content: space-between;
 }
 
+.tweet .name {
+    color: #000;
+    text-decoration: none;
+}
+
+.tweet .name:hover .real-name {
+    text-decoration: underline;
+}
+
+.tweet .name .screen-name {
+    color: #999;
+    font-size: 85%;
+}
+
 .twitter-icon {
     margin-right: 10px;
 }
@@ -18,13 +32,8 @@
     display: flex;
 }
 
-.tweet .hd .name {
+.tweet .hd .source {
     flex: 1;
-}
-
-.tweet .hd .name .screen-name {
-    color: #999;
-    font-size: 85%;
 }
 
 .tweet .hd .time {
