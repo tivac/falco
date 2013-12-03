@@ -8,10 +8,15 @@ YUI.add("view-timeline", function(Y) {
         extensions = Y.namespace("Falco.Extensions"),
         templates  = Y.namespace("Falco.Templates"),
         
-        options, Timeline;
+        _options, _newlineRegex, _nl2br, Timeline;
     
-    options = {
+    _options = {
         "data-external" : ""
+    };
+    
+    _newlineRegex = /(?:\r\n|\n|\r)/g;
+    _nl2br = function(txt) {
+        return txt.replace(_newlineRegex, "<br />");
     };
     
     moment.lang("en", {
@@ -62,7 +67,8 @@ YUI.add("view-timeline", function(Y) {
             this.get("container").setHTML(
                 this.template(
                     Y.merge(
-                        timeline, {
+                        timeline,
+                        {
                             tweets : this._renderTweets(timeline.tweets),
                             _t     : templates
                         }
@@ -76,11 +82,7 @@ YUI.add("view-timeline", function(Y) {
         },
         
         _renderUpdate : function(e) {
-            var self = this,
-                ol,
-                now,
-                models,
-                updates;
+            var list, now, models, updates;
             
             if(!this.rendered) {
                 return this.render();
@@ -89,8 +91,8 @@ YUI.add("view-timeline", function(Y) {
             models  = e.models || e.parsed || [ e.model ];
             updates = models.length;
             
-            ol = this.get("container").one("ol");
-            ol.prepend(
+            list = this.get("container").one(".tweets");
+            list.prepend(
                 this._renderTweets(models)
             );
             
@@ -102,13 +104,16 @@ YUI.add("view-timeline", function(Y) {
             
             // Update timestamps for all other tweets
             this.get("model").get("tweets").each(function(tweet, idx) {
+                var el;
+                
                 // skip the models we just rendered
                 if(idx < updates) {
                     return;
                 }
                 
-                ol.one("[data-id='" + tweet.id_str + "'] .time").setHTML(self._tweetDate(now, tweet));
-            });
+                el = list.one("[data-id='" + tweet.id_str + "'] .time");
+                el.setHTML(this._tweetDate(now, tweet));
+            }.bind(this));
         },
         
         _renderTweets : function(tweets) {
@@ -116,10 +121,18 @@ YUI.add("view-timeline", function(Y) {
                 now  = moment();
             
             return tweets.reduce(function(prev, tweet) {
-                tweet.html = text.autoLinkWithJSON(tweet.text, tweet.entities, options);
-                tweet.date = self._tweetDate(now, tweet);
+                var details = tweet.retweeted_status || tweet;
                 
-                return prev + templates.tweet(tweet);
+                return prev + templates.tweet({
+                    tweet   : tweet,
+                    details : details,
+                    date    : self._tweetDate(now, tweet),
+                    html    : text.autoLinkWithJSON(
+                                _nl2br(details.text),
+                                details.entities,
+                                _options
+                    )
+                });
             }, "");
         },
         

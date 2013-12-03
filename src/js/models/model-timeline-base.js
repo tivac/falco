@@ -2,7 +2,6 @@ YUI.add("model-timeline-base", function(Y) {
     "use strict";
     
     var models = Y.namespace("Falco.Models"),
-        syncs  = Y.namespace("ModelSync"),
         
         TimelineBase;
         
@@ -33,30 +32,6 @@ YUI.add("model-timeline-base", function(Y) {
             this.get("tweets").destroy();
         },
         
-        // Make sure that tweets are added to the child list correctly
-        parse : function(response) {
-            var tweets;
-            
-            if(!response || !response.tweets) {
-                return response;
-            }
-            
-            tweets = this.get("tweets");
-            
-            if(!tweets.size()) {
-                tweets.reset(response.tweets);
-            } else {
-                // Force new tweets to be added to the top of the list.
-                // When this is re-loaded later from the persistence layer
-                // they'll be sorted into the right spot
-                tweets.add(response.tweets, { cached : true, index : 0 });
-            }
-            
-            delete response.tweets;
-            
-            return response;
-        },
-        
         // Override .toJSON() to make sure tweets are included
         toJSON : function() {
             var json = TimelineBase.superclass.toJSON.apply(this);
@@ -74,8 +49,8 @@ YUI.add("model-timeline-base", function(Y) {
                 return;
             }
             
-            if(e.response || e.models) {
-                count = (e.response || e.models).length;
+            if(e.parsed || e.models) {
+                count = (e.parsed || e.models).length;
             }
             
             this.fire("tweets", {

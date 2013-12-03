@@ -1,3 +1,11 @@
+/* Let sanity reign, fuck the W3C box model */
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+
 html {
     height: 100%;
 }

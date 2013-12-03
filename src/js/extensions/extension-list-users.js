@@ -68,16 +68,15 @@ YUI.add("extension-list-users", function(Y) {
         },
         
         _streamTweet : function(e) {
-            var self = this,
-                lists = this._users[e.tweet.user.id_str];
+            var lists = this._users[e.tweet.user.id_str];
             
             if(!lists) {
                 return;
             }
             
             lists.forEach(function(list) {
-                self.getById(list).get("tweets").add(e.tweet);
-            });
+                this.getById(list).get("tweets").add(e.tweet);
+            }.bind(this));
         }
     };
     

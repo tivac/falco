@@ -23,8 +23,13 @@ YUI.add("view-nav", function(Y) {
         initializer : function() {
             this._handles = [
                 models.user.after([ "change", "reset" ], this.render, this),
-                models.timelines.after([ "change", "reset" ], this._renderLists, this)
             ];
+            
+            Y.Object.each(models.timelines, function(timelines) {
+                this._handles.push(
+                    timelines.after([ "change", "reset" ], this._renderTimelines, this)
+                );
+            }, this);
             
             this.publish("url", {
                 preventable : false
@@ -41,15 +46,17 @@ YUI.add("view-nav", function(Y) {
             this.get("container").setHTML(
                 this.template({
                     user      : models.user.toJSON(),
-                    timelines : models.timelines.toJSON(),
+                    path      : falco.app.getPath(),
+                    timelines : this._prepareTimelines(),
                     
                     _t : {
+                        timeline  : templates["nav-timeline"],
                         timelines : templates["nav-timelines"]
                     }
                 })
             );
             
-            this._renderLists();
+            this._renderTimelines();
         },
         
         updated : function(args) {
@@ -68,11 +75,25 @@ YUI.add("view-nav", function(Y) {
             list.setAttribute("data-updates", args.count + count);
         },
         
-        _renderLists : function() {
+        _prepareTimelines : function() {
+            var json = {};
+            
+            Y.Object.each(models.timelines, function(timeline, name) {
+                json[name] = timeline.toJSON();
+            });
+            
+            return json;
+        },
+        
+        _renderTimelines : function() {
             this.get("container").one(".timelines ul").setHTML(
                 templates["nav-timelines"]({
-                    timelines : models.timelines.toJSON(),
-                    path      : falco.app.getPath()
+                    timelines : this._prepareTimelines(),
+                    path      : falco.app.getPath(),
+                    
+                    _t : {
+                        timeline  : templates["nav-timeline"]
+                    }
                 })
             );
         },
@@ -128,6 +149,7 @@ YUI.add("view-nav", function(Y) {
         
         // Templates
         "template-nav",
+        "template-nav-timeline",
         "template-nav-timelines"
     ]
 });

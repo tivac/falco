@@ -1,6 +1,7 @@
 /*csslint adjoining-classes:false */
 .yui3-app-view.timeline {
     overflow-y: auto;
+    flex: 1;
 }
 
 .yui3-app-view.timeline h2 {
