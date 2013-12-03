@@ -49,8 +49,8 @@ YUI.add("model-timeline-base", function(Y) {
                 return;
             }
             
-            if(e.response || e.models) {
-                count = (e.response || e.models).length;
+            if(e.parsed || e.models) {
+                count = (e.parsed || e.models).length;
             }
             
             this.fire("tweets", {
