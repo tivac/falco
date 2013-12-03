@@ -4,7 +4,11 @@
     <div class="content">
         <div class="hd">
             <div class="name">
-                <strong class="real-name"><%= data.details.user.name %></strong>
+                <strong class="real-name">
+                    <a href="https://twitter.com/<%= data.details.user.screen_name %>" data-external>
+                        <%= data.details.user.name %>
+                    </a>
+                </strong>
                 <span class="screen-name">@<%= data.details.user.screen_name %></span>
             </div>
             
@@ -21,7 +25,11 @@
             <% if(data.tweet.retweeted_status) { %>
             <p class="retweeted name">
                 Retweeted by
-                <strong class="real-name"><%= data.tweet.user.name %></strong>
+                <strong class="real-name">
+                   <a href="https://twitter.com/<%= data.tweet.user.screen_name %>" data-external>
+                       <%= data.tweet.user.name %>
+                   </a>
+               </strong>
                 <span class="screen-name">@<%= data.tweet.user.screen_name %></span>
             </p>
             <% } %>
