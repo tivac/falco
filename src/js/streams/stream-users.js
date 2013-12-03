@@ -1,7 +1,7 @@
 YUI.add("stream-users", function(Y) {
     "use strict";
     
-    var falco = Y.namespace("Falco"),
+    var falco   = Y.namespace("Falco"),
         streams = Y.namespace("Falco.Streams"),
         Users;
     
@@ -28,6 +28,7 @@ YUI.add("stream-users", function(Y) {
         },
         
         _tweet : function(data) {
+            // filter out users we don't recognize
             if(!this._ids[data.user.id_str]) {
                 return;
             }
