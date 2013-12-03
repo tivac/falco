@@ -1,4 +1,3 @@
-/*jshint node:true, yui:true, browser:true */
 YUI.add("model-timeline-base", function(Y) {
     "use strict";
     
@@ -31,30 +30,6 @@ YUI.add("model-timeline-base", function(Y) {
             this._handles = null;
             
             this.get("tweets").destroy();
-        },
-        
-        // Make sure that tweets are added to the child list correctly
-        parse : function(response) {
-            var tweets;
-            
-            if(!response || !response.tweets) {
-                return response;
-            }
-            
-            tweets = this.get("tweets");
-            
-            if(!tweets.size()) {
-                tweets.reset(response.tweets);
-            } else {
-                // Force new tweets to be added to the top of the list.
-                // When this is re-loaded later from the persistence layer
-                // they'll be sorted into the right spot
-                tweets.add(response.tweets, { cached : true, index : 0 });
-            }
-            
-            delete response.tweets;
-            
-            return response;
         },
         
         // Override .toJSON() to make sure tweets are included
