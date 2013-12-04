@@ -1,0 +1,24 @@
+/*jshint node:true */
+
+"use strict";
+
+var path = require("path"),
+    pkg = require("./package.json"),
+    config;
+
+module.exports = config = {
+    "nw" : {
+        name : "node-webkit-v" + pkg.nodewebkit.version + "-win-ia32"
+        
+    },
+
+    "dirs" : [
+        "build/tasks"
+    ],
+
+    "steps" : [
+        
+    ]
+};
+
+config.nw.dir = path.join(".", "bin", config.nw.name);
