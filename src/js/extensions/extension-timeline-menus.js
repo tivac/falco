@@ -3,7 +3,7 @@ YUI.add("extension-timeline-menus", function(Y) {
     
     var gui     = require("nw.gui"),
         _events = {
-            ".username" : {
+            ".username, .name" : {
                 contextmenu : "_usernameMenu"
             },
             
