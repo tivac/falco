@@ -1,7 +1,7 @@
 {
   "name": "Falco",
   "description": "Node-Webkit + Twitter experiment",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "keywords": [
     "twitter"
   ],
@@ -39,8 +39,8 @@
     "progress": "~1.1.2"
   },
   "window": {
-    "show": true,
-    "toolbar": true,
+    "show": false,
+    "toolbar": false,
     "title": "Falco"
   },
   "nodewebkit": {
