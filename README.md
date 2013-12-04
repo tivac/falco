@@ -6,16 +6,19 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 [![Packages](https://david-dm.org/tivac/falco/status.png)](https://david-dm.org/tivac/falco/)
 [![Dev Packages](https://david-dm.org/tivac/falco/dev-status.png)](https://david-dm.org/tivac/falco/)
 
-![Client Screenshot](http://tivac.com/upload/images/pBp8OCu_falco.png)
-
-(Ignore the URL bar, that's just for dev!)
+![Client Screenshot](http://tivac.com/images/falco.png)
 
 ## Features ##
 
-* It auths against Twitter
-* It shows some timelines
-* It streams updates to timelines
-* It's pretty ugly still
+- [x] Auths against Twitter
+- [x] Shows your home timeline
+- [x] Shows your mentions timeline
+- [x] Shows your saved lists
+- [x] Shows your saved searches
+- [x] Retweet tweets
+- [ ] Compose tweets
+- [ ] Doesn't look like a programmer designed it
+- [ ] Isn't full of [Issues](https://github.com/tivac/falco/issues?state=open)
 
 ## Install ##
 
