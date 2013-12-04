@@ -124,6 +124,7 @@ YUI.add("view-timeline", function(Y) {
                 var details = tweet.retweeted_status || tweet;
                 
                 return prev + templates.tweet({
+                    _t      : templates,
                     tweet   : tweet,
                     details : details,
                     date    : self._tweetDate(now, tweet),
@@ -160,6 +161,7 @@ YUI.add("view-timeline", function(Y) {
         // Templates
         "template-timeline",
         "template-tweet",
+        "template-tweet-name",
         
         // CSS
         "css-timeline",
