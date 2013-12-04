@@ -6,16 +6,24 @@
     justify-content: space-between;
 }
 
-.tweet .name {
+.tweet [data-ui] {
     color: #000;
     text-decoration: none;
 }
 
-.tweet .name:hover .real-name {
+.tweet [data-ui]:hover {
     text-decoration: underline;
 }
 
-.tweet .name .screen-name {
+.tweet .username:hover {
+    text-decoration: none;
+}
+
+.tweet .username:hover .real-name {
+    text-decoration: underline;
+}
+
+.tweet .username .screen-name {
     color: #999;
     font-size: 85%;
 }

@@ -3,7 +3,7 @@ YUI.add("extension-timeline-menus", function(Y) {
     
     var gui     = require("nw.gui"),
         _events = {
-            ".username, .name" : {
+            ".username" : {
                 contextmenu : "_usernameMenu"
             },
             
@@ -11,7 +11,11 @@ YUI.add("extension-timeline-menus", function(Y) {
                 contextmenu : "_hashtagMenu"
             },
             
-            ".tweet a:not(.tweet-url)" : {
+            ".list-slug" : {
+                contextmenu : "_listMenu",
+            },
+            
+            ".url" : {
                 contextmenu : "_linkMenu"
             }
         },
@@ -24,7 +28,7 @@ YUI.add("extension-timeline-menus", function(Y) {
             username : [
                 { label : "User Details",  click : "_followLink" },
                 { label : "User Mentions", click : "_userSearch" },
-                { type : "separator" },
+                { type  : "separator" },
                 { label : "Copy Username", click : "_copyUser" },
                 { label : "Copy User URL", click : "_copyLink" }
                 
@@ -32,13 +36,17 @@ YUI.add("extension-timeline-menus", function(Y) {
             
             hashtag : [
                 { label : "Hashtag Tweets", click : "_followLink" },
-                { type : "separator" },
+                { type  : "separator" },
                 { label : "Copy Hashtag",   click : "_copyText" }
+            ],
+            
+            list : [
+                { label : "Subscribe",      click : "_subscribeList" }
             ],
             
             link : [
                 { label : "Open URL", click : "_followLink" },
-                { type : "separator" },
+                { type  : "separator" },
                 { label : "Copy URL", click : "_copyLink" }
             ]
         },
@@ -108,6 +116,8 @@ YUI.add("extension-timeline-menus", function(Y) {
         // DOM Events
         _usernameMenu : function(e) {
             this._showMenu("username", e);
+            
+            
         },
         
         _hashtagMenu : function(e) {

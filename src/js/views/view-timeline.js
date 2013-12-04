@@ -11,7 +11,8 @@ YUI.add("view-timeline", function(Y) {
         _options, _newlineRegex, _nl2br, Timeline;
     
     _options = {
-        "data-external" : ""
+        "data-external" : "",
+        "urlClass"      : "url"
     };
     
     _newlineRegex = /(?:\r\n|\n|\r)/g;

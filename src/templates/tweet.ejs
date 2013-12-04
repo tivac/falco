@@ -8,7 +8,9 @@
             </div>
             
             <div class="time">
-                <%= data.date %>
+                <a href="http://twitter.com/<%= data.tweet.user.screen_name %>/status/<%= data.tweet.id_str %>" data-external data-ui>
+                    <%= data.date %>
+                </a>
             </div>
         </div>
         
