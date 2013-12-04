@@ -7,14 +7,13 @@ YUI.add("model-list-timelines-searches", function(Y) {
         TimelinesSearches;
         
     TimelinesSearches = Y.Base.create("searches", models.TimelinesBase, [
-        extensions.ListUsers,
         extensions.TwitterSyncGet
     ], {
         model : models.Search,
         
         comparator : function(model) {
             return model.get("query");
-        },
+        }
     }, {
         ATTRS : {
             api : {

@@ -6,11 +6,9 @@ YUI.add("model-timeline-search", function(Y) {
         Search;
         
     Search = Y.Base.create("list", models.TimelineBase, [], {
-        initializer : function(config) {
-            config || (config = {});
-            
+        initializer : function() {
             this._handles.push(
-                this.get("tweets").after("load", this._poll, this)
+                this.get("tweets").after([ "load", "more" ], this.poll, this)
             );
             
             this.get("tweets").setAttrs({
@@ -24,11 +22,18 @@ YUI.add("model-timeline-search", function(Y) {
             });
             
             this.set("url", "/searches/" + this.get("id"));
+            
+            // Searches load (& start polling) immediately
+            this.get("tweets").load();
         },
         
-        _poll : function() {
-            Y.later(30000, this, function() {
-                this.get("tweets").more(this._poll.bind(this));
+        poll : function() {
+            if(this._timer) {
+                this._timer.cancel();
+            }
+            
+            this._timer = Y.later(60000, this, function() {
+                this.get("tweets").more();
             });
         }
     }, {
