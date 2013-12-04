@@ -16,9 +16,9 @@ module.exports = config = {
         "build/tasks"
     ],
 
-    "steps" : [
-        
-    ]
+    "steps" : {
+        "default" : "launch"
+    }
 };
 
 config.nw.dir = path.join(".", "bin", config.nw.name);

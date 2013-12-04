@@ -8,6 +8,10 @@ module.exports = function debugTask(config) {
     spawn(
         "nw.exe",
         [ "../../" ],
-        { cwd : config.nw.dir }
-    );
+        {
+            cwd      : config.nw.dir,
+            detached : true,
+            stdio    : [ "ignore", "ignore", "ignore" ]
+        }
+    ).unref();
 };
