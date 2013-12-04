@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         bumpup : "package.json",
         
         compress : {
-            tristis : {
+            falco : {
                 src : [
                     "package.json",
                     "config/**",
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 options : {
                     mode    : "zip",
                     level   : 0,
-                    archive : "./bin/tristis.nw"
+                    archive : "./bin/falco.nw"
                 }
             },
             
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                 files : [
                     {
                         expand: true,
-                        src : "./tristis.exe",
+                        src : "./falco.exe",
                         cwd : "./bin"
                     }, {
                         expand  : true,
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
                 options : {
                     mode    : "zip",
                     level   : 7,
-                    archive : "./bin/tristis-v<%= pkg.version %>.zip"
+                    archive : "./bin/falco-v<%= pkg.version %>.zip"
                 }
             }
         },
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
                 "yui",
                 "template",
                 "mkdir",
-                "compress:tristis",
+                "compress:falco",
                 "package",
                 "compress:release"
             );

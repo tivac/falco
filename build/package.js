@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         var done = this.async();
         
         grunt.task.requires("mkdir");
-        grunt.task.requires("compress:tristis");
+        grunt.task.requires("compress:falco");
         
         grunt.log.writeln("Reading buffers");
         
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
             },
             
             function readTristis(nw, callback) {
-                fs.readFile("./bin/tristis.nw", function(err, data) {
+                fs.readFile("./bin/falco.nw", function(err, data) {
                     if(err) {
                         return callback(err);
                     }
@@ -43,14 +43,14 @@ module.exports = function(grunt) {
                 });
             },
             
-            function combine(nw, tristis, callback) {
-                callback(null, Buffer.concat([ nw, tristis ]));
+            function combine(nw, falco, callback) {
+                callback(null, Buffer.concat([ nw, falco ]));
             },
             
-            function write(tristis, callback) {
+            function write(falco, callback) {
                 grunt.log.writeln("Writing exe");
                 
-                fs.writeFile("./bin/tristis.exe", tristis, function(err) {
+                fs.writeFile("./bin/falco.exe", falco, function(err) {
                     callback(err);
                 });
             }
