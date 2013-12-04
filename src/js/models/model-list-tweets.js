@@ -15,7 +15,7 @@ YUI.add("model-list-tweets", function(Y) {
         sync : function(action, options, done) {
             var args = {};
             
-            if(this.size()) {
+            if(action === "more" && this.size()) {
                 args.since_id = this.item(0).id_str;
             }
             
@@ -24,8 +24,6 @@ YUI.add("model-list-tweets", function(Y) {
                 this.get("config") || {},
                 args
             );
-            
-            this.loading = true;
             
             falco.twitter.get(this.get("api"), args, function(err, resp) {
                 if(err) {
