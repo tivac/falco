@@ -1,5 +1,4 @@
 /*jshint node:true */
-
 "use strict";
 
 var shell = require("shelljs");
@@ -9,5 +8,5 @@ module.exports = function(config) {
         "./src",
         "./config",
         "./package.json"
-    ], "./temp");
+    ], config.temp);
 };

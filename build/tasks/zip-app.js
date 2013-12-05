@@ -1,37 +1,24 @@
 /*jshint node:true */
-
 "use strict";
 
 var fs       = require("fs"),
-    path     = require("path"),
     shell    = require("shelljs"),
     archiver = require("archiver");
 
 module.exports = function(config, done) {
     var zip  = archiver("zip", { zlib : { level : 0 }}),
-        dest = fs.createWriteStream("./bin/falco-v" + config.package.version + ".nw");
+        dest = fs.createWriteStream("./dist/" + config.app + ".nw");
         
-    zip.on("close", function() {
-        console.log(arguments);
-        
-        done();
-    });
-    
-    zip.on("error", function(err) {
-        console.log(err);
-        
-        done(err);
-    });
+    dest.on("close", done);
+    zip.on("error", done);
     
     zip.pipe(dest);
     
-    shell.ls("-R", "./temp")
+    shell.ls("-R", config.temp)
         .filter(function(item) {
             return fs.statSync(item).isFile();
         })
         .forEach(function(file) {
-            console.log(file);
-            
             zip.append(fs.createReadStream(file), { name : file });
         });
     
@@ -39,7 +26,7 @@ module.exports = function(config, done) {
         if (err) {
             return done(err);
         }
-
-        console.log(bytes + " total bytes");
+        
+        config.log("Wrote " + bytes + " bytes");
     });
 };

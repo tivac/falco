@@ -1,5 +1,4 @@
 /*jshint node:true */
-
 "use strict";
 
 var fs    = require("fs"),
@@ -35,8 +34,8 @@ module.exports = function(config) {
         .forEach(function(file) {
             var full = path.join(process.cwd(), "src", file);
             
-            shell.mkdir("-p", path.join("./temp", "src", path.dirname(file)));
+            shell.mkdir("-p", path.join(config.temp, "src", path.dirname(file)));
             
-            shell.cp(full, path.join("./temp", "src", file));
+            shell.cp(full, path.join(config.temp, "src", file));
         });
 };

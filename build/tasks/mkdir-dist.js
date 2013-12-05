@@ -3,6 +3,6 @@
 
 var shell = require("shelljs");
     
-module.exports = function(config) {
-    shell.mkdir("-p", config.temp);
+module.exports = function() {
+    shell.mkdir("./dist");
 };

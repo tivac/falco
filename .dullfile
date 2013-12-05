@@ -2,17 +2,19 @@
 
 "use strict";
 
-var path = require("path"),
-    pkg = require("./package.json"),
-    config;
+var pkg = require("./package.json");
 
-module.exports = config = {
-    "package" : pkg,
-    
+module.exports  = {
+    // General config stuff
+    "package"  : pkg,
+    "platform" : "win",
     "nw" : {
-        name : "node-webkit-v" + pkg.nodewebkit.version + "-win-ia32"
+        name : {
+            win : "node-webkit-v" + pkg.nodewebkit.version + "-win-ia32"
+        }
     },
 
+    // Dullard specific configs
     "dirs" : [
         "build/tasks"
     ],
@@ -26,18 +28,22 @@ module.exports = config = {
         ],
         
         "release" : [
+            "nw-dir",
+            "app-name",
+            "clean",
+            "temp-dir",
             "mkdir-temp",
+            "mkdir-dist",
             "yui-configger",
             "compile-templates",
             "copy-node_modules",
             "copy-filtered-yui",
             "copy-app",
             "zip-app",
+            "package-app"
             /*"compress:falco",
             "package",
             "compress:release"*/
         ]
     }
 };
-
-config.nw.dir = path.join(".", "bin", config.nw.name);
