@@ -17,7 +17,7 @@ module.exports = function(config) {
     // Make sure to require every module we've defined
     for(group in falco.groups) {
         // Ignore pattern groups
-        if(group.indexOf("/") === -1) {
+        if(!falco.groups[group].modules) {
             continue;
         }
         
