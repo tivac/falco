@@ -83,7 +83,7 @@ YUI.add("view-timeline", function(Y) {
         },
         
         _renderUpdate : function(e) {
-            var list, now, models, updates;
+            var container, list, models, now, updates, scrolled;
             
             if(!this.rendered) {
                 return this.render();
@@ -92,10 +92,18 @@ YUI.add("view-timeline", function(Y) {
             models  = e.models || e.parsed || [ e.model ];
             updates = models.length;
             
-            list = this.get("container").one(".tweets");
+            container = this.get("container");
+            list      = container.one(".tweets");
+            
+            scrolled = container.get("scrollHeight") - container.get("scrollTop");
+            
             list.prepend(
                 this._renderTweets(models)
             );
+            
+            if(scrolled) {
+                container.set("scrollTop", container.get("scrollHeight") - scrolled);
+            }
             
             if(updates === this.get("model").get("tweets").size()) {
                 return;
