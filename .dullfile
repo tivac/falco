@@ -7,9 +7,10 @@ var path = require("path"),
     config;
 
 module.exports = config = {
+    "package" : pkg,
+    
     "nw" : {
         name : "node-webkit-v" + pkg.nodewebkit.version + "-win-ia32"
-        
     },
 
     "dirs" : [
@@ -17,7 +18,24 @@ module.exports = config = {
     ],
 
     "steps" : {
-        "default" : "launch"
+        "default" : "launch",
+        "debug"   : [
+            "yui-configger",
+            "compile-templates",
+            "launch-debug"
+        ],
+        
+        "release" : [
+            "mkdir-temp",
+            "yui-configger",
+            "compile-templates",
+            "copy-node_modules",
+            "yui-filter-modules",
+            "copy-app",
+            /*"compress:falco",
+            "package",
+            "compress:release"*/
+        ]
     }
 };
 

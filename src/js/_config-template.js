@@ -48,3 +48,7 @@ var falco_config = {
         }
     }
 };
+
+if(module) {
+    module.exports = falco_config;
+}
