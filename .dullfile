@@ -30,8 +30,9 @@ module.exports = config = {
             "yui-configger",
             "compile-templates",
             "copy-node_modules",
-            "yui-filter-modules",
+            "copy-filtered-yui",
             "copy-app",
+            "zip-app",
             /*"compress:falco",
             "package",
             "compress:release"*/
