@@ -2,12 +2,13 @@
 "use strict";
 
 var fs       = require("fs"),
+    path     = require("path"),
     shell    = require("shelljs"),
     archiver = require("archiver");
 
 module.exports = function(config, done) {
     var zip  = archiver("zip", { zlib : { level : 0 }}),
-        dest = fs.createWriteStream("./dist/" + config.app + ".nw");
+        dest = fs.createWriteStream(path.join("./temp", config.app + ".nw"));
         
     dest.on("close", done);
     zip.on("error", done);
@@ -19,7 +20,10 @@ module.exports = function(config, done) {
             return fs.statSync(item).isFile();
         })
         .forEach(function(file) {
-            zip.append(fs.createReadStream(file), { name : file });
+            zip.append(
+                fs.createReadStream(file),
+                { name : file }
+            );
         });
     
     zip.finalize(function(err, bytes) {
