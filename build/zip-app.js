@@ -7,7 +7,7 @@ var fs       = require("fs"),
     archiver = require("archiver");
 
 module.exports = function(config, done) {
-    var zip  = archiver("zip", { zlib : { level : 0 }}),
+    var zip  = archiver("zip", { level : 0 }),
         dest = fs.createWriteStream(path.join("./temp", config.app + ".nw"));
         
     dest.on("close", done);

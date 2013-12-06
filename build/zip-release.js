@@ -9,7 +9,7 @@ var fs       = require("fs"),
     platforms;
 
 module.exports = function(config, done) {
-    var zip    = archiver("zip", { zlib : { level : 0 }}),
+    var zip    = archiver("zip", { level : 9 }),
         dest   = fs.createWriteStream("./dist/" + config.app + ".zip"),
         filter = platforms[config.platform];
         
