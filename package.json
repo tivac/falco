@@ -30,7 +30,8 @@
     "unzip": "~0.1.9",
     "shelljs": "~0.2.6",
     "archiver": "~0.4.10",
-    "hyperquest": "~0.1.8"
+    "hyperquest": "~0.1.8",
+    "uglify-js": "~2.4.6"
   },
   "window": {
     "show": false,
