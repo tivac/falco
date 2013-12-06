@@ -5,7 +5,7 @@ var fs    = require("fs"),
     path  = require("path"),
     shell = require("shelljs"),
     Y     = require("yui/loader"),
-    falco = require("../../src/js/_config.js");
+    falco = require("../src/js/_config.js");
 
 module.exports = function(config) {
     var require = [],

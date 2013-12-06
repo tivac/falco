@@ -16,7 +16,7 @@ module.exports  = {
 
     // Dullard specific configs
     "dirs" : [
-        "build/tasks"
+        "build"
     ],
     
     "steps" : {
