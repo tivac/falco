@@ -18,7 +18,7 @@ module.exports  = {
     "dirs" : [
         "build/tasks"
     ],
-
+    
     "steps" : {
         "default" : "launch",
         "debug"   : [
@@ -40,10 +40,10 @@ module.exports  = {
             "copy-filtered-yui",
             "copy-app",
             "zip-app",
-            "package-app"
-            /*"compress:falco",
-            "package",
-            "compress:release"*/
+            "copy-nw",
+            "compress-nw",
+            "package-app",
+            "zip-release"
         ]
     }
 };
