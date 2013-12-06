@@ -9,8 +9,11 @@ module.exports  = {
     "package"  : pkg,
     "platform" : "win",
     "nw" : {
+        root : "https://s3.amazonaws.com/node-webkit/v" + pkg.nodewebkit.version + "/",
         name : {
-            win : "node-webkit-v" + pkg.nodewebkit.version + "-win-ia32"
+            win   : "node-webkit-v" + pkg.nodewebkit.version + "-win-ia32",
+            mac   : "node-webkit-v" + pkg.nodewebkit.version + "-osx-ia32",
+            linux : "node-webkit-v" + pkg.nodewebkit.version + "-linux-ia32"
         }
     },
 
@@ -27,8 +30,14 @@ module.exports  = {
             "launch-debug"
         ],
         
+        "node-webkit" : [
+            "nw-dir",
+            "download-nw"
+        ],
+        
         "release" : [
             "nw-dir",
+            "download-nw",
             "app-name",
             "clean",
             "temp-dir",
