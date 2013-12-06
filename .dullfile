@@ -48,8 +48,6 @@ module.exports  = {
             "copy-node_modules",
             "copy-filtered-yui",
             "copy-app",
-            "compress-app-js",
-            "compress-app-css",
             "zip-app",
             "copy-nw",
             "compress-nw",
