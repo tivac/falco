@@ -23,17 +23,19 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 ## Install ##
 
 1. `git clone git://github.com/tivac/falco.git`
-2. `npm i`
-3. `grunt`
+1. `npm i`
+1. `npm i -g dullard`
+1. `dullard`
 
 ## Develop ##
 
 1. Fork, clone locally
 1. `npm i`
+1. `npm i -g dullard`
 1. Create a Twitter App
 1. Copy `/config/default.js` to `/config/development.js` & add your consumer key/secret
-1. `grunt yui template` to build required files
-1. `grunt` will launch the app, use `grunt debug` if you want to open the developer tools.
+1. `dullard yui-configger compile-templates launch` to build required files & launch app
+    `dullard debug` will build required files & launch the app with the developer tools open.
 
 All build steps run through Grunt.
 
