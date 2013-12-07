@@ -35,6 +35,7 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 1. Create a Twitter App
 1. Copy `/config/default.js` to `/config/development.js` & add your consumer key/secret
 1. `dullard yui-configger compile-templates launch` to build required files & launch app
+    
     `dullard debug` will build required files & launch the app with the developer tools open.
 
 All build steps run through Grunt.
