@@ -39,7 +39,7 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
     
 `dullard debug` will build required files & launch the app with the developer tools open.
 
-All build steps run through Grunt.
+All build steps run through [Dullard](https://github.com/tivac/dullard).
 
 ## License ##
 
