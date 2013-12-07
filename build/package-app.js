@@ -2,27 +2,20 @@
 "use strict";
 
 var fs    = require("fs"),
-    path  = require("path"),
-    async = require("async");
-
-module.exports = function(grunt) {
+    async = require("async"),
     
-    // NodeJS powered binary concatenation, a bit longer than "copy /BY" but cross-platform :D
-    grunt.registerTask("package", "Build a packaged binary", function() {
-        var done = this.async();
-        
-        grunt.task.requires("mkdir");
-        grunt.task.requires("compress:falco");
-        
-        grunt.log.writeln("Reading buffers");
-        
+    platforms;
+
+module.exports = function(config, done) {
+    platforms[config.platform](config, done);
+};
+
+platforms = {
+    win : function(config, done) {
         async.waterfall([
             function readNodeWebkit(callback) {
                 fs.readFile(
-                    path.join(
-                        grunt.config("unzip.nw.dest"),
-                        "nw.exe"
-                    ),
+                    "./temp/nw/nw.exe",
                     function(err, data) {
                         if(err) {
                             return callback(err);
@@ -34,7 +27,7 @@ module.exports = function(grunt) {
             },
             
             function readTristis(nw, callback) {
-                fs.readFile("./bin/falco.nw", function(err, data) {
+                fs.readFile("./temp/" + config.app + ".nw", function(err, data) {
                     if(err) {
                         return callback(err);
                     }
@@ -48,18 +41,10 @@ module.exports = function(grunt) {
             },
             
             function write(falco, callback) {
-                grunt.log.writeln("Writing exe");
-                
-                fs.writeFile("./bin/falco.exe", falco, function(err) {
+                fs.writeFile("./dist/" + config.app + ".exe", falco, function(err) {
                     callback(err);
                 });
             }
-        ], function(err) {
-            if(err) {
-                grunt.log.error(err);
-            }
-            
-            done(!err);
-        });
-    });
+        ], done);
+    }
 };

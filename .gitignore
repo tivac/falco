@@ -4,12 +4,13 @@ Desktop.ini
 .DS_Store
 
 # My Stuff
-*MarkdownPad*
 bin
+dist
 node_modules
 npm*
 src/templates/compiled/*.js
 src/js/_config.js
+temp
 
 # Ignore configuration files
 config/*
