@@ -49,6 +49,6 @@ var falco_config = {
     }
 };
 
-if(module) {
+if(typeof module !== "undefined") {
     module.exports = falco_config;
 }
