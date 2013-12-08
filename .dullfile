@@ -23,8 +23,13 @@ module.exports  = {
     ],
     
     "steps" : {
-        "default" : "launch",
+        "default" : [
+            "nw-dir",
+            "launch"
+        ],
+        
         "debug"   : [
+            "nw-dir",
             "yui-configger",
             "compile-templates",
             "launch-debug"
@@ -33,6 +38,11 @@ module.exports  = {
         "node-webkit" : [
             "nw-dir",
             "download-nw"
+        ],
+        
+        "compile" : [
+            "yui-configger",
+            "compile-templates"
         ],
         
         "release" : [
