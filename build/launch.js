@@ -4,7 +4,7 @@
 
 var spawn = require("child_process").spawn;
 
-module.exports = function debugTask(config) {
+module.exports = function launchTask(config) {
     spawn(
         "nw.exe",
         [ "../../" ],
