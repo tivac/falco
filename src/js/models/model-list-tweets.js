@@ -61,7 +61,7 @@ YUI.add("model-list-tweets", function(Y) {
         
         // Sort in reverse chronological order
         _compare : function(a, b) {
-            return this.comparator(b) - this.comparator(a);
+            return b - a;
         },
         
         // Will either load all tweets if list is empty or
@@ -74,7 +74,9 @@ YUI.add("model-list-tweets", function(Y) {
             }
             
             items = this.toArray();
-            items = items.sort(this._compare.bind(this));
+            items = items.sort(function(a, b) {
+                return this._compare(this.comparator(a), this.comparator(b));
+            }.bind(this));
             
             this.more({
                 // Only tweets prior to the earliest one in our list
