@@ -64,15 +64,23 @@ YUI.add("model-list-tweets", function(Y) {
             return this.comparator(b) - this.comparator(a);
         },
         
-        // Will either load tweets below the first (not necessarily most recent, but good enough)
-        // & otherwise will load  all of them if the list is empty
+        // Will either load all tweets if list is empty or
+        // load tweets below the oldest existing one
         backfill : function() {
+            var items;
+            
             if(!this.size()) {
                 return this.load();
             }
             
+            items = this.toArray();
+            items = items.sort(this._compare.bind(this));
+            
             this.more({
-                max_id : this.item(0).id_str
+                // Only tweets prior to the earliest one in our list
+                max_id : items[items.length - 1].id_str,
+                // Insert them at the end so it doesn't jump around weirdly
+                index  : this.size()
             });
         }
     }, {
