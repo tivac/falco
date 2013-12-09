@@ -43,9 +43,10 @@ YUI.add("extension-app-routes", function(Y) {
                 tweets = list.get("tweets");
                 
                 // Load first page of tweets via REST api if needed
-                if(list.get("tweets").size() < 100) {
-                    debugger;
-                    tweets.backfill(); // TODO: see model-list-tweets.js for explanation
+                // TODO: this 100 value is arbitrary and will cause weird behavior if I
+                // ever add tweet persistence back in
+                if(tweets.size() < 100) {
+                    tweets.backfill();
                 }
                 
                 this.showView(name, {
