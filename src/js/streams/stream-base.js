@@ -4,26 +4,21 @@ YUI.add("stream-base", function(Y) {
     var StreamBase;
     
     StreamBase = function() {
-        this.publish("tweet", {
-            preventable : false
-        });
+        this.publish("tweet");
     };
     
     StreamBase.prototype = {
-        _stream : null,
+        _create : function() {
+            throw new Error("No op StreamBase._create was called");
+        },
         
         start : function() {
             if(!this._stream) {
                 this._create();
                 
-                this._stream.on("disconnect", function() {
-                    console.log("Disconnected from stream");
-                    console.log(arguments);
-                });
-                
                 return;
             }
-           
+            
             this._stream.start();
         },
         
