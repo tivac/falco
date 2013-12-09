@@ -6,7 +6,6 @@ YUI.add("extension-app-events", function(Y) {
         
         falco   = Y.namespace("Falco"),
         models  = Y.namespace("Falco.Models"),
-        streams = Y.namespace("Falco.Streams"),
         
         Events;
     
@@ -40,10 +39,6 @@ YUI.add("extension-app-events", function(Y) {
         
         // Called after main app's _setup fn
         _eventsSetup : function() {
-            this._handles.push(
-                streams.user.on("friends", this._friendsEvent, this)
-            );
-            
             Y.Object.each(models.timelines, function(timelines) {
                 this._handles.push(
                     timelines.on("updated", this._updatedEvent, this)
@@ -76,12 +71,6 @@ YUI.add("extension-app-events", function(Y) {
             });
         },
         
-        _friendsEvent : function(friends) {
-            models.friends = new models.Friends({
-                items : friends
-            });
-        },
-        
         _logoutEvent : function() {
             localStorage.removeItem("access_token");
             localStorage.removeItem("access_secret");
@@ -98,9 +87,4 @@ YUI.add("extension-app-events", function(Y) {
     
     Y.namespace("Falco.Extensions").Events = Events;
     
-}, "@VERSION@", {
-    requires : [
-        "stream-user",
-        "model-list-friends"
-    ]
 });
