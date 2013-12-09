@@ -60,7 +60,7 @@ YUI.add("model-list-tweets", function(Y) {
         },
         
         // Sort in reverse chronological order
-        _sort : function(a, b) {
+        _compare : function(a, b) {
             return this.comparator(b) - this.comparator(a);
         },
         
