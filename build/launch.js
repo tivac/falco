@@ -2,9 +2,14 @@
 
 "use strict";
 
-var spawn = require("child_process").spawn;
+var fs    = require("fs"),
+    spawn = require("child_process").spawn;
 
 module.exports = function launchTask(config) {
+    if(!fs.existsSync(config.nw.dir)) {
+        return config.nw.dir + " does not exist.";
+    }
+    
     spawn(
         "nw.exe",
         [ "../../" ],
