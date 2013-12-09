@@ -18,8 +18,6 @@ YUI.add("extension-app-routes", function(Y) {
     };
     
     Routes.prototype = {
-        _loaded : {},
-        
         _showTimeline : function(name) {
             Y.lazyLoad("view-timeline", function(errors) {
                 var list, tweets;
@@ -45,10 +43,10 @@ YUI.add("extension-app-routes", function(Y) {
                 tweets = list.get("tweets");
                 
                 // Load first page of tweets via REST api if needed
-                if(!this._loaded[name]) {
-                    tweets.load();
-                    
-                    this._loaded[name] = 1;
+                // TODO: this 100 value is arbitrary and will cause weird behavior if I
+                // ever add tweet persistence back in
+                if(tweets.size() < 100) {
+                    tweets.backfill();
                 }
                 
                 this.showView(name, {

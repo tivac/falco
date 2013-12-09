@@ -11,9 +11,7 @@ YUI.add("stream-user", function(Y) {
         _create : function() {
             var stream;
             
-            stream = falco.twitter.stream("user", {
-                with : "followings"
-            });
+            stream = falco.twitter.stream("user");
             
             stream.on("tweet", this._tweet.bind(this));
             stream.on("friends", this._friends.bind(this));

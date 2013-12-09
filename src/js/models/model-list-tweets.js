@@ -13,17 +13,11 @@ YUI.add("model-list-tweets", function(Y) {
         model : models.Tweet,
         
         sync : function(action, options, done) {
-            var args = {};
-            
-            if(action === "more" && this.size()) {
-                args.since_id = this.item(0).id_str;
-            }
-            
-            args = Y.merge(
-                { count : 200 },
-                this.get("config") || {},
-                args
-            );
+            var args = Y.merge(
+                    { count : 200 },
+                    this.get("config") || {},
+                    options
+                );
             
             falco.twitter.get(this.get("api"), args, function(err, resp) {
                 if(err) {
@@ -66,8 +60,28 @@ YUI.add("model-list-tweets", function(Y) {
         },
         
         // Sort in reverse chronological order
-        _sort : function(a, b) {
+        _compare : function(a, b) {
             return this.comparator(b) - this.comparator(a);
+        },
+        
+        // Will either load all tweets if list is empty or
+        // load tweets below the oldest existing one
+        backfill : function() {
+            var items;
+            
+            if(!this.size()) {
+                return this.load();
+            }
+            
+            items = this.toArray();
+            items = items.sort(this._compare.bind(this));
+            
+            this.more({
+                // Only tweets prior to the earliest one in our list
+                max_id : items[items.length - 1].id_str,
+                // Insert them at the end so it doesn't jump around weirdly
+                index  : this.size()
+            });
         }
     }, {
         ATTRS : {
