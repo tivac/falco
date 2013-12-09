@@ -9,7 +9,9 @@ YUI.add("model-timeline-base", function(Y) {
         initializer : function(config) {
             var tweets;
             
-            config || (config = {});
+            if(!config) {
+                config = {};
+            }
             
             tweets = new models.Tweets({
                 items : config.tweets || []
@@ -42,19 +44,16 @@ YUI.add("model-timeline-base", function(Y) {
         },
         
         _tweetAdd : function(e) {
-            var count = 1;
-            
             // Don't notify for tweets from cache
+            // TODO: is this ever hit?
             if(e.cached) {
+                debugger;
+                
                 return;
             }
             
-            if(e.parsed || e.models) {
-                count = (e.parsed || e.models).length;
-            }
-            
             this.fire("tweets", {
-                count : count
+                count  : e.model ? 1 : (e.parsed || e.models).length
             });
         }
     });
