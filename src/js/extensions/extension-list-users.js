@@ -18,21 +18,14 @@ YUI.add("extension-list-users", function(Y) {
                 streams.user.on("tweet",  this._streamTweet, this)
             );
             
-            this._users = {};
+            this._userLists = {};
         },
         
         _listUsers : function() {
-            var self = this;
-            
             async.map(
                 this.toArray(),
                 function(timeline, done) {
                     var id = timeline.get("id");
-                    
-                    // Ignore non-list timelines
-                    if(timeline.get("type") !== "list") {
-                        return done();
-                    }
                     
                     falco.twitter.get("lists/members", {
                         list_id          : id,
@@ -43,20 +36,21 @@ YUI.add("extension-list-users", function(Y) {
                             return done(err);
                         }
                         
-                        // update lookup object
                         resp.users.forEach(function(user) {
-                            if(user.id_str in self._users) {
-                                self._users[user.id_str].push(id);
-                            } else {
-                                self._users[user.id_str] = [ id ];
+                            user = user.id_str;
+                            
+                            if(!this._userLists[user]) {
+                                this._userLists[user] = [];
                             }
-                        });
+                            
+                            this._userLists[user].push(id);
+                        }.bind(this));
                         
                         done(null, resp.users.map(function(user) {
                             return user.id_str;
                         }));
-                    });
-                },
+                    }.bind(this));
+                }.bind(this),
                 function(err, results) {
                     if(err) {
                         return console.error(err);
@@ -67,8 +61,9 @@ YUI.add("extension-list-users", function(Y) {
             );
         },
         
+        // Add tweet to appropriate lists
         _streamTweet : function(e) {
-            var lists = this._users[e.tweet.user.id_str];
+            var lists = this._userLists[e.tweet.user.id_str];
             
             if(!lists) {
                 return;
