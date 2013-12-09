@@ -62,6 +62,8 @@ YUI.add("app-main", function(Y) {
             models.user.load(function userLoad(err) {
                 if(err) {
                     console.log("userLoad Error", err);
+                    // TODO: is this still happening?
+                    debugger;
                     
                     // TODO: Getting ECONNRESET here on the first attempt, not sure what the deal is...
                     //return this._auth();
