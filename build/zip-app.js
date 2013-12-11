@@ -4,7 +4,8 @@
 var fs       = require("fs"),
     path     = require("path"),
     shell    = require("shelljs"),
-    archiver = require("archiver");
+    archiver = require("archiver"),
+    size     = require("file-size");
 
 module.exports = function(config, done) {
     var zip  = archiver("zip", { level : 0 }),
@@ -31,6 +32,6 @@ module.exports = function(config, done) {
             return done(err);
         }
         
-        config.log("Wrote " + bytes + " bytes");
+        config.log("Wrote " + size(bytes).human({ jedec : true }));
     });
 };

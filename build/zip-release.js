@@ -5,6 +5,7 @@ var fs       = require("fs"),
     path     = require("path"),
     shell    = require("shelljs"),
     archiver = require("archiver"),
+    size     = require("file-size"),
     
     platforms;
 
@@ -41,7 +42,7 @@ module.exports = function(config, done) {
             return done(err);
         }
         
-        config.log("Wrote " + bytes + " bytes");
+        config.log("Wrote " + size(bytes).human({ jedec : true }));
     });
 };
 
