@@ -1,10 +1,9 @@
 Falco
 =======
+[![Dependency Status](https://gemnasium.com/tivac/falco.png)](https://gemnasium.com/tivac/falco)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/tivac/falco/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 I made a Twitter client. Well, I've started a Twitter client. We shall see how far I take it.
-
-[![Packages](https://david-dm.org/tivac/falco/status.png)](https://david-dm.org/tivac/falco/)
-[![Dev Packages](https://david-dm.org/tivac/falco/dev-status.png)](https://david-dm.org/tivac/falco/)
 
 ![Client Screenshot](http://tivac.com/images/falco.png)
 
