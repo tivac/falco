@@ -22,7 +22,7 @@
     "moment": "~2.4.0",
     "twit": "~1.1.11",
     "twitter-text": "~1.7.0",
-    "yui": "~3.13.0",
+    "yui": "~3.14.0",
     "async": "~0.2.9"
   },
   "devDependencies": {
