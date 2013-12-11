@@ -24,12 +24,17 @@ module.exports  = {
     
     "steps" : {
         "default" : [
-            "nw-dir",
+            "node-webkit",
             "launch"
         ],
         
+        "compile" : [
+            "yui-configger",
+            "compile-templates"
+        ],
+        
         "debug"   : [
-            "nw-dir",
+            "node-webkit",
             "yui-configger",
             "compile-templates",
             "launch-debug"
@@ -40,14 +45,8 @@ module.exports  = {
             "download-nw"
         ],
         
-        "compile" : [
-            "yui-configger",
-            "compile-templates"
-        ],
-        
         "release" : [
-            "nw-dir",
-            "download-nw",
+            "node-webkit",
             "app-name",
             "clean",
             "temp-dir",
@@ -63,6 +62,11 @@ module.exports  = {
             "compress-nw",
             "package-app",
             "zip-release"
+        ],
+        
+        "init" : [
+            "node-webkit",
+            "compile"
         ]
     }
 };
