@@ -31,15 +31,13 @@ I made a Twitter client. Well, I've started a Twitter client. We shall see how f
 
 1. Fork, clone locally
 1. `npm i`
-1. `npm i -g dullard`
+1. `npm i -g dullard` (all build steps run through [Dullard](https://github.com/tivac/dullard))
 1. Create a new [Twitter App](https://dev.twitter.com/apps/new)
 1. Copy `/config/default.js` to `/config/development.js` & add your new app's consumer key/secret
 
-`dullard init launch` to download/build required files & launch app
+`dullard init launch` to download/build required files & launch app.
     
 `dullard debug` will download/build required files & launch the app with the developer tools open.
-
-All build steps run through [Dullard](https://github.com/tivac/dullard).
 
 ## License ##
 
