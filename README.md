@@ -63,3 +63,7 @@ THE SOFTWARE.
 ```
 
 Also available in LICENSE.txt
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/tivac/falco/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
