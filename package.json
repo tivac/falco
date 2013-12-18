@@ -31,7 +31,7 @@
     "shelljs": "~0.2.6",
     "archiver": "~0.4.10",
     "hyperquest": "~0.1.8",
-    "file-size": "0.0.2"
+    "file-size": "0.0.3"
   },
   "window": {
     "show": false,
