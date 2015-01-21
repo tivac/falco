@@ -25,8 +25,7 @@ build/Release
 node_modules
 
 # App files
-dns.json
-configs
+bin
 
 # Users Environment Variables
 .lock-wscript
