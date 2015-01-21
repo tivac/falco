@@ -17,12 +17,16 @@
   },
   "main": "src/index.html",
   "dependencies": {
+    "autostrip-json-comments": "0.0.4",
+    "immutable": "^3.6.2",
+    "mithril": "^0.1.28",
+    "rc": "^0.5.5"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "scripts": {
+    "start": "\"\"./bin/nwjs-v0.12.0-alpha2-win-x64/nw\"\" ."
   },
   "window": {
-    "show": false,
-    "toolbar": false,
     "title": "Falco"
   }
 }
