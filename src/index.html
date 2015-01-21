@@ -5,6 +5,32 @@
 </head>
 <body>
 <h1>FALCO</h1>
-<script src="./app.js"></script>
+<script>
+    "use strict";
+    
+    require("autostrip-json-comments");
+
+    var App = require("./app"),
+        twitter = require("./twitter"),
+        app = new App();
+    
+    console.log(app);
+    
+    app.on("change", function(state) {
+        console.log("change", state.toJSON());
+    });
+    
+    twitter.get("lists/list", function(error, lists) {
+        if(error) {
+            console.error(error);
+            
+            return;
+        }
+        
+        lists.forEach(function(list) {
+            app.addList(list);
+        });
+    });
+</script>
 </body>
 </html>
