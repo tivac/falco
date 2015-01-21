@@ -3,7 +3,7 @@
 require("autostrip-json-comments");
 
 var config = require("rc")(
-        require("../package.json").name.toLowerCase(),
+        require("../package.json").name,
         require("../config.json")
     );
 

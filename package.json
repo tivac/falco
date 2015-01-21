@@ -1,5 +1,5 @@
 {
-  "name": "Falco",
+  "name": "falco",
   "description": "Node-Webkit + Twitter experiment",
   "version": "0.0.1",
   "keywords": [
@@ -20,7 +20,8 @@
     "autostrip-json-comments": "0.0.4",
     "immutable": "^3.6.2",
     "mithril": "^0.1.28",
-    "rc": "^0.5.5"
+    "rc": "^0.5.5",
+    "twitter": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {
