@@ -20,17 +20,7 @@
         console.log("change", state.toJSON());
     });
     
-    twitter.get("lists/list", function(error, lists) {
-        if(error) {
-            console.error(error);
-            
-            return;
-        }
-        
-        lists.forEach(function(list) {
-            app.addList(list);
-        });
-    });
+    
 </script>
 </body>
 </html>
