@@ -1,7 +1,7 @@
 {
   "name": "falco",
   "description": "Node-Webkit + Twitter experiment",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": [
     "twitter"
   ],
