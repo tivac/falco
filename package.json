@@ -20,7 +20,8 @@
     "autostrip-json-comments": "0.0.4",
     "immutable": "^3.6.2",
     "mithril": "^0.1.28",
-    "rc": "^0.5.5",
+    "rc": "^0.6.0",
+    "strip-json-comments": "^1.0.2",
     "twitter": "^1.0.3"
   },
   "devDependencies": {},
