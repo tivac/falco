@@ -4,10 +4,10 @@ var EventEmitter = require("events").EventEmitter,
     util = require("util"),
     
     twitter = require("./twitter"),
-    state   = require("./state");
+    State   = require("./state");
 
 function App() {
-    this._state = state.initial();
+    this.state = new State();
 }
 
 util.inherits(App, EventEmitter);
@@ -23,22 +23,14 @@ App.prototype.getLists = function() {
         }
         
         lists.forEach(function(list) {
-            self.addList(list);
+            state.addList(list);
         });
     });
 };
 
-App.prototype.addList = function(list) {
-    this._state = this._state.update("lists", function(lists) {
-        return lists.push(list);
-    });
-    
-    this.emit("change", this._state);
-};
-
 App.prototype.loadTweets = function() {
-    var selected = this._state.get("selected"),
-        list     = this._state.get("lists").get(selected);
+    var selected = this.state.get("selected"),
+        list     = this.state.get("lists").get(selected);
         
     console.log(selected, list);
 };

@@ -2,11 +2,23 @@
 
 var immutable = require("immutable");
 
-exports.initial = function() {
-    return immutable.fromJS({
+function State() {
+    this._state = immutable.fromJS({
         lists    : [],
         selected : 0
     });
+}
+
+State.prototype = {
+    addList : function(list) {
+        this._state = this._state.update("lists", function(lists) {
+            return lists.push(list);
+        });
+    },
+    
+    get : function(key) {
+        return this._state.get(key);
+    }
 };
 
-exports.lists = immutable.List();
+module.exports = State;
