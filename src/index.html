@@ -5,22 +5,35 @@
 </head>
 <body>
 <h1>FALCO</h1>
+<div></div>
+<script src="../node_modules/mithril/mithril.js"></script>
 <script>
     "use strict";
     
     require("autostrip-json-comments");
 
-    var App = require("./app"),
-        twitter = require("./twitter"),
-        app = new App();
+    var Data = require("./data"),
+        data = new Data();
     
-    console.log(app);
-    
-    app.on("change", function(state) {
+    data.on("change", function(state) {
         console.log("change", state.toJSON());
+        
+        m.redraw();
     });
     
-    
+    m.module(document.querySelector("div"), {
+        view : function() {
+            return m(
+                "ul",
+                data.get("lists").map(function(list) {
+                    return m(
+                        "li",
+                        list.get("id_str") + " - " + list.get("name") + " - " + list.get("uri")
+                    );
+                }).toArray()
+            );
+        }
+    });
 </script>
 </body>
 </html>
