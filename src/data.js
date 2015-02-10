@@ -13,7 +13,7 @@ function Data() {
             { id_str : "timeline", name : "Timeline", uri : "/home" },
             { id_str : "notifications", name : "Notifications", uri : "/notifications" }
         ],
-        selected : 0
+        selected : "timeline"
     });
     
     console.log(this._state.toJSON());
@@ -22,6 +22,10 @@ function Data() {
 }
 
 util.inherits(Data, EventEmitter);
+
+Data.prototype._changed = function() {
+    this.emit("change", this._state);
+};
 
 Data.prototype.get = function(key) {
     return this._state.get(key);
@@ -46,8 +50,14 @@ Data.prototype.addList = function(list) {
         return lists.push(immutable.fromJS(list));
     });
     
-    this.emit("change", this._state);
-}
+    this._changed();
+};
+
+Data.prototype.selectList = function(list) {
+    this._state = this._state.set("selected", list);
+    
+    this._changed();
+};
 
 Data.prototype.loadTweets = function() {
     var selected = this.state.get("selected"),
