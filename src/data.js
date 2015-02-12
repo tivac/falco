@@ -9,16 +9,24 @@ var EventEmitter = require("events").EventEmitter,
 
 function Data() {
     this._state = immutable.fromJS({
-        lists : [
-            { id_str : "timeline", name : "Timeline", uri : "/home" },
-            { id_str : "notifications", name : "Notifications", uri : "/notifications" }
-        ],
-        selected : "timeline"
+        selected : "timeline",
+        lists : {
+            timeline : {
+                name    : "Timeline",
+                uri     : "/home",
+                tweets  : []
+            },
+            
+            notifications : {
+                name    : "Notifications",
+                uri     : "/notifications",
+                tweets  : []
+            }
+        }
     });
     
-    console.log(this._state.toJSON());
-    
-    this.getLists();
+    this.loadLists();
+    this.loadTweets();
 }
 
 util.inherits(Data, EventEmitter);
@@ -31,7 +39,7 @@ Data.prototype.get = function(key) {
     return this._state.get(key);
 };
 
-Data.prototype.getLists = function() {
+Data.prototype.loadLists = function() {
     var self = this;
     
     twitter.get("lists/list", function(error, lists) {
@@ -45,11 +53,48 @@ Data.prototype.getLists = function() {
     });
 };
 
+Data.prototype.loadTweets = function() {
+    var self     = this,
+        selected = this._state.get("selected"),
+        url;
+        
+    if(selected === "timeline") {
+        url = "statuses/home_timeline";
+    }
+    
+    twitter.get(url, function(error, tweets) {
+        if(error) {
+            console.log(error);
+            
+            return;
+        }
+        
+        self.addTweets(selected, tweets);
+    });
+};
+
 Data.prototype.addList = function(list) {
     this._state = this._state.update("lists", function(lists) {
-        return lists.push(immutable.fromJS(list));
+        return lists.set(
+            list.id_str,
+            immutable.fromJS({
+                name   : list.name,
+                uri    : list.uri,
+                tweets : []
+            })
+        );
     });
     
+    this._changed();
+};
+
+Data.prototype.addTweets = function(list, tweets) {
+    this._state = this._state.updateIn([ "lists", list ], function(list) {
+        return list.update("tweets", function(current) {
+            return current.concat(immutable.fromJS(tweets));
+        });
+    });
+        
     this._changed();
 };
 
@@ -59,11 +104,5 @@ Data.prototype.selectList = function(list) {
     this._changed();
 };
 
-Data.prototype.loadTweets = function() {
-    var selected = this.state.get("selected"),
-        list     = this.state.get("lists").get(selected);
-        
-    console.log(selected, list);
-};
 
 module.exports = Data;

@@ -8,6 +8,8 @@
 <div></div>
 <script src="../node_modules/mithril/mithril.js"></script>
 <script>
+    /*jshint browser:true */
+    /*global m */
     "use strict";
     
     require("autostrip-json-comments");
@@ -25,10 +27,10 @@
         view : function() {
             return m(
                 "ul",
-                data.get("lists").map(function(list) {
+                data.get("lists").map(function(list, id) {
                     return m(
                         "li",
-                        list.get("id_str") + " - " + list.get("name") + " - " + list.get("uri")
+                        id + " - " + list.get("name") + " - " + list.get("uri") + " " + list.get("tweets").size
                     );
                 }).toArray()
             );
