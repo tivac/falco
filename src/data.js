@@ -3,12 +3,12 @@
 var EventEmitter = require("events").EventEmitter,
     util = require("util"),
     
-    immutable = require("immutable"),
+    immutable = require("seamless-immutable"),
     
     twitter = require("./twitter");
 
 function Data() {
-    this._state = immutable.fromJS({
+    this._state = immutable({
         selected : "timeline",
         lists : {
             timeline : {
@@ -22,7 +22,8 @@ function Data() {
                 uri     : "/notifications",
                 tweets  : []
             }
-        }
+        },
+        order : [ "timeline", "notifications" ]
     });
     
     this.loadLists();
@@ -36,7 +37,7 @@ Data.prototype._changed = function() {
 };
 
 Data.prototype.get = function(key) {
-    return this._state.get(key);
+    return this._state[key];
 };
 
 Data.prototype.loadLists = function() {
@@ -55,7 +56,7 @@ Data.prototype.loadLists = function() {
 
 Data.prototype.loadTweets = function() {
     var self     = this,
-        selected = this._state.get("selected"),
+        selected = this._state.selected,
         url;
         
     if(selected === "timeline") {
@@ -74,35 +75,44 @@ Data.prototype.loadTweets = function() {
 };
 
 Data.prototype.addList = function(list) {
-    this._state = this._state.update("lists", function(lists) {
-        return lists.set(
-            list.id_str,
-            immutable.fromJS({
-                name   : list.name,
-                uri    : list.uri,
-                tweets : []
-            })
-        );
+    var lists = {};
+    
+    lists[list.id_str] = {
+        name   : list.name,
+        uri    : list.uri,
+        tweets : []
+    };
+    
+    this._state = this._state.merge({
+        lists : this._state.lists.merge(lists),
+        order : this._state.order.concat([ list.id_str ])
     });
     
     this._changed();
 };
 
-Data.prototype.addTweets = function(list, tweets) {
-    this._state = this._state.updateIn([ "lists", list ], function(list) {
-        return list.update("tweets", function(current) {
-            return current.concat(immutable.fromJS(tweets));
-        });
+Data.prototype.addTweets = function(key, tweets) {
+    var list  = this._state.lists[key].asMutable(),
+        lists = {};
+    
+    list.tweets = tweets.concat(list.tweets);
+    
+    lists[key] = list;
+    
+    this._state = this._state.merge({
+        lists : this._state.lists.merge(lists)
     });
-        
+    
     this._changed();
 };
 
 Data.prototype.selectList = function(list) {
-    this._state = this._state.set("selected", list);
+    this._state = this._state.merge({
+        selected : list
+    });
     
     this._changed();
 };
 
 
-module.exports = Data;
+module.exports = new Data();

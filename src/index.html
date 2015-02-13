@@ -2,40 +2,11 @@
 <html>
 <head>
     <title>FALCO</title>
+    <link rel="stylesheet" href="./pure@0.6.0-rc-1/pure.css">
+    <link rel="stylesheet" href="./css/side-menu.css">
 </head>
 <body>
-<h1>FALCO</h1>
-<div></div>
-<script src="../node_modules/mithril/mithril.js"></script>
-<script>
-    /*jshint browser:true */
-    /*global m */
-    "use strict";
-    
-    require("autostrip-json-comments");
-
-    var Data = require("./data"),
-        data = new Data();
-    
-    data.on("change", function(state) {
-        console.log("change", state.toJSON());
-        
-        m.redraw();
-    });
-    
-    m.module(document.querySelector("div"), {
-        view : function() {
-            return m(
-                "ul",
-                data.get("lists").map(function(list, id) {
-                    return m(
-                        "li",
-                        id + " - " + list.get("name") + " - " + list.get("uri") + " " + list.get("tweets").size
-                    );
-                }).toArray()
-            );
-        }
-    });
-</script>
+    <div id="layout"></div>
+    <script src="./app.js"></script>
 </body>
 </html>
