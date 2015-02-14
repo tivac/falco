@@ -1,11 +1,10 @@
 "use strict";
 
-var m       = require("mithril"),
-    twitter = require("twitter-text"),
+var m = require("mithril"),
     
-    data = require("./data"),
-    
-    menu = require("./menu");
+    data  = require("./data"),
+    parse = require("./tweet").parse,
+    menu  = require("./menu");
 
 exports.controller = function() {
     this.list = m.route.param("list");
@@ -17,8 +16,10 @@ exports.view = function(ctrl) {
     return [
         menu(),
         m(".content",
-            list.tweets.map(function(tweet) {
-                return m(".tweet", tweet.text);
+            list.tweets.asMutable().map(function(tweet) {
+                var text = parse(tweet);
+                
+                return m(".tweet", m.trust(text));
             })
         )
     ];
