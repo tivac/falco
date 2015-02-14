@@ -20,7 +20,7 @@ module.exports = function() {
                                     href : "/lists/" + key,
                                     config : m.route
                                 },
-                                list.name + "(" + list.tweets.length + ")"
+                                list.name + " (" + list.tweets.length + ")"
                             )
                         );
                     })
