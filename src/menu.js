@@ -1,10 +1,10 @@
 "use strict";
 
-var m    = require("mithril"),
-    data = require("./data");
+var m     = require("mithril"),
+    state = require("./state");
 
 module.exports = function() {
-    var active = data.get("active");
+    var active = state.get("active");
     
     return [
         m("a.menu-link[href='#menu'][id='menuLink']",
@@ -14,8 +14,8 @@ module.exports = function() {
             m(".pure-menu",
                 m("a.pure-menu-heading[href='#']", "Falco"),
                 m("ul.pure-menu-list",
-                    data.get("order").map(function(key) {
-                        var list = data.get("lists")[key];
+                    state.get("order").map(function(key) {
+                        var list = state.get("lists")[key];
                         
                         return m("li.pure-menu-item",
                             m("a.pure-menu-link", {

@@ -3,10 +3,10 @@
 require("autostrip-json-comments");
 
 var m    = require("mithril"),
-    data = require("./data");
+    state = require("./state");
 
-data.on("change", function(state) {
-    console.log("change", state);
+state.on("change", function(current) {
+    console.log("change", current);
     
     m.redraw();
 });

@@ -4,10 +4,11 @@ var EventEmitter = require("events").EventEmitter,
     util = require("util"),
     
     immutable = require("seamless-immutable"),
+    debounce  = require("debounce"),
     
     twitter = require("./twitter");
 
-function Data() {
+function State() {
     this._state = immutable({
         active : "timeline",
         users  : {},
@@ -31,19 +32,19 @@ function Data() {
     this.loadTweets(this._state.active);
 }
 
-util.inherits(Data, EventEmitter);
+util.inherits(State, EventEmitter);
 
 // Util
-Data.prototype._changed = function() {
+State.prototype._changed = function() {
     this.emit("change", this._state);
 };
 
-Data.prototype.get = function(key) {
+State.prototype.get = function(key) {
     return this._state[key];
 };
 
 // Loading
-Data.prototype.loadLists = function() {
+State.prototype.loadLists = function() {
     var self = this;
     
     twitter.get("lists/list", function(err, lists) {
@@ -57,7 +58,7 @@ Data.prototype.loadLists = function() {
     });
 };
 
-Data.prototype.loadTweets = function(list) {
+State.prototype.loadTweets = function(list) {
     var self = this,
         options = {
             count       : 200,
@@ -83,7 +84,7 @@ Data.prototype.loadTweets = function(list) {
     });
 };
 
-Data.prototype.loadUsers = function(list) {
+State.prototype.loadUsers = function(list) {
     var self = this;
     
     // No-ops in the special lists case, this is handled by the user stream
@@ -106,14 +107,47 @@ Data.prototype.loadUsers = function(list) {
                 resp.users.map(function(user) {
                     return user.id_str;
                 }),
-                list.id_str
+                list
             );
         }
     );
 };
 
+// Streams
+State.prototype.streamUsers = debounce(function() {
+    var self  = this,
+        users = Object.keys(this._state.users).join(",");
+    
+    // No changes, don't do anything
+    if(users === this._users) {
+        return;
+    }
+    
+    this._users = users;
+    
+    twitter.stream("statuses/filter", { follow : users }, function(stream) {
+        console.log("Streaming: ", users);
+        
+        stream.on("data", function(tweet) {
+            console.log("Streaming Tweet:", tweet);
+            
+            var list = self._state.users[tweet.retweeted_status.user.id_str] || self._state.users[tweet.user.id_str];
+            
+            if(!list) {
+                debugger;
+            }
+            
+            self.addTweets(list, [ tweet ]);
+        });
+        
+        stream.on("error", function(err) {
+            console.log(err);
+        });
+    });
+}, 500);
+
 // Mutations
-Data.prototype.addList = function(list) {
+State.prototype.addList = function(list) {
     var id    = list.id_str,
         lists = {};
     
@@ -134,7 +168,7 @@ Data.prototype.addList = function(list) {
     this._changed();
 };
 
-Data.prototype.addUsers = function(users, list) {
+State.prototype.addUsers = function(users, list) {
     var map = {};
     
     users.forEach(function(id) {
@@ -145,10 +179,12 @@ Data.prototype.addUsers = function(users, list) {
         users : this._state.users.merge(map)
     });
     
+    this.streamUsers();
+    
     this._changed();
 };
 
-Data.prototype.addTweets = function(key, tweets) {
+State.prototype.addTweets = function(key, tweets) {
     var list  = this._state.lists[key].asMutable(),
         lists = {};
     
@@ -163,7 +199,7 @@ Data.prototype.addTweets = function(key, tweets) {
     this._changed();
 };
 
-Data.prototype.selectList = function(list) {
+State.prototype.selectList = function(list) {
     this._state = this._state.merge({
         active : list
     });
@@ -171,4 +207,4 @@ Data.prototype.selectList = function(list) {
     this._changed();
 };
 
-module.exports = new Data();
+module.exports = new State();
