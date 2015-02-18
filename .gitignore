@@ -17,7 +17,6 @@ build/Release
 node_modules
 
 # App files
-bin
 .falcorc
 
 # Users Environment Variables

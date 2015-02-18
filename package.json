@@ -25,9 +25,11 @@
     "twitter": "^1.0.3",
     "twitter-text": "^1.11.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nw": "^0.12.0-alpha3"
+  },
   "scripts": {
-    "start": "\"\"./bin/nwjs-v0.12.0-alpha2-win-x64/nw\"\" ."
+    "start": "nw"
   },
   "window": {
     "title": "Falco"
