@@ -4,6 +4,8 @@ var m    = require("mithril"),
     data = require("./data");
 
 module.exports = function() {
+    var active = data.get("active");
+    
     return [
         m("a.menu-link[href='#menu'][id='menuLink']",
             m("span")
@@ -17,8 +19,9 @@ module.exports = function() {
                         
                         return m("li.pure-menu-item",
                             m("a.pure-menu-link", {
-                                    href : "/lists/" + key,
-                                    config : m.route
+                                    class   : key === active ? "pure-menu-selected" : null,
+                                    href    : "/lists/" + key,
+                                    config  : m.route
                                 },
                                 list.name + " (" + list.tweets.length + ")"
                             )
