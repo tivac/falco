@@ -129,13 +129,15 @@ State.prototype.streamUsers = debounce(function() {
         console.log("Streaming: ", users);
         
         stream.on("data", function(tweet) {
-            console.log("Streaming Tweet:", tweet);
+            var list = self._state.users[tweet.user.id_str];
             
-            var list = self._state.users[tweet.retweeted_status.user.id_str] || self._state.users[tweet.user.id_str];
-            
+            // If we don't recognize the user it was probably someone
+            // retweeting someone we do recognize. AKA we don't care.
             if(!list) {
-                debugger;
+                return;
             }
+            
+            console.log("Streaming Tweet:", tweet);
             
             self.addTweets(list, [ tweet ]);
         });
