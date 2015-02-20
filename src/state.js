@@ -15,15 +15,19 @@ function State() {
         order  : [ "timeline", "notifications" ],
         lists  : {
             timeline : {
-                name    : "Timeline",
-                uri     : "/home",
-                tweets  : []
+                name   : "Timeline",
+                abbr   : "",
+                uri    : "/home",
+                tweets : [],
+                unread : 0
             },
             
             notifications : {
-                name    : "Notifications",
-                uri     : "/notifications",
-                tweets  : []
+                name   : "Notifications",
+                abbr   : "",
+                uri    : "/notifications",
+                tweets : [],
+                unread : 0
             }
         }
     });
@@ -104,10 +108,10 @@ State.prototype.loadUsers = function(list) {
             }
             
             self.addUsers(
+                list,
                 resp.users.map(function(user) {
                     return user.id_str;
-                }),
-                list
+                })
             );
         }
     );
@@ -156,7 +160,16 @@ State.prototype.addList = function(list) {
     lists[id] = {
         name   : list.name,
         uri    : list.uri,
-        tweets : []
+        tweets : [],
+        unread : 0,
+        abbr   : list.name.length < 4 ?
+            list.name :
+            list.name
+                .split(" ")
+                .map(function(chunk) {
+                    return chunk.slice(0, 1).toUpperCase();
+                })
+                .join("")
     };
     
     this._state = this._state.merge({
@@ -170,11 +183,11 @@ State.prototype.addList = function(list) {
     this._changed();
 };
 
-State.prototype.addUsers = function(users, list) {
+State.prototype.addUsers = function(key, users) {
     var map = {};
     
     users.forEach(function(id) {
-        map[id] = list;
+        map[id] = key;
     });
     
     this._state = this._state.merge({
@@ -187,12 +200,13 @@ State.prototype.addUsers = function(users, list) {
 };
 
 State.prototype.addTweets = function(key, tweets) {
-    var list  = this._state.lists[key].asMutable(),
+    var list  = this._state.lists[key],
         lists = {};
     
-    list.tweets = tweets.concat(list.tweets);
-    
-    lists[key] = list;
+    lists[key] = list.merge({
+        tweets : tweets.concat(list.tweets),
+        unread : this._state.active !== key ? list.unread + tweets.length : 0
+    });
     
     this._state = this._state.merge({
         lists : this._state.lists.merge(lists)
@@ -201,9 +215,21 @@ State.prototype.addTweets = function(key, tweets) {
     this._changed();
 };
 
-State.prototype.selectList = function(list) {
+State.prototype.selectList = function(key) {
+    var list  = this._state.lists[key],
+        lists = {};
+    
+    if(!list) {
+        return this.selectList("timeline");
+    }
+    
+    lists[key] = list.merge({
+        unread : 0
+    });
+    
     this._state = this._state.merge({
-        active : list
+        active : key,
+        lists  : this._state.lists.merge(lists)
     });
     
     this._changed();

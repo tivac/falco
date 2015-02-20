@@ -1,6 +1,28 @@
+html,
+body,
+#layout {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #DDD;
+}
+
+#layout {
+    display: flex;
+    flex-direction: row;
+}
+
 .emoji {
     height: 1em;
     width: 1em;
     margin: 0 .05em 0 .1em;
     vertical-align: -0.1em;
+}
+
+.tweet {
+    margin: 15px 0;
+}
+
+.tweet .author {
+    margin: 5px 0 5px 10px;
 }
