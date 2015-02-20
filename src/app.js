@@ -6,12 +6,10 @@ var m    = require("mithril"),
     state = require("./state");
 
 state.on("change", function(current) {
-    console.log("change", current);
+    console.log("change", current.asMutable({ deep : true }));
     
     m.redraw();
 });
-
-//m.route.mode = "pathname";
 
 m.route(
     document.querySelector("#layout"),
