@@ -3,12 +3,12 @@
 var twitter = require("twitter-text"),
     twemoji = require("twemoji");
 
-function getSource(tweet) {
+exports.source = function(tweet) {
     return tweet.retweeted_status? tweet.retweeted_status : tweet;
-}
+};
 
 exports.parse = function(tweet) {
-    var source = getSource(tweet),
+    var source = exports.source(tweet),
         text   = twitter.autoLinkWithJSON(
             source.text,
             source.entities

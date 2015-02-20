@@ -2,9 +2,10 @@
 
 var m = require("mithril"),
     
-    state = require("./state"),
-    parse = require("./tweet").parse,
-    menu  = require("./menu");
+    state  = require("./state"),
+    parse  = require("./tweet").parse,
+    source = require("./tweet").source,
+    menu   = require("./menu");
 
 exports.controller = function() {
     this.list = m.route.param("list");
@@ -23,9 +24,13 @@ exports.view = function(ctrl) {
         menu(),
         m(".content",
             list.tweets.asMutable().map(function(tweet) {
-                var text = parse(tweet);
+                var text = parse(tweet),
+                    src  = source(tweet);
                 
-                return m(".tweet", m.trust(text));
+                return m(".tweet",
+                    m(".author", src.user.name),
+                    m(".text", m.trust(text))
+                );
             })
         )
     ];
