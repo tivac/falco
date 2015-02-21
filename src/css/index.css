@@ -50,6 +50,10 @@ body,
     padding-left: 10px;
 }
 
+.tweet .top .pure-u {
+    margin-right: 10px;
+}
+
 .tweet .name {
     font-weight: bold;
 }
