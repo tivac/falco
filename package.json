@@ -34,6 +34,10 @@
     "start": "nw"
   },
   "window": {
-    "title": "Falco"
+    "title": "Falco",
+    "show": false,
+    "toolbar": false,
+    "min_width": 500,
+    "min_height": 550
   }
 }
