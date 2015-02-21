@@ -19,10 +19,18 @@ body,
     vertical-align: -0.1em;
 }
 
+/* Tweet Styling */
 .tweet {
     margin: 15px 0;
 }
 
 .tweet .author {
     margin: 5px 0 5px 10px;
+}
+
+/* Main Content */
+.content {
+    flex: 4;
+    overflow-y: auto;
+    padding: 15px;
 }

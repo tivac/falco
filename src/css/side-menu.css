@@ -1,9 +1,9 @@
 .pure-menu {
-    flex: 1;
-    max-width: 80px;
+    width: 80px;
     
     background: #BBB;
 }
+
 .pure-menu-item {
     margin: 10px 0;
     display: flex;
@@ -39,10 +39,4 @@
     border-radius: 5px;
     
     text-align: center;
-}
-
-.content {
-    flex: 4;
-    overflow-y: auto;
-    padding: 15px;
 }
