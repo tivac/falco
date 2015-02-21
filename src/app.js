@@ -4,11 +4,22 @@ require("autostrip-json-comments");
 
 var state = require("./state"),
     m     = require("mithril"),
+    
     gui   = require("nw.gui"),
+    
     argv  = require("minimist")(gui.App.argv);
 
+// Debug keyboard shortcuts
 if(argv.debug) {
-    gui.Window.get().showDevTools();
+    Mousetrap.bind("ctrl+shift+r", function() {
+        gui.Window.get().reloadDev(); 
+    });
+    
+    Mousetrap.bind("ctrl+shift+k", function() {
+        var win = gui.Window.get();
+        
+        win.isDevToolsOpen() ? win.closeDevTools() : win.showDevTools();
+    });
 }
 
 state.on("change", function(current) {
