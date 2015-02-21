@@ -17,6 +17,7 @@ module.exports = function() {
                                 class   : key === active ? "pure-menu-selected" : null,
                                 href    : "/lists/" + key,
                                 config  : m.route,
+                                tooltip : list.name,
                                 
                                 "data-unread" : list.unread
                             },

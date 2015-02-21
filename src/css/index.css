@@ -21,11 +21,37 @@ body,
 
 /* Tweet Styling */
 .tweet {
-    margin: 15px 0;
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
 }
 
-.tweet .author {
-    margin: 5px 0 5px 10px;
+.tweet:first-child {
+    padding-top: 0;
+}
+
+.tweet:last-child {
+    border-bottom: none;
+}
+
+.tweet .icon {
+    margin: 0 10px;
+    width: 48px;
+}
+
+.tweet .icon img {
+    border-radius: 5px;
+    width: 48px;
+    height: 48px;
+}
+
+.tweet .details {
+    flex: 2;
+    padding-left: 10px;
+}
+
+.tweet .name {
+    font-weight: bold;
 }
 
 /* Main Content */

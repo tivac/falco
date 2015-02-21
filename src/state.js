@@ -32,8 +32,8 @@ function State() {
         }
     });
     
-    // this.loadLists();
-    // this.loadTweets(this._state.active);
+    this.loadLists();
+    this.loadTweets(this._state.active);
 }
 
 util.inherits(State, EventEmitter);
