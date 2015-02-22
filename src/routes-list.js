@@ -52,7 +52,7 @@ exports.view = function(ctrl) {
     return [
         menu(),
         m(".content",
-            list.tweets.asMutable().map(function(tweet) {
+            list.items.asMutable().map(function(tweet) {
                 var text = parse(tweet),
                     src  = source(tweet),
                     date = moment(Date.parse(src.created_at));

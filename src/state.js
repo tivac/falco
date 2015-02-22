@@ -8,7 +8,6 @@ var EventEmitter = require("events").EventEmitter,
     
     config  = require("./config"),
     twitter = require("./twitter");
-    
 
 function State() {
     this._state = immutable({
@@ -20,7 +19,7 @@ function State() {
                 name   : "Timeline",
                 abbr   : "",
                 uri    : "/home",
-                tweets : [],
+                items  : [],
                 unread : 0
             },
             
@@ -28,14 +27,15 @@ function State() {
                 name   : "Notifications",
                 abbr   : "",
                 uri    : "/notifications",
-                tweets : [],
+                items  : [],
                 unread : 0
             }
         }
     });
     
     this.loadLists();
-    this.loadTweets(this._state.active);
+    this.loadTweets("timeline", { quiet : true });
+    this.loadTweets("notifications", { quiet : true });
     this.streamUser();
 }
 
@@ -65,9 +65,9 @@ State.prototype.loadLists = function() {
     });
 };
 
-State.prototype.loadTweets = function(list) {
+State.prototype.loadTweets = function(list, options) {
     var self = this,
-        options = {
+        args = {
             count       : 200,
             include_rts : true
         },
@@ -79,15 +79,15 @@ State.prototype.loadTweets = function(list) {
         url = "statuses/mentions_timeline";
     } else {
         url = "lists/statuses";
-        options.list_id = list;
+        args.list_id = list;
     }
     
-    twitter.get(url, options, function(err, tweets) {
+    twitter.get(url, args, function(err, tweets) {
         if(err) {
             return console.log(err);
         }
         
-        self.addTweets(list, tweets);
+        self.addItems(list, tweets, options);
     });
 };
 
@@ -146,7 +146,7 @@ State.prototype.streamUsers = debounce(function() {
             
             console.log("Streaming Tweet:", tweet);
             
-            self.addTweets(list, tweet);
+            self.addItems(list, tweet);
         });
         
         stream.on("error", function(err) {
@@ -164,7 +164,15 @@ State.prototype.streamUser = function() {
         stream.on("data", function(data) {
             console.log("User Stream data:", data);
             
-            //self.addTweets(list, tweet);
+            // TODO: Add follow/favorite events to notifications
+            
+            // Filter out non-tweets
+            // TODO: retweet_count is kinda random, need better heuristic
+            if(!data.hasOwnProperty("id_str") || !data.hasOwnProperty("retweet_count")) {
+                return;
+            }
+            
+            self.addItems("timeline", data);
         });
         
         stream.on("error", function(err) {
@@ -201,6 +209,9 @@ State.prototype.addList = function(list) {
     // Go get users for this list to track
     this.loadUsers(id);
     
+    // Go get tweets for this list
+    this.loadTweets(id, { quiet : true });
+    
     this._changed();
 };
 
@@ -220,22 +231,26 @@ State.prototype.addUsers = function(key, users) {
     this._changed();
 };
 
-State.prototype.addTweets = function(key, tweets) {
+State.prototype.addItems = function(key, items, options) {
     var list  = this._state.lists[key],
         lists = {};
+    
+    if(!options) {
+        options = {};
+    }
         
-    if(!Array.isArray(tweets)) {
-        tweets = [ tweets ];
+    if(!Array.isArray(items)) {
+        items = [ items ];
     }
     
     lists[key] = list.merge({
-        tweets : tweets.concat(list.tweets),
-        unread : this._state.active !== key ? list.unread + tweets.length : 0
+        items  : items.concat(list.items),
+        unread : this._state.active !== key && !options.quiet ? list.unread + items.length : 0
     });
     
-    if(lists[key].tweets.length > config.limits.tweets) {
+    if(lists[key].items.length > config.limits.items) {
         lists[key] = lists[key].merge({
-            tweets : lists[key].tweets.slice(0, config.limits.tweets)
+            items : lists[key].items.slice(0, config.limits.items)
         });
     }
     
