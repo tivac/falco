@@ -7,7 +7,7 @@ module.exports = function() {
     var active = state.get("active");
     
     return [
-        m(".pure-menu",
+        m(".pure-menu.no-select",
             m("ul.pure-menu-list",
                 state.get("order").map(function(key) {
                     var list = state.get("lists")[key];

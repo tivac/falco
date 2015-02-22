@@ -12,6 +12,12 @@ body,
     flex-direction: row;
 }
 
+.no-select {
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+              user-select: none;
+}
+
 .emoji {
     height: 1em;
     width: 1em;
