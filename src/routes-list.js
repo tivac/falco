@@ -28,6 +28,13 @@ exports.controller = function() {
     this.list = m.route.param("list");
     
     state.selectList(this.list);
+    
+    // force a re-render once a minute to update timestamps
+    this.interval = setInterval(m.redraw, 60000);
+};
+
+exports.controller.onunload = function() {
+    clearInterval(this.interval);
 };
 
 exports.view = function(ctrl) {
