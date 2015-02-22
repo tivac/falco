@@ -1,4 +1,8 @@
 {
+    "limits" : {
+        "tweets" : 1000
+    },
+    
     "twitter" : {
         "consumer" : {
             "key"    : "",

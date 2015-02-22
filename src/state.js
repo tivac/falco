@@ -6,7 +6,9 @@ var EventEmitter = require("events").EventEmitter,
     immutable = require("seamless-immutable"),
     debounce  = require("debounce"),
     
+    config  = require("./config"),
     twitter = require("./twitter");
+    
 
 function State() {
     this._state = immutable({
@@ -144,7 +146,7 @@ State.prototype.streamUsers = debounce(function() {
             
             console.log("Streaming Tweet:", tweet);
             
-            self.addTweets(list, [ tweet ]);
+            self.addTweets(list, tweet);
         });
         
         stream.on("error", function(err) {
@@ -162,7 +164,7 @@ State.prototype.streamUser = function() {
         stream.on("data", function(data) {
             console.log("User Stream data:", data);
             
-            //self.addTweets(list, [ tweet ]);
+            //self.addTweets(list, tweet);
         });
         
         stream.on("error", function(err) {
@@ -221,11 +223,21 @@ State.prototype.addUsers = function(key, users) {
 State.prototype.addTweets = function(key, tweets) {
     var list  = this._state.lists[key],
         lists = {};
+        
+    if(!Array.isArray(tweets)) {
+        tweets = [ tweets ];
+    }
     
     lists[key] = list.merge({
         tweets : tweets.concat(list.tweets),
         unread : this._state.active !== key ? list.unread + tweets.length : 0
     });
+    
+    if(lists[key].tweets.length > config.limits.tweets) {
+        lists[key] = lists[key].merge({
+            tweets : lists[key].tweets.slice(0, config.limits.tweets)
+        });
+    }
     
     this._state = this._state.merge({
         lists : this._state.lists.merge(lists)
