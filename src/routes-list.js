@@ -25,6 +25,8 @@ function dateString(date) {
 }
 
 exports.controller = function() {
+    m.redraw.strategy("diff");
+    
     this.list = m.route.param("list");
     
     state.selectList(this.list);
