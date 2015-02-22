@@ -1,26 +1,22 @@
 "use strict";
 
 var twitter = require("twitter-text"),
-    twemoji = require("twemoji");
+    emoji   = require("./emoji");
 
 exports.source = function(tweet) {
-    return tweet.retweeted_status? tweet.retweeted_status : tweet;
+    return tweet.retweeted_status ? tweet.retweeted_status : tweet;
 };
 
 exports.parse = function(tweet) {
     var source = exports.source(tweet),
         text   = twitter.autoLinkWithJSON(
             source.text,
-            source.entities
+            source.entities.asMutable({ deep : true })
         );
-    
+        
     // respect newlines
     text = text.replace(/\n|\r\n|\r/g, "<br />");
     
-    return twemoji.parse(
-        text,
-        function(icon) {
-            return "../node_modules/twemoji/svg/" + icon + ".svg";
-        }
-    );
+    // emoji
+    return emoji.parse(text);
 };
