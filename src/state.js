@@ -34,6 +34,7 @@ function State() {
     
     this.loadLists();
     this.loadTweets(this._state.active);
+    this.streamUser();
 }
 
 util.inherits(State, EventEmitter);
@@ -130,7 +131,7 @@ State.prototype.streamUsers = debounce(function() {
     this._users = users;
     
     twitter.stream("statuses/filter", { follow : users }, function(stream) {
-        console.log("Streaming: ", users);
+        console.log("Streaming %d user IDs", Object.keys(self._state.users).length);
         
         stream.on("data", function(tweet) {
             var list = self._state.users[tweet.user.id_str];
@@ -151,6 +152,24 @@ State.prototype.streamUsers = debounce(function() {
         });
     });
 }, 500);
+
+State.prototype.streamUser = function() {
+    var self = this;
+    
+    twitter.stream("user", { stringify_friend_ids : true, replies : "all" }, function(stream) {
+        console.log("Streaming User");
+        
+        stream.on("data", function(data) {
+            console.log("User Stream data:", data);
+            
+            //self.addTweets(list, [ tweet ]);
+        });
+        
+        stream.on("error", function(err) {
+            console.log(err);
+        });
+    });
+};
 
 // Mutations
 State.prototype.addList = function(list) {
