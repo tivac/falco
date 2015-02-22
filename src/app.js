@@ -1,3 +1,4 @@
+/*global Mousetrap:true */
 "use strict";
 
 require("autostrip-json-comments");
@@ -9,21 +10,23 @@ var state = require("./state"),
     
     argv  = require("minimist")(gui.App.argv);
 
-// Debug keyboard shortcuts
+// Debug helpers
 if(argv.debug) {
+    window.state = state;
+
     Mousetrap.bind("ctrl+shift+r", function() {
-        gui.Window.get().reloadDev(); 
+        gui.Window.get().reloadDev();
     });
     
     Mousetrap.bind("ctrl+shift+k", function() {
         var win = gui.Window.get();
         
-        win.isDevToolsOpen() ? win.closeDevTools() : win.showDevTools();
+        win[win.isDevToolsOpen() ? "closeDevTools" : "showDevTools"]();
     });
 }
 
 state.on("change", function(current) {
-    console.log("change", current.asMutable({ deep : true }));
+    console.log("State Change", current.asMutable({ deep : true }));
     
     m.redraw();
 });
