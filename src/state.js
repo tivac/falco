@@ -189,7 +189,7 @@ State.prototype.addList = function(list) {
     lists[id] = {
         name   : list.name,
         uri    : list.uri,
-        tweets : [],
+        items  : [],
         unread : 0,
         abbr   : list.name.length < 4 ?
             list.name :

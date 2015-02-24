@@ -7,7 +7,6 @@ var state = require("./state"),
     m     = require("mithril"),
     
     gui   = require("nw.gui"),
-    
     argv  = require("minimist")(gui.App.argv);
 
 // Debug helpers
@@ -23,6 +22,8 @@ if(argv.debug) {
         
         win[win.isDevToolsOpen() ? "closeDevTools" : "showDevTools"]();
     });
+    
+    gui.Window.get().showDevTools();
 }
 
 state.on("change", function(current) {
