@@ -246,7 +246,7 @@ State.prototype.addItems = function(key, items, options) {
     
     items = items.map(function(item) {
         item.html       = tweet.parse(item);
-        item.created_at = Date.parse(item.created_id);
+        item.created_at = Date.parse(item.created_at);
         
         if(item.retweeted_status) {
             item.retweeted_status.html       = tweet.parse(item.retweeted_status);
