@@ -16,6 +16,7 @@
     "url": "https://github.com/tivac/falco.git"
   },
   "main": "src/index.html",
+  "node-main": "./src/state.js",
   "dependencies": {
     "debounce": "^1.0.0",
     "mithril": "^0.1.30",
