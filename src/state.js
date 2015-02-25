@@ -7,7 +7,8 @@ var EventEmitter = require("events").EventEmitter,
     debounce  = require("debounce"),
     
     config  = require("./config"),
-    twitter = require("./twitter");
+    twitter = require("./twitter"),
+    tweet   = require("./tweet");
 
 function State() {
     this._state = immutable({
@@ -242,6 +243,18 @@ State.prototype.addItems = function(key, items, options) {
     if(!Array.isArray(items)) {
         items = [ items ];
     }
+    
+    items = items.map(function(item) {
+        item.html       = tweet.parse(item);
+        item.created_at = Date.parse(item.created_id);
+        
+        if(item.retweeted_status) {
+            item.retweeted_status.html       = tweet.parse(item.retweeted_status);
+            item.retweeted_status.created_at = Date.parse(item.retweeted_status.created_at);
+        }
+        
+        return item;
+    });
     
     lists[key] = list.merge({
         items  : items.concat(list.items),

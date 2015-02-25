@@ -5,7 +5,6 @@ var m      = require("mithril"),
     moment = require("moment"),
     
     state  = require("./state"),
-    parse  = require("./tweet").parse,
     source = require("./tweet").source,
     menu   = require("./menu"),
     
@@ -52,10 +51,10 @@ exports.view = function(ctrl) {
     return [
         menu(),
         m(".content",
-            list.items.asMutable().map(function(tweet) {
-                var text = parse(tweet),
-                    src  = source(tweet),
-                    date = moment(Date.parse(src.created_at));
+            // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
+            list.items.asMutable().map(function tweetMarkup(tweet) {
+                var src  = source(tweet),
+                    date = moment(src.created_at);
                 
                 return m(".tweet",
                     m(".icon",
@@ -69,7 +68,7 @@ exports.view = function(ctrl) {
                             m(".username.pure-u", "@" + src.user.screen_name),
                             m(".time.pure-u", dateString(date))
                         ),
-                        m(".text", m.trust(text))
+                        m(".text", m.trust(src.html))
                     )
                 );
             })

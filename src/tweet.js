@@ -11,7 +11,7 @@ exports.parse = function(tweet) {
     var source = exports.source(tweet),
         text   = twitter.autoLinkWithJSON(
             source.text,
-            source.entities.asMutable({ deep : true })
+            source.entities
         );
         
     // respect newlines
