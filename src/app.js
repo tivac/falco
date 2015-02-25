@@ -1,7 +1,5 @@
 "use strict";
 
-require("autostrip-json-comments");
-
 var state = require("./state"),
     m     = require("mithril"),
     
