@@ -1,7 +1,7 @@
 {
-  "name": "Falco",
+  "name": "falco",
   "description": "Node-Webkit + Twitter experiment",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "keywords": [
     "twitter"
   ],
@@ -17,28 +17,30 @@
   },
   "main": "src/index.html",
   "dependencies": {
-    "config": "~0.4.33",
-    "oauth": "~0.9.10",
-    "moment": "~2.4.0",
-    "twit": "~1.1.11",
-    "twitter-text": "~1.7.0",
-    "yui": "~3.14.0",
-    "async": "~0.2.9"
+    "autostrip-json-comments": "0.0.4",
+    "debounce": "^1.0.0",
+    "minimist": "^1.1.0",
+    "mithril": "^0.1.30",
+    "moment": "^2.9.0",
+    "mousetrap": "^1.4.6",
+    "rc": "^0.6.0",
+    "seamless-immutable": "^1.3.0",
+    "twemoji": "^1.2.0",
+    "twitter": "^1.0.3",
+    "twitter-text": "^1.11.0"
   },
   "devDependencies": {
-    "yui-configger": "~0.2.2",
-    "unzip": "~0.1.9",
-    "shelljs": "~0.2.6",
-    "archiver": "~0.4.10",
-    "hyperquest": "~0.1.8",
-    "file-size": "0.0.3"
+    "nw": "^0.12.0-alpha3"
+  },
+  "scripts": {
+    "start": "nw",
+    "debug": "nw --debug"
   },
   "window": {
+    "title": "Falco",
     "show": false,
     "toolbar": false,
-    "title": "Falco"
-  },
-  "nodewebkit": {
-    "version": "0.8.2"
+    "min_width": 500,
+    "min_height": 550
   }
 }

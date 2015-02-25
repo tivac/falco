@@ -1,0 +1,17 @@
+{
+    "limits" : {
+        "tweets" : 1000
+    },
+    
+    "twitter" : {
+        "consumer" : {
+            "key"    : "",
+            "secret" : ""
+        },
+        
+        "access" : {
+            "token"  : "",
+            "secret" : ""
+        }
+    }
+}
