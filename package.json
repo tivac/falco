@@ -40,5 +40,36 @@
     "show": false,
     "min_width": 500,
     "min_height": 550
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "browser": true
+    },
+    "rules": {
+      "curly": true,
+      "dot-notation": true,
+      "no-caller": true,
+      "no-constant-condition": true,
+      "no-dupe-args": true,
+      "no-dupe-keys": true,
+      "no-duplicate-case": true,
+      "no-empty": true,
+      "no-eval": true,
+      "no-ex-assign": true,
+      "no-extend-native": true,
+      "no-extra-parens": true,
+      "no-extra-semi": true,
+      "no-floating-decimal": true,
+      "no-func-assign": true,
+      "no-implied-eval": true,
+      "no-inner-declarations": true,
+      "no-negated-in-lhs": true,
+      "no-obj-calls": true,
+      "no-sparse-arrays": true,
+      "no-unreachable": true,
+      "use-isnan": true,
+      "valid-typeof": true
+    }
   }
 }
