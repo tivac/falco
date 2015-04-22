@@ -1,0 +1,44 @@
+.list {
+    flex: 4;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+/* Tweet */
+.tweet {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
+}
+
+.tweet:first-child {
+    padding-top: 0;
+}
+
+.tweet:last-child {
+    border-bottom: none;
+}
+
+.tweet .icon {
+    margin: 0 10px;
+    width: 48px;
+}
+
+.tweet .icon img {
+    border-radius: 5px;
+    width: 48px;
+    height: 48px;
+}
+
+.tweet .details {
+    flex: 2;
+    padding-left: 10px;
+}
+
+.tweet .top .pure-u {
+    margin-right: 10px;
+}
+
+.tweet .name {
+    font-weight: bold;
+}
