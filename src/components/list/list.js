@@ -2,7 +2,10 @@
 
 var m      = require("mithril"),
 
-    moment = require("moment"),
+    moment    = require("moment"),
+    delegated = require("delegated"),
+    
+    shell  = require("shell"),
     
     state  = require("../../lib/state"),
     source = require("../../lib/tweet").source,
@@ -48,7 +51,17 @@ module.exports = {
             return m(".error", "Unknown list: " + ctrl.list);
         }
         
-        return m(".list",
+        return m(".list", {
+                onclick : delegated("a", function(e, a) {
+                    e.preventDefault();
+                    
+                    if(a.matches(".username")) {
+                        return m.route("/user/" + a.getAttribute("data-screen-name"));
+                    }
+                    
+                    shell.openExternal(a.getAttribute("href"));
+                })
+            },
             // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
             list.items.asMutable().map(function tweetMarkup(tweet) {
                 var src  = source(tweet),

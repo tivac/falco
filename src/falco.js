@@ -1,11 +1,12 @@
 "use strict";
 
-var state = require("./lib/state"),
+var m = require("mithril"),
     
-    m = require("mithril"),
-    
-    menu = require("./components/menu/menu"),
-    list = require("./components/list/list");
+    state = require("./lib/state"),
+    pages = {
+        list : require("./pages/list"),
+        user : require("./pages/user")
+    };
 
 state.on("change", function() {
     m.redraw();
@@ -15,13 +16,7 @@ m.route(
     document.body,
     "/lists/timeline",
     {
-        "/lists/:list" : {
-            view : function() {
-                return m(".content",
-                    m.component(menu),
-                    m.component(list)
-                );
-            }
-        }
+        "/lists/:list" : pages.list,
+        "/user/:user"  : pages.user
     }
 );
