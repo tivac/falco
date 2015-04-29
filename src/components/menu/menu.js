@@ -1,31 +1,38 @@
 "use strict";
 
-var m     = require("mithril"),
-    state = require("../../lib/state");
+var m      = require("mithril"),
+    
+    state  = require("../../lib/state"),
+    emoji  = require("../../lib/emoji"),
+    
+    optional  = require("../../lib/optional");
 
 module.exports = {
     view : function() {
-        var active = state.get("active");
+        var active = state.get("active"),
+            lists  = state.get("lists");
         
-        return m(".pure-menu.no-select",
-            m("ul.pure-menu-list",
-                state.get("order").map(function(key) {
-                    var list = state.get("lists")[key];
-                    
-                    return m("li.pure-menu-item",
-                        m("a.pure-menu-link", {
-                                class   : key === active ? "pure-menu-selected" : null,
-                                href    : "/lists/" + key,
-                                config  : m.route,
-                                tooltip : list.name,
-                                
-                                "data-unread" : list.unread
-                            },
-                            list.abbr
-                        )
-                    );
-                })
-            )
+        return m(".menu.no-select",
+            state.get("order").asMutable().map(function(key) {
+                var list   = lists[key],
+                    abbr   = emoji.replace(list.abbr);
+                
+                return m("a.list", {
+                        class   : optional(key === active, "selected"),
+                        href    : "/lists/" + key,
+                        config  : m.route,
+                        tooltip : list.name,
+                        "data-unread" : list.unread
+                    },
+                    optional(
+                        abbr === list.abbr,
+                        abbr,
+                        m("img.emoji", {
+                            src : abbr
+                        })
+                    )
+                );
+            })
         );
     }
 };
