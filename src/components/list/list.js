@@ -26,32 +26,15 @@ function dateString(date) {
 }
 
 module.exports = {
-    controller : function() {
-        var ctrl = this;
-        
-        m.redraw.strategy("diff");
-        
-        ctrl.list = m.route.param("list");
-        
-        state.selectList(ctrl.list);
-        
-        // force a re-render once a minute to update timestamps
-        ctrl.interval = setInterval(m.redraw, 60000);
-        
-        // Clear that same interval when the controller unloads
-        ctrl.onunload = function() {
-            clearInterval(ctrl.interval);
-        };
-    },
-
     view : function(ctrl) {
-        var list = state.get("lists")[ctrl.list];
+        var active = state.get("active"),
+            list   = state.get("lists")[active];
         
         if(!list) {
-            return m(".error", "Unknown list: " + ctrl.list);
+            return m(".error", "Unknown list: " + active);
         }
         
-        return m(".list", {
+        return m(".current-list", {
                 onclick : delegated("a", function(e, a) {
                     e.preventDefault();
                     
