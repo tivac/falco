@@ -48,6 +48,7 @@ module.exports = {
                 })
             },
             // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
+            // TODO: Break this out into components?
             list.items.asMutable().map(function tweetMarkup(tweet) {
                 var src  = source(tweet),
                     date = moment(src.created_at).locale("en-twitter");
