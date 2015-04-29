@@ -1,17 +1,19 @@
 "use strict";
 
-var m      = require("mithril"),
-
-    moment    = require("moment"),
+var m         = require("mithril"),
     delegated = require("delegated"),
+    moment    = require("moment"),
     
+    // Electron
     shell  = require("shell"),
     
+    // Libs
     state  = require("../../lib/state"),
     source = require("../../lib/tweet").source,
     
-    day    = moment().startOf("day"),
-    year   = moment().startOf("year").subtract(1, "year");
+    // Locals
+    day    = moment().subtract(23, "hours"),
+    year   = moment().subtract(12, "months");
 
 function dateString(date) {
     if(date.isAfter(day)) {
@@ -19,7 +21,7 @@ function dateString(date) {
     }
     
     if(date.isBefore(year)) {
-        return date.format("MMM D YYYY");
+        return date.format("D MMM YYYY");
     }
     
     return date.format("MMM D");
@@ -48,7 +50,7 @@ module.exports = {
             // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
             list.items.asMutable().map(function tweetMarkup(tweet) {
                 var src  = source(tweet),
-                    date = moment(src.created_at);
+                    date = moment(src.created_at).locale("en-twitter");
                 
                 return m(".tweet",
                     m(".icon",
@@ -57,10 +59,12 @@ module.exports = {
                         })
                     ),
                     m(".details",
-                        m(".top.pure-g",
-                            m(".name.pure-u", src.user.name),
-                            m(".username.pure-u", "@" + src.user.screen_name),
-                            m(".time.pure-u", dateString(date))
+                        m(".top",
+                            m(".name.part",
+                                m("span.real", src.user.name),
+                                m("span.user", "@" + src.user.screen_name)
+                            ),
+                            m(".time.part", dateString(date))
                         ),
                         m(".text", m.trust(src.html))
                     )

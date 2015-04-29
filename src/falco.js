@@ -1,5 +1,8 @@
 "use strict";
 
+// Register locales
+require("./lib/moment-locales");
+
 var m = require("mithril"),
     
     state = require("./lib/state");

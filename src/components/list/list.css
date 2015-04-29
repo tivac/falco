@@ -9,6 +9,8 @@
     display: flex;
     padding: 15px 0;
     border-bottom: 1px solid #333;
+    
+    font-size: 82%;
 }
 
 .tweet:first-child {
@@ -31,14 +33,38 @@
 }
 
 .tweet .details {
-    flex: 2;
+    flex: 1;
     padding-left: 10px;
 }
 
-.tweet .top .pure-u {
-    margin-right: 10px;
+.tweet .top {
+    display: flex;
 }
 
-.tweet .name {
+.tweet .top .part {
+    flex: 1;
+}
+
+.tweet .top .name {
+    flex: 2;
+    display: flex;
+    align-items: baseline;
+}
+
+.tweet .top .name .real {
     font-weight: bold;
+    margin-right: 5px;
+}
+
+.tweet .top .name .user {
+    font-size: 96%;
+    color: #888;
+}
+
+.tweet .top .time {
+    text-align: right;
+}
+
+.tweet .text {
+    margin-top: 10px;
 }
