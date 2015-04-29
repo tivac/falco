@@ -14,20 +14,21 @@ function State() {
     this._state = immutable({
         active : "timeline",
         users  : {},
-        order  : [ "timeline", "notifications" ],
+        order  : [
+            "timeline",
+            "notifications"
+        ],
         lists  : {
             timeline : {
                 name   : "Timeline",
-                abbr   : "",
-                uri    : "/home",
+                abbr   : "🏠",
                 items  : [],
                 unread : 0
             },
             
             notifications : {
                 name   : "Notifications",
-                abbr   : "",
-                uri    : "/notifications",
+                abbr   : "🔔",
                 items  : [],
                 unread : 0
             }
@@ -145,13 +146,11 @@ State.prototype.streamUsers = debounce(function() {
                 return;
             }
             
-            console.log("Streaming Tweet:", tweet);
-            
             self.addItems(list, tweet);
         });
         
         stream.on("error", function(err) {
-            console.log(err);
+            console.error(err);
         });
     });
 }, 500);
@@ -177,7 +176,7 @@ State.prototype.streamUser = function() {
         });
         
         stream.on("error", function(err) {
-            console.log(err);
+            console.error(err);
         });
     });
 };
@@ -189,7 +188,6 @@ State.prototype.addList = function(list) {
     
     lists[id] = {
         name   : list.name,
-        uri    : list.uri,
         items  : [],
         unread : 0,
         abbr   : list.name.length < 4 ?
