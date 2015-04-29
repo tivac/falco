@@ -26,10 +26,8 @@ module.exports = {
                     },
                     optional(
                         abbr === list.abbr,
-                        abbr,
-                        m("img.emoji", {
-                            src : abbr
-                        })
+                        m("span.label", abbr),
+                        m("img.label.emoji", { src : abbr })
                     )
                 );
             })
