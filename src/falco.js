@@ -2,21 +2,15 @@
 
 var m = require("mithril"),
     
-    state = require("./lib/state"),
-    pages = {
-        list : require("./pages/list"),
-        user : require("./pages/user")
-    };
+    state = require("./lib/state");
 
-state.on("change", function() {
-    m.redraw();
-});
+state.on("change", m.redraw);
 
 m.route(
     document.body,
     "/lists/timeline",
     {
-        "/lists/:list" : pages.list,
-        "/user/:user"  : pages.user
+        "/lists/:list" : require("./pages/list"),
+        "/user/:user"  : require("./pages/user")
     }
 );
