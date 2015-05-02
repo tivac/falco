@@ -8,14 +8,16 @@ var m         = require("mithril"),
     shell  = require("shell"),
     
     // Libs
-    state  = require("../../lib/state"),
-    source = require("../../lib/tweet").source,
+    state   = require("../../lib/state"),
+    tweet   = require("../../lib/tweet"),
     
     // Locals
     day    = moment().subtract(23, "hours"),
     year   = moment().subtract(12, "months");
 
 function dateString(date) {
+    date = moment(date).locale("en-twitter");
+    
     if(date.isAfter(day)) {
         return date.fromNow(true);
     }
@@ -28,7 +30,7 @@ function dateString(date) {
 }
 
 module.exports = {
-    view : function(ctrl) {
+    view : function() {
         var active = state.get("active"),
             list   = state.get("lists")[active];
         
@@ -49,25 +51,53 @@ module.exports = {
             },
             // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
             // TODO: Break this out into components?
-            list.items.asMutable().map(function tweetMarkup(tweet) {
-                var src  = source(tweet),
-                    date = moment(src.created_at).locale("en-twitter");
+            list.items.asMutable().map(function tweetMarkup(item) {
+                var src = tweet.source(item);
                 
                 return m(".tweet",
-                    m(".icon",
-                        m("img", {
-                            src : src.user.profile_image_url_https
-                        })
-                    ),
-                    m(".details",
-                        m(".top",
-                            m(".name.part",
-                                m("span.real", src.user.name),
-                                m("span.user", "@" + src.user.screen_name)
+                    // Retweet Status
+                    (item.retweeted_status ?
+                        m("p.retweet",
+                            m("a", {
+                                    href : item.user.url
+                                },
+                                item.user.name
                             ),
-                            m(".time.part", dateString(date))
+                            " retweeted"
+                        ) :
+                        null
+                    ),
+                    // Main tweet content
+                    m(".bd",
+                        m(".icon",
+                            m("img", {
+                                src : src.user.profile_image_url_https
+                            })
                         ),
-                        m(".text", m.trust(src.html))
+                        m(".details",
+                            m(".top",
+                                m(".name.part",
+                                    m("span.real", src.user.name),
+                                    m("span.user", "@" + src.user.screen_name)
+                                ),
+                                m(".time.part", dateString(item.created_at))
+                            ),
+                            m(".text", m.trust(tweet.text(src))),
+                            src.entities.media ?
+                                m(".images",
+                                    src.entities.media.map(function(media) {
+                                        return m("a", {
+                                                href : media.expanded_url
+                                            },
+                                            m("img", {
+                                                src   : media.media_url_https,
+                                                title : media.display_url
+                                            })
+                                        );
+                                    })
+                                ) :
+                                null
+                        )
                     )
                 );
             })

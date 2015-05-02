@@ -7,8 +7,7 @@ var EventEmitter = require("events").EventEmitter,
     debounce  = require("debounce"),
     
     config  = require("./config"),
-    twitter = require("./twitter"),
-    tweet   = require("./tweet");
+    twitter = require("./twitter");
 
 function State() {
     this._state = immutable({
@@ -36,8 +35,15 @@ function State() {
     });
     
     this.loadLists();
-    this.loadTweets("timeline", { quiet : true });
-    this.loadTweets("notifications", { quiet : true });
+    
+    this.loadTweets("timeline", {
+        quiet : true
+    });
+    
+    this.loadTweets("notifications", {
+        quiet : true
+    });
+    
     this.streamUser();
 }
 
@@ -70,7 +76,7 @@ State.prototype.loadLists = function() {
 State.prototype.loadTweets = function(list, options) {
     var self = this,
         args = {
-            count       : 200,
+            count       : 75,
             include_rts : true
         },
         url;
@@ -209,7 +215,9 @@ State.prototype.addList = function(list) {
     this.loadUsers(id);
     
     // Go get tweets for this list
-    this.loadTweets(id, { quiet : true });
+    this.loadTweets(id, {
+        quiet : true
+    });
     
     this._changed();
 };
@@ -241,18 +249,6 @@ State.prototype.addItems = function(key, items, options) {
     if(!Array.isArray(items)) {
         items = [ items ];
     }
-    
-    items = items.map(function(item) {
-        item.html       = tweet.parse(item);
-        item.created_at = Date.parse(item.created_at);
-        
-        if(item.retweeted_status) {
-            item.retweeted_status.html       = tweet.parse(item.retweeted_status);
-            item.retweeted_status.created_at = Date.parse(item.retweeted_status.created_at);
-        }
-        
-        return item;
-    });
     
     lists[key] = list.merge({
         items  : items.concat(list.items),

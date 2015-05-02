@@ -7,11 +7,13 @@ exports.source = function(tweet) {
     return tweet.retweeted_status ? tweet.retweeted_status : tweet;
 };
 
-exports.parse = function(tweet) {
-    var source = exports.source(tweet),
-        text   = twitter.autoLinkWithJSON(
-            source.text,
-            source.entities
+exports.text = function(tweet) {
+    var text   = twitter.autoLinkWithJSON(
+            tweet.text,
+            // twitter-text lib munges this data (╯°□°)╯︵ ┻━┻
+            tweet.entities.asMutable({
+                deep : true
+            })
         );
         
     // respect newlines
