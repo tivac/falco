@@ -6,12 +6,23 @@ var m         = require("mithril"),
     // Electron
     shell  = require("shell"),
     
+    remote = require("remote"),
+    Menu   = remote.require("menu"),
+    
     // Libs
     state   = require("../../lib/state"),
     
     // Components
-    tweet = require("../tweet/tweet");
+    tweet = require("../tweet/tweet"),
+    
+    context;
 
+context = Menu.buildFromTemplate([{
+    label : "Open in browser",
+    click : function() {
+        console.log(arguments);
+    }
+}]);
 
 module.exports = {
     view : function() {
@@ -31,6 +42,11 @@ module.exports = {
                     }
                     
                     shell.openExternal(a.getAttribute("href"));
+                }),
+                oncontextmenu : delegated(".tweet", function(e, el) {
+                    e.preventDefault();
+                    
+                    context.popup(remote.getCurrentWindow());
                 })
             },
             // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
