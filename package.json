@@ -19,7 +19,7 @@
   "dependencies": {
     "debounce": "^1.0.0",
     "delegated": "^1.0.0",
-    "mithril": "git://github.com/lhorie/mithril.js.git#components",
+    "mithril": "^0.2.0",
     "moment": "^2.10.2",
     "purecss": "^0.6.0",
     "rc": "^1.0.1",
