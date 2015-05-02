@@ -4,8 +4,10 @@
 require("./lib/moment-locales");
 
 var m = require("mithril"),
-    
-    state = require("./lib/state");
+
+    state;
+
+state = window.state = require("./lib/state");
 
 state.on("change", m.redraw);
 

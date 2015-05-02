@@ -8,7 +8,7 @@
 .tweet {
     display: flex;
     padding: 15px 0;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #CCC;
     
     font-size: 82%;
 }
@@ -41,13 +41,10 @@
     display: flex;
 }
 
-.tweet .top .part {
-    flex: 1;
-}
-
 .tweet .top .name {
-    flex: 2;
+    flex: 1 0 auto;
     display: flex;
+    
     align-items: baseline;
 }
 
@@ -57,12 +54,13 @@
 }
 
 .tweet .top .name .user {
-    font-size: 96%;
+    font-size: 88%;
     color: #888;
 }
 
 .tweet .top .time {
-    text-align: right;
+    flex: 0 1 auto;
+    color: #9A9A9A;
 }
 
 .tweet .text {
