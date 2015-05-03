@@ -18,7 +18,7 @@
   "main": "./src",
   "dependencies": {
     "debounce": "^1.0.0",
-    "delegated": "^1.0.0",
+    "delegated": "^1.1.0",
     "mithril": "^0.2.0",
     "moment": "^2.10.2",
     "purecss": "^0.6.0",
@@ -37,6 +37,9 @@
     "debug": "node-inspector && electron --debug-brk=5858 ."
   },
   "eslintConfig": {
+    "ecmaFeatures": {
+      "templateStrings": true
+    },
     "env": {
       "node": true,
       "browser": true
@@ -79,7 +82,7 @@
       "no-obj-calls": 2,
       "no-sparse-arrays": 2,
       "no-trailing-spaces": 0,
-      "no-underscore-dangle" : 0,
+      "no-underscore-dangle": 0,
       "no-unreachable": 2,
       "use-isnan": 2,
       "valid-typeof": 2

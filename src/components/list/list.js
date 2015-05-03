@@ -4,40 +4,102 @@ var m         = require("mithril"),
     delegated = require("delegated"),
     
     // Electron
-    shell  = require("shell"),
+    shell     = require("shell"),
+    clipboard = require("clipboard"),
+    
+    remote = require("remote"),
+    Menu   = remote.require("menu"),
     
     // Libs
-    state   = require("../../lib/state"),
+    state = require("../../lib/state"),
+    data  = require("../../lib/tweet-data"),
     
     // Components
-    tweet = require("../tweet/tweet");
-
+    tweet = require("../tweet/tweet"),
+    
+    menus = {
+        _refs : {
+            tweet : null,
+            link  : null
+        },
+        
+        tweet : Menu.buildFromTemplate([{
+            label : "Open in browser",
+            click : function() {
+                var tgt = state.get("tweets")[menus._refs.tweet],
+                    src;
+                
+                if(!tgt) {
+                    return;
+                }
+                
+                src = data.source(tgt);
+                
+                shell.openExternal(`https://twitter.com/${src.user.screen_name}/status/${src.id_str}`);
+            }
+        }]),
+        
+        link : Menu.buildFromTemplate([{
+            label : "Open in browser",
+            click : function() {
+                shell.openExternal(menus._refs.link);
+            }
+        }, {
+            label : "Copy link location",
+            click : function() {
+                clipboard.writeText(menus._refs.link);
+            }
+        }])
+    };
 
 module.exports = {
     view : function() {
         var active = state.get("active"),
-            list   = state.get("lists")[active];
+            list   = state.get("lists")[active],
+            tweets = state.get("tweets");
         
         if(!list) {
             return m(".error", "Unknown list: " + active);
         }
         
         return m(".current-list", {
-                onclick : delegated("a", function(e, a) {
-                    e.preventDefault();
+                onclick : delegated({
+                    "a.username" : function(e, a) {
+                        e.preventDefault();
                     
-                    if(a.matches(".username")) {
                         return m.route("/user/" + a.getAttribute("data-screen-name"));
-                    }
+                    },
                     
-                    shell.openExternal(a.getAttribute("href"));
+                    "a" : function(e, a) {
+                        e.preventDefault();
+                        
+                        shell.openExternal(a.getAttribute("href"));
+                    }
+                }),
+                
+                oncontextmenu : delegated({
+                    ".tweet" : function(e, el) {
+                        e.preventDefault();
+                        
+                        menus._refs.tweet = el.getAttribute("data-id");
+                        
+                        menus.tweet.popup(remote.getCurrentWindow());
+                    },
+                
+                    "a" : function(e, a) {
+                        e.preventDefault();
+                        
+                        menus._refs.link = a.getAttribute("href");
+                        
+                        menus.link.popup(remote.getCurrentWindow());
+                    }
                 })
             },
-            // Call to asMutable here is necessary to prevent weirdness w/ mithril interactions
+            // Call to .asMutable() is required so that mithril can munge the array
             list.items.asMutable().map(function tweetMarkup(item) {
                 return m.component(tweet, {
                     key   : item.id_str,
-                    tweet : item
+                    tweet : tweets[item]
                 });
             })
         );

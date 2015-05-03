@@ -28,7 +28,9 @@ module.exports = {
         var tweet = args.tweet,
             src   = data.source(tweet);
                 
-        return m(".tweet",
+        return m(".tweet", {
+                "data-id" : tweet.id_str
+            },
             // Retweet Status
             (tweet.retweeted_status ?
                 m("p.retweet",
