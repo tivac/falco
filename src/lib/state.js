@@ -1,3 +1,4 @@
+/*eslint camelcase:0, key-spacing:0 */
 "use strict";
 
 var EventEmitter = require("events").EventEmitter,
@@ -31,7 +32,8 @@ function State() {
                 items  : [],
                 unread : 0
             }
-        }
+        },
+        tweets : {}
     });
     
     this.loadLists();
@@ -239,8 +241,9 @@ State.prototype.addUsers = function(key, users) {
 };
 
 State.prototype.addItems = function(key, items, options) {
-    var list  = this._state.lists[key],
-        lists = {};
+    var list   = this._state.lists[key],
+        lists  = {},
+        tweets = {};
     
     if(!options) {
         options = {};
@@ -250,11 +253,22 @@ State.prototype.addItems = function(key, items, options) {
         items = [ items ];
     }
     
+    // Ensure that all items are valid
+    items = items.filter(Boolean);
+    
+    items.forEach(function(item) {
+        tweets[item.id_str] = item;
+    });
+    
     lists[key] = list.merge({
-        items  : items.concat(list.items),
+        items  : items.map(function(item) {
+            return item.id_str;
+        })
+        .concat(list.items),
         unread : this._state.active !== key && !options.quiet ? list.unread + items.length : 0
     });
     
+    // TODO: does this still make any sense?
     if(lists[key].items.length > config.limits.items) {
         lists[key] = lists[key].merge({
             items : lists[key].items.slice(0, config.limits.items)
@@ -262,7 +276,8 @@ State.prototype.addItems = function(key, items, options) {
     }
     
     this._state = this._state.merge({
-        lists : this._state.lists.merge(lists)
+        tweets : this._state.tweets.merge(tweets),
+        lists  : this._state.lists.merge(lists)
     });
     
     this._changed();
