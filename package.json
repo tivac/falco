@@ -19,6 +19,7 @@
   "dependencies": {
     "debounce": "^1.0.0",
     "delegated": "^1.1.0",
+    "lazysizes": "^1.1.0",
     "mithril": "^0.2.0",
     "moment": "^2.10.2",
     "purecss": "^0.6.0",

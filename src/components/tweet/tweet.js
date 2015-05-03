@@ -8,7 +8,9 @@ var m      = require("mithril"),
     
     // Locals
     day    = moment().subtract(23, "hours"),
-    year   = moment().subtract(12, "months");
+    year   = moment().subtract(12, "months"),
+    
+    empty  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
 
 function dateString(date) {
     date = moment(Date.parse(date)).locale("en-twitter");
@@ -47,8 +49,9 @@ module.exports = {
             // Main tweet content
             m(".bd",
                 m(".icon",
-                    m("img", {
-                        src : src.user.profile_image_url_https
+                    m("img.lazyload", {
+                        src        : empty,
+                        "data-src" : src.user.profile_image_url_https
                     })
                 ),
                 m(".details",
@@ -66,9 +69,10 @@ module.exports = {
                                 return m("a", {
                                         href : media.expanded_url
                                     },
-                                    m("img", {
-                                        src   : media.media_url_https,
-                                        title : media.display_url
+                                    m("img.lazyload", {
+                                        src        : empty,
+                                        "data-src" : media.media_url_https,
+                                        title      : media.display_url
                                     })
                                 );
                             })
