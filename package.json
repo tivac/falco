@@ -24,14 +24,14 @@
     "moment": "^2.10.2",
     "purecss": "^0.6.0",
     "rc": "^1.0.1",
-    "seamless-immutable": "^2.3.1",
+    "seamless-immutable": "^4.0.0",
     "twemoji": "^1.4.1",
     "twitter": "^1.2.5",
     "twitter-text": "^1.12.0"
   },
   "devDependencies": {
-    "electron-prebuilt": "^0.25.1",
-    "node-inspector": "^0.10.0"
+    "electron-prebuilt": "^0.33.6",
+    "node-inspector": "^0.12.3"
   },
   "scripts": {
     "start": "node_modules\\electron-prebuilt\\dist\\electron.exe .",
