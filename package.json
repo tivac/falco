@@ -2,38 +2,35 @@
   "name": "falco",
   "description": "Electron-powered List-focused Twitter experiment",
   "version": "1.0.0",
+  "license": "MIT",
   "keywords": [
     "twitter"
   ],
-  "maintainers": [
-    {
-      "name": "Pat Cavit",
-      "email": "pcavit@gmail.com"
-    }
-  ],
+  "author": "Pat Cavit <npm@patcavit.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/tivac/falco.git"
   },
   "main": "./src",
   "dependencies": {
-    "debounce": "^1.0.0",
     "delegated": "^1.1.0",
-    "lazysizes": "^1.1.0",
+    "lazysizes": "^1.4.0",
+    "lodash.debounce": "^4.0.3",
     "mithril": "^0.2.0",
-    "moment": "^2.10.2",
+    "moment": "^2.11.2",
     "purecss": "^0.6.0",
-    "rc": "^1.0.1",
+    "rc": "^1.1.6",
     "seamless-immutable": "^2.3.1",
-    "twemoji": "^1.4.1",
+    "twemoji": "^2.0.1",
     "twitter": "^1.2.5",
-    "twitter-text": "^1.12.0"
+    "twitter-text": "^1.13.3"
   },
   "devDependencies": {
-    "electron-prebuilt": "^0.25.1",
+    "electron-prebuilt": "^0.36.9",
+    "eslint": "^2.2.0",
     "eslint-config-arenanet": "^2.0.2",
-    "jscs-preset-arenanet": "^1.0.3",
-    "node-inspector": "^0.10.0"
+    "jscs": "^2.10.1",
+    "jscs-preset-arenanet": "^1.0.3"
   },
   "scripts": {
     "start": "node_modules\\electron-prebuilt\\dist\\electron.exe .",

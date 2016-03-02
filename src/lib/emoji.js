@@ -6,7 +6,7 @@ exports.parse = function(text) {
     return twemoji.parse(
         text,
         function(icon) {
-            return "../node_modules/twemoji/svg/" + icon + ".svg";
+            return "../node_modules/twemoji/2/svg/" + icon + ".svg";
         }
     );
 };
@@ -28,6 +28,10 @@ exports.replace = function(text) {
                   icon.charAt(0) + icon.charAt(2) : icon)
         );
         
-        return "../node_modules/twemoji/svg/" + icon + ".svg"
+        if(!icon) {
+            return "../node_modules/twemoji/2/svg/1f0cf.svg"; 
+        }
+        
+        return "../node_modules/twemoji/2/svg/" + icon + ".svg";
     })
 }
