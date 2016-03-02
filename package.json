@@ -16,7 +16,7 @@
     "delegated": "^1.1.0",
     "lazysizes": "^1.4.0",
     "lodash.debounce": "^4.0.3",
-    "mithril": "^0.2.0",
+    "mithril": "^0.2.3",
     "moment": "^2.11.2",
     "purecss": "^0.6.0",
     "rc": "^1.1.6",
