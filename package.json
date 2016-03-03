@@ -23,7 +23,7 @@
     "seamless-immutable": "^2.3.1",
     "twemoji": "^2.0.1",
     "twitter": "^1.2.5",
-    "twitter-text": "^1.13.3"
+    "twitter-text": "^1.13.4"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.36.9",
