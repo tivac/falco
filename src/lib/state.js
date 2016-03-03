@@ -11,7 +11,7 @@ var EventEmitter = require("events").EventEmitter,
     twitter = require("./twitter");
 
 function State() {
-    this._state = u.freeze({
+    this.data = u.freeze({
         active : "timeline",
         users  : {},
         order  : [
@@ -53,11 +53,7 @@ util.inherits(State, EventEmitter);
 
 // Util
 State.prototype._changed = function() {
-    this.emit("change", this._state);
-};
-
-State.prototype.get = function(key) {
-    return this._state[key];
+    this.emit("change", this.data);
 };
 
 // Loading
@@ -133,7 +129,7 @@ State.prototype.loadUsers = function(list) {
 // Streams
 State.prototype.streamUsers = debounce(function() {
     var self  = this,
-        users = Object.keys(this._state.users).join(",");
+        users = Object.keys(this.data.users).join(",");
     
     // No changes, don't do anything
     if(users === this._users) {
@@ -143,10 +139,10 @@ State.prototype.streamUsers = debounce(function() {
     this._users = users;
     
     twitter.stream("statuses/filter", { follow : users }, function(stream) {
-        console.log("Streaming %d user IDs", Object.keys(self._state.users).length);
+        console.log("Streaming %d user IDs", Object.keys(self.data.users).length);
         
         stream.on("data", function(tweet) {
-            var list = self._state.users[tweet.user.id_str];
+            var list = self.data.users[tweet.user.id_str];
             
             // If we don't recognize the user it was probably someone
             // retweeting someone we do recognize. AKA we don't care.
@@ -194,7 +190,7 @@ State.prototype.addList = function(list) {
     var id    = list.id_str,
         lists = {};
     
-    this._state = u({
+    this.data = u({
         lists : {
             [list.id_str] : {
                 name   : list.name,
@@ -213,7 +209,7 @@ State.prototype.addList = function(list) {
         order : function(order) {
             return [].concat(order, [id]);
         }
-    }, this._state);
+    }, this.data);
     
     // Go get users for this list to track
     this.loadUsers(id);
@@ -233,9 +229,9 @@ State.prototype.addUsers = function(key, users) {
         map[id] = key;
     });
 
-    this._state = u({
+    this.data = u({
         users : map 
-    }, this._state);
+    }, this.data);
     
     this.streamUsers();
     
@@ -243,7 +239,7 @@ State.prototype.addUsers = function(key, users) {
 };
 
 State.prototype.addItems = function(key, items, options) {
-    var list   = this._state.lists[key],
+    var list   = this.data.lists[key],
         tweets = {},
         shown;
     
@@ -267,9 +263,9 @@ State.prototype.addItems = function(key, items, options) {
         return true;
     });
     
-    shown = this._state.active !== key && !options.quiet;
+    shown = this.data.active !== key && !options.quiet;
     
-    this._state = u({
+    this.data = u({
         tweets : tweets,
         lists  : {
             [key] : {
@@ -284,26 +280,26 @@ State.prototype.addItems = function(key, items, options) {
                 }
             }
         }
-    }, this._state);
+    }, this.data);
     
     this._changed();
 };
 
 State.prototype.selectList = function(key) {
-    var list = this._state.lists[key];
+    var list = this.data.lists[key];
     
     if(!list) {
         return this.selectList("timeline");
     }
     
-    this._state = u({
+    this.data = u({
         active : key,
         lists  : {
             [key] : {
                 unread : 0
             }
         }
-    }, this._state);
+    }, this.data);
     
     this._changed();
 };

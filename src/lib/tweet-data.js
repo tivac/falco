@@ -8,7 +8,7 @@ exports.source = function(tweet) {
 };
 
 exports.text = function(tweet) {
-    var text   = twitter.autoLinkWithJSON(
+    var text = twitter.autoLinkWithJSON(
             tweet.text,
             tweet.entities
         );

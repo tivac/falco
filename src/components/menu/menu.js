@@ -9,16 +9,13 @@ var m      = require("mithril"),
 
 module.exports = {
     view : function() {
-        var active = state.get("active"),
-            lists  = state.get("lists");
-        
         return m(".menu.no-select",
-            state.get("order").map(function(key) {
-                var list   = lists[key],
-                    abbr   = emoji.replace(list.abbr);
+            state.data.order.map(function(key) {
+                var list = state.data.lists[key],
+                    abbr = emoji.replace(list.abbr);
                 
                 return m("a.list", {
-                        class   : optional(key === active, "selected"),
+                        class   : optional(key === state.data.active, "selected"),
                         href    : "/lists/" + key,
                         config  : m.route,
                         tooltip : list.name,

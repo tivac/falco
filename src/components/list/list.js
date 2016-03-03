@@ -26,7 +26,7 @@ var m         = require("mithril"),
         tweet : Menu.buildFromTemplate([{
             label : "Open in browser",
             click : function() {
-                var tgt = state.get("tweets")[menus._refs.tweet],
+                var tgt = state.data.tweets[menus._refs.tweet],
                     src;
                 
                 if(!tgt) {
@@ -54,11 +54,9 @@ var m         = require("mithril"),
 
 module.exports = {
     view : function() {
-        var active = state.get("active"),
-            list   = state.get("lists")[active],
-            tweets = state.get("tweets");
+        var active = state.data.active;
         
-        if(!list) {
+        if(!(active in state.data.lists)) {
             return m(".error", "Unknown list: " + active);
         }
         
@@ -95,10 +93,10 @@ module.exports = {
                     }
                 })
             },
-            list.items.map(function tweetMarkup(item) {
+            state.data.lists[active].items.map(function tweetMarkup(item) {
                 return m.component(tweet, {
                     key   : item.id_str,
-                    tweet : tweets[item]
+                    tweet : state.data.tweets[item]
                 });
             })
         );
