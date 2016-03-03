@@ -4,14 +4,14 @@
 var EventEmitter = require("events").EventEmitter,
     util = require("util"),
     
-    immutable = require("seamless-immutable"),
-    debounce  = require("lodash.debounce"),
+    u        = require("updeep").default,
+    debounce = require("lodash.debounce"),
     
     config  = require("./config"),
     twitter = require("./twitter");
 
 function State() {
-    this._state = immutable({
+    this._state = u.freeze({
         active : "timeline",
         users  : {},
         order  : [
@@ -194,24 +194,26 @@ State.prototype.addList = function(list) {
     var id    = list.id_str,
         lists = {};
     
-    lists[id] = {
-        name   : list.name,
-        items  : [],
-        unread : 0,
-        abbr   : list.name.length < 4 ?
-            list.name :
-            list.name
-                .split(" ")
-                .map(function(chunk) {
-                    return chunk.slice(0, 1).toUpperCase();
-                })
-                .join("")
-    };
-    
-    this._state = this._state.merge({
-        lists : this._state.lists.merge(lists),
-        order : this._state.order.concat([ id ])
-    });
+    this._state = u({
+        lists : {
+            [list.id_str] : {
+                name   : list.name,
+                items  : [],
+                unread : 0,
+                abbr   : list.name.length < 4 ?
+                    list.name :
+                    list.name
+                        .split(" ")
+                        .map(function(chunk) {
+                            return chunk.slice(0, 1).toUpperCase();
+                        })
+                        .join("")
+            }
+        },
+        order : function(order) {
+            return [].concat(order, [id]);
+        }
+    }, this._state);
     
     // Go get users for this list to track
     this.loadUsers(id);
@@ -230,10 +232,10 @@ State.prototype.addUsers = function(key, users) {
     users.forEach(function(id) {
         map[id] = key;
     });
-    
-    this._state = this._state.merge({
-        users : this._state.users.merge(map)
-    });
+
+    this._state = u({
+        users : map 
+    }, this._state);
     
     this.streamUsers();
     
@@ -242,8 +244,8 @@ State.prototype.addUsers = function(key, users) {
 
 State.prototype.addItems = function(key, items, options) {
     var list   = this._state.lists[key],
-        lists  = {},
-        tweets = {};
+        tweets = {},
+        shown;
     
     if(!options) {
         options = {};
@@ -254,51 +256,54 @@ State.prototype.addItems = function(key, items, options) {
     }
     
     // Ensure that all items are valid
-    items = items.filter(Boolean);
-    
-    items.forEach(function(item) {
+    items = items.filter(function(item) {
+        if(!item) {
+            return false;
+        }
+        
+        // Build up tweets object
         tweets[item.id_str] = item;
+        
+        return true;
     });
     
-    lists[key] = list.merge({
-        items  : items.map(function(item) {
-            return item.id_str;
-        })
-        .concat(list.items),
-        unread : this._state.active !== key && !options.quiet ? list.unread + items.length : 0
-    });
+    shown = this._state.active !== key && !options.quiet;
     
-    // TODO: does this still make any sense?
-    if(lists[key].items.length > config.limits.items) {
-        lists[key] = lists[key].merge({
-            items : lists[key].items.slice(0, config.limits.items)
-        });
-    }
-    
-    this._state = this._state.merge({
-        tweets : this._state.tweets.merge(tweets),
-        lists  : this._state.lists.merge(lists)
-    });
+    this._state = u({
+        tweets : tweets,
+        lists  : {
+            [key] : {
+                items : function(current) {
+                    return [].concat(current, items.map(function(item) {
+                        return item.id_str;
+                    }));
+                },
+                
+                unread : function(val) {
+                    return shown ? val + items.length : 0;
+                }
+            }
+        }
+    }, this._state);
     
     this._changed();
 };
 
 State.prototype.selectList = function(key) {
-    var list  = this._state.lists[key],
-        lists = {};
+    var list = this._state.lists[key];
     
     if(!list) {
         return this.selectList("timeline");
     }
     
-    lists[key] = list.merge({
-        unread : 0
-    });
-    
-    this._state = this._state.merge({
+    this._state = u({
         active : key,
-        lists  : this._state.lists.merge(lists)
-    });
+        lists  : {
+            [key] : {
+                unread : 0
+            }
+        }
+    }, this._state);
     
     this._changed();
 };

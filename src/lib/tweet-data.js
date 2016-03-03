@@ -10,10 +10,7 @@ exports.source = function(tweet) {
 exports.text = function(tweet) {
     var text   = twitter.autoLinkWithJSON(
             tweet.text,
-            // twitter-text lib munges this data (╯°□°)╯︵ ┻━┻
-            tweet.entities.asMutable({
-                deep : true
-            })
+            tweet.entities
         );
         
     // respect newlines

@@ -95,8 +95,7 @@ module.exports = {
                     }
                 })
             },
-            // Call to .asMutable() is required so that mithril can munge the array
-            list.items.asMutable().map(function tweetMarkup(item) {
+            list.items.map(function tweetMarkup(item) {
                 return m.component(tweet, {
                     key   : item.id_str,
                     tweet : tweets[item]

@@ -13,7 +13,7 @@ module.exports = {
             lists  = state.get("lists");
         
         return m(".menu.no-select",
-            state.get("order").asMutable().map(function(key) {
+            state.get("order").map(function(key) {
                 var list   = lists[key],
                     abbr   = emoji.replace(list.abbr);
                 
@@ -22,6 +22,7 @@ module.exports = {
                         href    : "/lists/" + key,
                         config  : m.route,
                         tooltip : list.name,
+                        
                         "data-unread" : list.unread
                     },
                     optional(
