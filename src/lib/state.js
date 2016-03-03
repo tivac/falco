@@ -5,7 +5,7 @@ var EventEmitter = require("events").EventEmitter,
     util = require("util"),
     
     immutable = require("seamless-immutable"),
-    debounce  = require("debounce"),
+    debounce  = require("lodash.debounce"),
     
     config  = require("./config"),
     twitter = require("./twitter");
