@@ -1,7 +1,7 @@
 "use strict";
 
 var twitter = require("twitter-text"),
-    emoji   = require("./emoji");
+    emoji   = require("twemoji");
 
 exports.source = function(tweet) {
     return tweet.retweeted_status ? tweet.retweeted_status : tweet;

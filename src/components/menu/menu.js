@@ -1,9 +1,9 @@
 "use strict";
 
 var m      = require("mithril"),
+    emoji  = require("twemoji"),
     
     state  = require("../../lib/state"),
-    emoji  = require("../../lib/emoji"),
     
     optional  = require("../../lib/optional");
 
@@ -12,7 +12,7 @@ module.exports = {
         return m(".menu.no-select",
             state.data.order.map(function(key) {
                 var list = state.data.lists[key],
-                    abbr = emoji.replace(list.abbr);
+                    abbr = emoji.parse(list.abbr);
                 
                 return m("a.list", {
                         class   : optional(key === state.data.active, "selected"),
@@ -25,7 +25,7 @@ module.exports = {
                     optional(
                         abbr === list.abbr,
                         m("span.label", abbr),
-                        m("img.label.icon", { src : abbr })
+                        m.trust(abbr)
                     )
                 );
             })

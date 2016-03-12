@@ -20,7 +20,7 @@
     "moment": "^2.12.0",
     "purecss": "^0.6.0",
     "rc": "^1.1.6",
-    "twemoji": "^2.0.1",
+    "twemoji": "^2.0.5",
     "twitter": "^1.2.5",
     "twitter-text": "^1.13.4",
     "updeep": "^0.13.0"
