@@ -1,11 +1,11 @@
 "use strict";
 
-// Register locales
-require("./lib/moment-locales");
-
 var m = require("mithril"),
 
     state;
+
+// Register locales
+require("./lib/moment-locales");
 
 state = window.state = require("./lib/state");
 

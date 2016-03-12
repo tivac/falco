@@ -1,14 +1,14 @@
 "use strict";
 
-// Include state to kick off updates
-require("./lib/state");
-
 var app = require("app"),
     Window = require("browser-window"),
     
     // Keep a global reference of the window object, if you don"t, the window will
     // be closed automatically when the javascript object is GCed.
     main = null;
+
+// Include state to kick off updates
+require("./lib/state");
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function() {
