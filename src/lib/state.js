@@ -4,7 +4,7 @@
 var EventEmitter = require("events").EventEmitter,
     util = require("util"),
     
-    u        = require("updeep").default,
+    u        = require("updeep"),
     debounce = require("lodash.debounce"),
     
     config  = require("./config"),
@@ -207,7 +207,7 @@ State.prototype.addList = function(list) {
             }
         },
         order : function(order) {
-            return [].concat(order, [id]);
+            return [].concat(order, [ id ]);
         }
     }, this.data);
     
@@ -260,6 +260,10 @@ State.prototype.addItems = function(key, items, options) {
         // Build up tweets object
         tweets[item.id_str] = item;
         
+        if(item.id_str === "711740713084518400") {
+            console.log(item);
+        }
+            
         return true;
     });
     
