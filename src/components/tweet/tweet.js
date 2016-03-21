@@ -29,7 +29,8 @@ function dateString(date) {
 module.exports = {
     view : function(ctrl, args) {
         var tweet = args.tweet,
-            src   = data.source(tweet);
+            src   = data.source(tweet),
+            media = src.extended_entities ? src.extended_entities.media : [];
                 
         return m(".tweet", {
                 "data-id" : tweet.id_str
@@ -65,14 +66,14 @@ module.exports = {
                     m(".text", m.trust(data.text(src))),
                     src.entities.media ?
                         m(".images",
-                            src.entities.media.map(function(media) {
+                            media.map(function(item) {
                                 return m("a", {
-                                        href : media.expanded_url
+                                        href : item.expanded_url
                                     },
                                     m("img.lazyload", {
                                         src        : empty,
-                                        "data-src" : media.media_url_https,
-                                        title      : media.display_url
+                                        "data-src" : item.media_url_https,
+                                        title      : item.display_url
                                     })
                                 );
                             })
