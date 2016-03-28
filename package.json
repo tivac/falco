@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "electron-prebuilt": "^0.37.2",
-    "eslint": "^2.4.0",
+    "eslint": "^2.5.2",
     "eslint-config-arenanet": "^2.0.3",
     "jscs": "^2.11.0",
     "jscs-preset-arenanet": "^1.0.3"
