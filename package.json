@@ -23,7 +23,7 @@
     "twemoji": "^2.0.5",
     "twitter": "^1.2.5",
     "twitter-text": "^1.13.4",
-    "updeep": "^0.14.0"
+    "updeep": "^0.15.0"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.2.3",
